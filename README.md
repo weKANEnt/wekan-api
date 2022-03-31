@@ -57,4 +57,7 @@ Try your best not to interfere with any config files unless you are absolutely s
 
 ## All files/info you will need from me
 
-So files/info are going to be gitignored for either security reasons or those files just not being needed in the repo. Here's a comprehensive list: + .env file + db pw
+So files/info are going to be gitignored for either security reasons or those files just not being needed in the repo. Here's a comprehensive list:
+
+- .env file
+- db pw
