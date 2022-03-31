@@ -52,7 +52,7 @@ _To be continued..._
 To start the server run
 
 ```shell
-    npm run dev-start
+npm run dev-start
 ```
 
 You can check out the script `dev-start` in the package.json file to see what it does. When you see `Server is running` in the terminal, go to your localhost and "access" [Port8080](http://127.0.0.1:8080/). That's the server up and running. All API calls originate from and go to this point. If you make any changes to the code and save, because of _nodemon_ the sever will automatically restart so do not worry about that.
