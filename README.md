@@ -37,7 +37,7 @@ postgres=# \c uwivotes;
 
 If this is successful, running `\c` in ther terminal as seen above should connect you to the new database that you just created. Also, if you run `\dt` at this point, you should see a message telling you that it did not find any relations.
 
-Now, we need to creat a password so we can not only secure the database but construct our URI string. Run the following:
+Now, we need to create a password so we can not only secure the database but construct our URI string. Run the following:
 
 ```shell
 postgres=# \password postgres
