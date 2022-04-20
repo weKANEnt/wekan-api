@@ -43,9 +43,18 @@ Now, we need to create a password so we can not only secure the database but con
 postgres=# \password postgres
 ```
 
-You should see 'Enter new password:' in the terminal now. So that we keep one uri string for the most part - let me know when you need it and I will give it to you.
+You should see 'Enter new password:' in the terminal now. So that we keep one uri string for the most part - let me know when you need it and I will give it to you. The .env file is exculded from being pushed to git for obvious security reasons. When you have finished, the terminal should let you knwo that you have done this successfully.
 
-_To be continued..._
+The configuration needed to run the next set of commands is already set up so really, you just need to run the following.in the postgres terminal..
+
+```shell
+CREATE DATABASE uwivotes;
+\c uwivotes
+```
+
+If you have run this successfully, you should see the database name at the side to be _"uwivotes"_.
+
+Then in the bash terminal or whatever terminal youhave active in your VSCode run `npm run migrate`. You should see some commands executing. Then return to your psql terminal and run the `\dt` command. You should now see a list of our four tables as designed. And there, your local database is set up and ready for use.
 
 ## Starting the Dev Server
 
