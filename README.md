@@ -10,7 +10,7 @@ Okay, so at this point you have all dependencies installed and _should_ be able 
 
 ## Creating your local database
 
-As discussed and agreed, we will be using postgres (PostgreSQL) alongside Sequelize as our ORM. Before we get to the ORM, we first need to set up our database.
+As discussed and agreed, we will be using postgres (PostgreSQL - which you will need to install) alongside Sequelize as our ORM. Before we get to the ORM, we first need to set up our database.
 
 _NB: we all will have different instances of this database and records will not sync. It is *local*_
 
