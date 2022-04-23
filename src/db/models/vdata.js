@@ -11,11 +11,29 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(users) {
       // define association here
-      this.belongsTo(users, {foreignKey: "uid"})//may be emid
+      //this.belongsTo(users, {foreignKey: "uid"})//may be emid
     }
   }
   vdata.init({
-    email: DataTypes.STRING
+    ccid: {
+      allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+    },
+    emid: {
+        type: DataTypes.INTEGER,
+        unique: true,
+        allowNull: false,
+        references: {
+          model: "users",
+          key: "uid",
+        }
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    }
   }, {
     sequelize,
     modelName: 'vdata',

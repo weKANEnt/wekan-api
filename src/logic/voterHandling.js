@@ -1,5 +1,6 @@
-const { users } = require("../db/models/users");
-const { vdata } = require("../db/models/vdata");
+// const { users } = require("../db/models/users");
+// const { vdata } = require("../db/models/vdata");
+const { users, vdata } = require("../db/models");
 // const config = require("../../../config/env");
 
 /**
@@ -8,44 +9,22 @@ const { vdata } = require("../db/models/vdata");
  * @param {string} email 
  * @returns boolean
  */
-module.exports.checkUser = async function(email){
-    if(email & email != null){
-        const user = await vdata.findOne({
+module.exports.isRegistered = async function(email){
+    if(email){
+        const voter = await vdata.findOne({
             where: {
                 email: email
             }
         });
-        if (user){
+        console.log(voter);
+        if (voter){
             return true;
         }else{
             return false;
         };
-    };
-};
-
-/**
- * Gets information for user given an email
- * @async
- * @param {string} email 
- * @returns object
- */
-module.exports.getUserInfoByEmail = async function(email){
-    if (email & email != null){
-        const user = await vdata.findOne({
-            where: {
-                email: email
-            }
-        });
-
-        const fullUser = await users.findOne({
-            where: {
-                uid: user.emid
-            }
-        });
-        return fullUser;
     }else{
-        return "Error - email does not exist";
-    };
+        return 0;
+    }
 };
 
 /**
@@ -56,12 +35,33 @@ module.exports.getUserInfoByEmail = async function(email){
  * @returns 
  */
 module.exports.updateVoteStatus = async function(uid, vStat){
-    if (uid & uid != null & uid != NaN & vStat & typeof(vStat) == 'boolean'){
+    if (uid & vStat){
         await users.upsert({
             uid: uid,
             votestatus: vStat
         });
     }else{
-        return "Error - issue with uid or vStat";
+        return 0;
     };
 };
+
+
+module.exports.hasVoted = async function(email){
+    if(email){
+        const voter = await vdata.findOne({
+            where: {
+                email: email
+            }
+        });
+
+        const voterData = await users.findOne({
+            where: {
+                uid: voter.ccid
+            }
+        });
+
+        return (voterData.votestatus);
+    }else{
+        return 0;
+    }
+}

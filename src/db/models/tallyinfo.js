@@ -11,10 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({candidateinfos}) {
       // define association here
-      this.belongsTo(candidateinfos, {foreignKey: "cid"})//may be ttid
+      //this.belongsTo(candidateinfos, {foreignKey: "cid"})//may be ttid
     }
   }
   tallyinfo.init({
+    tid: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER
+      },
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     noOfVotes: DataTypes.INTEGER

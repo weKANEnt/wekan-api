@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   candidateinfo.init({
+    cid: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER
+      },
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     position: DataTypes.STRING,

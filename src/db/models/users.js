@@ -14,7 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   users.init({
-    emid: DataTypes.INTEGER,
+    uid: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER
+      },
     OTP: DataTypes.STRING,
     voteStatus: DataTypes.BOOLEAN
   }, {
