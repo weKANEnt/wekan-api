@@ -3,6 +3,14 @@ const validate = require("../helpers/validate");
 const errorHandler = require("../helpers/errors");
 const successHandler = require("../helpers/create-success");
 
+
+/**
+ * Checks if given email is registered to vote
+ * @async
+ * @param {*} req 
+ * @param {*} res 
+ * @returns res
+ */
 module.exports.isVoterRegistered = async function(req, res){
     const {email} = req.body;
     if (!email){

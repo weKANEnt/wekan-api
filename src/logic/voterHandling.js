@@ -32,7 +32,7 @@ module.exports.isRegistered = async function(email){
  * @async
  * @param {string} uid 
  * @param {boolean} vStat 
- * @returns 
+ * @returns -
  */
 module.exports.updateVoteStatus = async function(uid, vStat){
     if (uid & vStat){
@@ -45,7 +45,12 @@ module.exports.updateVoteStatus = async function(uid, vStat){
     };
 };
 
-
+/**
+ * Checks if given voter's vote status
+ * @async
+ * @param {*} email 
+ * @returns object
+ */
 module.exports.hasVoted = async function(email){
     if(email){
         const voter = await vdata.findOne({
