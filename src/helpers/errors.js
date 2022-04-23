@@ -19,4 +19,11 @@ module.exports.serverError = errorHandler(
     "Sever Error",
     "Sepcific error unknown",
     "wek-se"
+);
+
+module.exports.emptyParam = errorHandler(
+    false,
+    "Empty Parameter",
+    "A parameter is empty or not given",
+    "wek-se"
 )

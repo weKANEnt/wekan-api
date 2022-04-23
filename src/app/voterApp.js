@@ -14,7 +14,7 @@ const successHandler = require("../helpers/create-success");
 module.exports.isVoterRegistered = async function(req, res){
     const {email} = req.body;
     if (!email){
-        res.status(503).json({message: 'Invalid email given'});
+        res.status(503).json(errorHandler.emptyParam);
         return;
     }
 
@@ -27,10 +27,7 @@ module.exports.isVoterRegistered = async function(req, res){
                 res.status(401).json(errorHandler.emailUnregistered);
             }else if (vote === true){
                 res.status(200).json(successHandler
-                    (true, 
-                    "Email is registered to vote"
-                    )
-                );
+                    (true, "Email is registered to vote"));
             }else{
                 res.status(500).json(errorHandler.serverError);
             }
