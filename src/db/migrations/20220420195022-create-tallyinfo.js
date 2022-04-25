@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('tallyinfos', {
+    await queryInterface.createTable("tallyinfos", {
       tid: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       ttid: {
         type: Sequelize.INTEGER,
@@ -15,24 +15,24 @@ module.exports = {
         references: {
           model: "candidateinfos",
           key: "cid",
-        }
+        },
       },
       noOfVotes: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: 0
+        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('tallyinfos');
-  }
+    await queryInterface.dropTable("tallyinfos");
+  },
 };

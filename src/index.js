@@ -7,7 +7,7 @@ const passport = require("passport");
 
 //Router imports
 const voters = require("./routes/voterRoute");
-const admin = require("./routes/adminRoute")
+const admin = require("./routes/adminRoute");
 
 //
 const app = express();

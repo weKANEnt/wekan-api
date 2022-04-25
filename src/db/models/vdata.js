@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class vdata extends Model {
     /**
@@ -14,29 +12,32 @@ module.exports = (sequelize, DataTypes) => {
       //this.belongsTo(users, {foreignKey: "uid"})//may be emid
     }
   }
-  vdata.init({
-    ccid: {
-      allowNull: false,
+  vdata.init(
+    {
+      ccid: {
+        allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER,
-    },
-    emid: {
+      },
+      emid: {
         type: DataTypes.INTEGER,
         unique: true,
         allowNull: false,
         references: {
           model: "users",
           key: "uid",
-        }
+        },
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    {
+      sequelize,
+      modelName: "vdata",
     }
-  }, {
-    sequelize,
-    modelName: 'vdata',
-  });
+  );
   return vdata;
 };

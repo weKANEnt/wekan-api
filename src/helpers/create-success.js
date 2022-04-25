@@ -1,6 +1,6 @@
-module.exports = function (success,message) {
+module.exports = function (success, message) {
   return {
     success: success,
-    message: message
+    message: message,
   };
 };

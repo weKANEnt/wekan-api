@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('vdata', {
+    await queryInterface.createTable("vdata", {
       ccid: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       emid: {
         type: Sequelize.INTEGER,
@@ -15,24 +15,24 @@ module.exports = {
         references: {
           model: "users",
           key: "uid",
-        }
+        },
       },
       email: {
         type: Sequelize.STRING(255),
         unique: true,
-        allowNull: false
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('vdata');
-  }
+    await queryInterface.dropTable("vdata");
+  },
 };

@@ -6,11 +6,12 @@ const Sequelize = require("sequelize");
 const basename = path.basename(__filename);
 const config = require("../../../config/env");
 const db = {};
-const sequelize = new Sequelize('uwivotes', 'postgres', 'aLowbrid', {
-  dialect: 'postgres',
+const sequelize = new Sequelize("uwivotes", "postgres", "aLowbrid", {
+  dialect: "postgres",
   dialectOptions: {
     // Your pg options here
-  }});
+  },
+});
 
 fs.readdirSync(__dirname)
   .filter((file) => {
