@@ -15,7 +15,6 @@ module.exports.isVoterRegistered = async function(req, res){
     const {email} = req.body;
     if (!email){
         res.status(503).json(errorHandler.emptyParam);
-        return;
     }
 
     const vEmail = validate.valEmail(email);
@@ -32,7 +31,7 @@ module.exports.isVoterRegistered = async function(req, res){
                 res.status(500).json(errorHandler.serverError);
             }
         }catch(err){
-            res.status(500).json(errorHandler.serverError);
+            res.status(500).json(errorHandler.queryError);
         }
     } else if (vEmail!= true){
         res.status(401).json(errorHandler.emailValidation);
@@ -40,3 +39,4 @@ module.exports.isVoterRegistered = async function(req, res){
         res.status(500).json(errorHandler.serverError);
     }
 };
+

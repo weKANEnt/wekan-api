@@ -1,5 +1,3 @@
-// const { users } = require("../db/models/users");
-// const { vdata } = require("../db/models/vdata");
 const { users, vdata } = require("../db/models");
 // const config = require("../../../config/env");
 
@@ -16,7 +14,6 @@ module.exports.isRegistered = async function(email){
                 email: email
             }
         });
-        console.log(voter);
         if (voter){
             return true;
         }else{
@@ -34,10 +31,10 @@ module.exports.isRegistered = async function(email){
  * @param {boolean} vStat 
  * @returns -
  */
-module.exports.updateVoteStatus = async function(uid, vStat){
-    if (uid & vStat){
+module.exports.updateVoteStatus = async function(id, vStat){
+    if (id & vStat){
         await users.upsert({
-            uid: uid,
+            uid: id,
             votestatus: vStat
         });
     }else{
@@ -51,22 +48,48 @@ module.exports.updateVoteStatus = async function(uid, vStat){
  * @param {*} email 
  * @returns object
  */
-module.exports.hasVoted = async function(email){
-    if(email){
+module.exports.hasVoted = async function(id){
+    if(id){
         const voter = await vdata.findOne({
             where: {
-                email: email
+                emid: id
             }
         });
 
         const voterData = await users.findOne({
             where: {
-                uid: voter.ccid
+                uid: voter.emid
             }
         });
 
         return (voterData.votestatus);
     }else{
         return 0;
+    };
+};
+
+/**
+ * 
+ */
+module.exports.insertOTP = async function (id, otp){
+    if(id & otp){
+        const voter = await vdata.findOne({
+            where: {
+                emid: id
+            }
+        });
+
+        const voterData = await users.findOne({
+            where: {
+                uid: voter.emid
+            }
+        });
+
+        if(voterData){
+            await users.upsert({
+                uid: id,
+                OTP: otp
+            });
+        }
     }
 }
