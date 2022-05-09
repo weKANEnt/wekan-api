@@ -1,3 +1,4 @@
+const TypeOverrides = require("pg/lib/type-overrides");
 const { users, vdata } = require("../db/models");
 // const config = require("../../../config/env");
 
@@ -71,11 +72,11 @@ module.exports.hasVoted = async function (id) {
 /**
  *
  */
-module.exports.insertOTP = async function (id, otp) {
-  if (id & otp) {
+module.exports.insertOTP = async function (email, otp) {
+  if (email != undefined & otp != undefined) {
     const voter = await vdata.findOne({
       where: {
-        emid: id,
+        email: email,
       },
     });
 
@@ -87,9 +88,35 @@ module.exports.insertOTP = async function (id, otp) {
 
     if (voterData) {
       await users.upsert({
-        uid: id,
+        uid: voterData.uid,
         OTP: otp,
       });
+
+      return true;
+    }else{
+      return false;
     }
+  }else {
+    return 1;
   }
 };
+
+/**
+ * Function that checks if a generated OTP already exists for any voter
+ * @param {*} otp 
+ * @returns 
+ */
+module.exports.doesOTPExist = async function (otp){
+  if(otp){
+    const voter = await users.findOne({
+      where: {
+        OTP: otp
+      },
+    });
+    if (voter){
+      return true ;
+    }else{
+      return false;
+    }
+  }return 1;
+}
