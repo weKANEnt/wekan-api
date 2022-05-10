@@ -38,7 +38,6 @@ module.exports.loginAdmin = async function (req, res) {
       if (!adminn) {
         res.status(401).json(errorHandler.noAdmins);
       } else if (adminn) {
-        console.log(vEmail);
         if (bcrypt.compareSync(password, adminn.password)) {
           const token = jwt.sign(
             {
@@ -77,7 +76,7 @@ module.exports.registerVoter = async function (req, res) {
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
-    const { email,hall } = req.body;
+    const { email, hall, faculty } = req.body
 
     if (payload && payload.id) {
       const adminn = await admin.findAdminById(payload.id);
@@ -85,19 +84,18 @@ module.exports.registerVoter = async function (req, res) {
         res.status(401).json(errorHandler.noAdmins);
       } else if (adminn) {
         if (!email) {
-          res.status(503).json(errorHandler.emptyParam);
+          res.status(400).json(errorHandler.emptyParam);
         } else {
           const vEmail = validate.valEmail(email);
 
           if (vEmail) {
             try {
-              const addVoter = await admin.addVoter(email, hall);
-              console.log(addVoter);
-              if (addVoter === 1) {
+              const addVoter = await admin.addVoter(email, hall, faculty);
+              if (addVoter === 0) {
                 res
                   .status(200)
-                  .json(successHandler(true, "Voter email added successfully"));
-              } else if (addVoter === 0) {
+                  .json(successHandler(true, "Voter added successfully"));
+              } else if (addVoter === 1) {
                 res.status(422).json(errorHandler.causingDuplicate);
               } else if (addVoter === 2) {
                 res.status(500).json(errorHandler.emptyParam);
@@ -122,13 +120,54 @@ module.exports.registerVoter = async function (req, res) {
   }
 };
 
-// module.exports.addHallCandidate = async function (req, res) {
-//     if (req.headers === null || req.headers === "") {
-//     res.status(401).json(errorHandler.cannotAccess);
-//   } else {
+module.exports.addCandidate = async function (req, res) {
+    if (req.headers === null || req.headers === "") {
+    res.status(401).json(errorHandler.cannotAccess);
+  } else {
+    const token = getToken(req.headers);
+    const payload = await jwt.verify(token, config.jwt_key);
+    const { firstName, lastName, email, hall, faculty, position, about }= req.body
+    if (payload && payload.id) {
+      const adminn = await admin.findAdminById(payload.id);
+      if (!adminn) {
+        res.status(401).json(errorHandler.noAdmins);
+      }else if (adminn){
+        if (! (firstName && lastName && email && hall && faculty && position && about)) {
+          res.status(400).json(errorHandler.emptyFields);
+        } else {
+          const vEmail = validate.valEmail(email);
+          const vFname = validate.valName(firstName);
+          const vLname = validate.valName(lastName);
 
-//   }
-// }
+          if (vEmail && vFname && vLname){
+            console.log("here");
+            try{
+              console.log("here2");
+              const addCandidate = await admin.addCandidate(firstName, lastName, email, hall, faculty, position, about);
+              console.log(addCandidate)
+              if (addCandidate === 0) {
+                res
+                  .status(200)
+                  .json(successHandler(true, "Candidate added successfully"));
+              } else if (addCandidate === 1) {
+                res.status(422).json(errorHandler.causingDuplicate);
+              } else if (addCandidate === 2) {
+                res.status(500).json(errorHandler.emptyParam);
+              } else {
+                res.status(500).json(errorHandler.serverError);
+              }
+            }catch(err){
+              res.status(500).json(err);
+            }
+          }else if (!vEmail || !vFname || !vLname){
+            res.status(401).json(errorHandler.genValidation);
+          }else {
+            res.status(500).json(errorHandler.serverError);
+          }
+      }
+    }
+  }}
+}
 
 
 

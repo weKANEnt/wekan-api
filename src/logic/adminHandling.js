@@ -1,4 +1,4 @@
-const { users, vdata, admin, candidateinfo } = require("../db/models");
+const { users, vdata, admin, candidates, halls, faculties } = require("../db/models");
 
 /**
  *
@@ -44,33 +44,90 @@ module.exports.findAdminById = async function (aid) {
  * @param {*} email
  * @returns
  */
-module.exports.addVoter = async function (email, hall) {
+module.exports.addVoter = async function (email, hid, fid) {
   if (email) {
     const voter = await vdata.findOne({
       where: {
         email: email,
       },
     });
+
     let newVoter;
+    let hall;
+    let faculty;
+
     if (!voter) {
       newVoter = await users.create({
         votestatus: false,
       });
+      
+      hall = await halls.findOne({
+        where: {
+          hid: hid,
+        }
+      });
+
+      faculty = await faculties.findOne({
+        where: {
+          fid: fid,
+        }
+      });
+
       newVoter = await vdata.create({
         emid: newVoter.uid,
         email: email,
-        hall: hall
+        hall: hall.hallName,
+        faculty: faculty.facultyName
       });
-      return 1;
-    } else {
       return 0;
+    } else {
+      return 1;
     }
   }
   return 2;
 };
 
-// module.exports.addCandidate = async function (fname, lname, hall, faculty, position, about){
-//   if (fname){
+module.exports.addCandidate = async function (fname, lname, email, hid, fid, position, about){
+  if (email) {
+    console.log(email)
+    const candidate = await candidates.findOne({
+      where: {
+        email: email,
+      },
+      attributes: ['cid', 'email', 'hall', 'faculty']
+    });
 
-//   }
-// };
+    let newCandidate;
+    let hall;
+    let faculty;
+
+    if (!candidate) {
+      
+      hall = await halls.findOne({
+        where: {
+          hid: hid,
+        }
+      });
+
+      faculty = await faculties.findOne({
+        where: {
+          fid: fid,
+        }
+      });
+      console.log(faculty);
+      newCandidate = await candidates.create({
+      firstName: fname,
+      lastName: lname,
+      email: email,
+      hall: hall.hallName,
+      faculty: faculty.facultyName,
+      position: position,
+      about: about
+    });
+    return 0;
+    }else {
+      return 1;
+    }
+  }
+  return 2;
+};

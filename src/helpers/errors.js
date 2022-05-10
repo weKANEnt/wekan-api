@@ -14,6 +14,13 @@ module.exports.emailValidation = errorHandler(
   "wek-val"
 );
 
+module.exports.generalValidation = errorHandler(
+  false,
+  "General Validation Error",
+  "A given field is not in required format",
+  "wek-val"
+);
+
 module.exports.otpValidation = errorHandler(
   false,
   "Invalid OTP",
