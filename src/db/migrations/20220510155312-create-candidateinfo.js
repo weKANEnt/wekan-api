@@ -1,12 +1,21 @@
 "use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("candidateinfos", {
+    await queryInterface.createTable("candidateinfo", {
       cid: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
+      },
+      vdid: {
+        type: Sequelize.INTEGER,
+        unique: true,
+        allowNull: false,
+        references: {
+          model: "vdata",
+          key: "ccid",
+        },
       },
       firstName: {
         type: Sequelize.STRING(255),
@@ -32,6 +41,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("candidateinfos");
+    await queryInterface.dropTable("candidateinfo");
   },
 };

@@ -1,4 +1,4 @@
-const { users, vdata, admin } = require("../db/models");
+const { users, vdata, admin, candidateinfo } = require("../db/models");
 
 /**
  *
@@ -44,7 +44,7 @@ module.exports.findAdminById = async function (aid) {
  * @param {*} email
  * @returns
  */
-module.exports.addVoter = async function (email) {
+module.exports.addVoter = async function (email, hall) {
   if (email) {
     const voter = await vdata.findOne({
       where: {
@@ -59,6 +59,7 @@ module.exports.addVoter = async function (email) {
       newVoter = await vdata.create({
         emid: newVoter.uid,
         email: email,
+        hall: hall
       });
       return 1;
     } else {
@@ -67,3 +68,9 @@ module.exports.addVoter = async function (email) {
   }
   return 2;
 };
+
+// module.exports.addCandidate = async function (fname, lname, hall, faculty, position, about){
+//   if (fname){
+
+//   }
+// };

@@ -22,6 +22,14 @@ module.exports = {
         unique: true,
         allowNull: false,
       },
+      hall:{
+        type: Sequelize.STRING(255),
+        allowNull: false,
+      },
+      faculty:{
+        type: Sequelize.STRING(255),
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

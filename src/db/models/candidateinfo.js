@@ -19,6 +19,15 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
+      vdid: {
+        type: DataTypes.INTEGER,
+        unique: true,
+        allowNull: false,
+        references: {
+          model: "vdata",
+          key: "ccid",
+        },
+      },
       firstName: DataTypes.STRING,
       lastName: DataTypes.STRING,
       position: DataTypes.STRING,

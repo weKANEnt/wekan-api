@@ -77,7 +77,7 @@ module.exports.registerVoter = async function (req, res) {
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
-    const { email } = req.body;
+    const { email,hall } = req.body;
 
     if (payload && payload.id) {
       const adminn = await admin.findAdminById(payload.id);
@@ -91,7 +91,7 @@ module.exports.registerVoter = async function (req, res) {
 
           if (vEmail) {
             try {
-              const addVoter = await admin.addVoter(email);
+              const addVoter = await admin.addVoter(email, hall);
               console.log(addVoter);
               if (addVoter === 1) {
                 res
@@ -121,3 +121,16 @@ module.exports.registerVoter = async function (req, res) {
     }
   }
 };
+
+// module.exports.addHallCandidate = async function (req, res) {
+//     if (req.headers === null || req.headers === "") {
+//     res.status(401).json(errorHandler.cannotAccess);
+//   } else {
+
+//   }
+// }
+
+
+
+
+//module.exports.addNewPosition
