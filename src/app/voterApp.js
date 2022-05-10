@@ -77,7 +77,7 @@ module.exports.generateOTP = async function (req, res) {
           res.status(422).json(errorHandler.queryError);
         }
       } catch (err) {
-        res.status(500).json(errorHandler.serverError);
+        res.status(500).json(errorHandler.emailUnregistered);
       }
     } else if (isOTP === true) {
       res.status(422).json(errorHandler.causingDuplicate);
