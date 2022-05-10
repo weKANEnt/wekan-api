@@ -73,7 +73,7 @@ module.exports.hasVoted = async function (id) {
  *
  */
 module.exports.insertOTP = async function (email, otp) {
-  if (email != undefined & otp != undefined) {
+  if ((email != undefined) & (otp != undefined)) {
     const voter = await vdata.findOne({
       where: {
         email: email,
@@ -93,30 +93,60 @@ module.exports.insertOTP = async function (email, otp) {
       });
 
       return true;
-    }else{
+    } else {
       return false;
     }
-  }else {
+  } else {
     return 1;
   }
 };
 
 /**
  * Function that checks if a generated OTP already exists for any voter
- * @param {*} otp 
- * @returns 
+ * @param {*} otp
+ * @returns
  */
-module.exports.doesOTPExist = async function (otp){
-  if(otp){
+module.exports.doesOTPExist = async function (otp) {
+  if (otp) {
     const voter = await users.findOne({
       where: {
-        OTP: otp
+        OTP: otp,
       },
     });
-    if (voter){
-      return true ;
-    }else{
+    if (voter) {
+      return true;
+    } else {
       return false;
     }
-  }return 1;
-}
+  }
+  return 1;
+};
+
+/**
+ * Function that checks if the given emaila nd otp exist for the same record
+ * @param {*} email
+ * @param {*} otp
+ * @returns
+ */
+module.exports.doesOTPMatchEntry = async function (email, otp) {
+  if (email) {
+    const voter = await vdata.findOne({
+      where: {
+        email: email,
+      },
+    });
+
+    const voterData = await users.findOne({
+      where: {
+        uid: voter.emid,
+      },
+    });
+
+    if (voterData.OTP === otp) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  return 1;
+};

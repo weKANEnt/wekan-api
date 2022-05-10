@@ -1,6 +1,7 @@
 const uname = /^[0-9a-zA-Z]+$/;
 const gname = /^[A-Za-z.\s-]+$/;
 const emailR = /.{1,}@[^.]{1,}/;
+const otpR = /^[A-Z0-9]{6}/;
 
 /**
  * Username server side validation
@@ -67,6 +68,24 @@ module.exports.valEmail = function (email) {
     return false;
   } else {
     if (!email.match(emailR)) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+};
+
+/**
+ * OTP Sever side validation
+ * @author Naomi Benjamin
+ * @param {*} otp
+ * @returns
+ */
+module.exports.valOTP = function (otp) {
+  if (otp === null || otp === "") {
+    return false;
+  } else {
+    if (!otp.match(otpR)) {
       return false;
     } else {
       return true;

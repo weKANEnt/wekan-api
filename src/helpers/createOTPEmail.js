@@ -9,7 +9,8 @@ module.exports = function (sender, receiver, otp) {
     from: sender,
     to: receiver,
     subject: "Welcome to UWIVotes",
-    html: `<h3>Hello ${receiver}, Welcome to UWIVotes</h3>` 
-            + `<p>Heres your OPT: ${otp}. Enter it on the UWIVotes Website to get your ballot.`,
+    html:
+      `<h3>Hello ${receiver}, Welcome to UWIVotes</h3>` +
+      `<p>Heres your OPT: ${otp}. Enter it on the UWIVotes Website to get your ballot.`,
   };
 };

@@ -14,6 +14,13 @@ module.exports.emailValidation = errorHandler(
   "wek-val"
 );
 
+module.exports.otpValidation = errorHandler(
+  false,
+  "Invalid OTP",
+  "Entered OTP is not in required format",
+  "wek-val"
+);
+
 module.exports.serverError = errorHandler(
   false,
   "Sever Error",
@@ -25,6 +32,20 @@ module.exports.emptyParam = errorHandler(
   false,
   "Empty Parameter",
   "A parameter is empty or not given",
+  "wek-se"
+);
+
+module.exports.emptyBody = errorHandler(
+  false,
+  "Empty Body",
+  "The body of the request has not been detected",
+  "wek-se"
+);
+
+module.exports.missingField = errorHandler(
+  false,
+  "Empty Field",
+  "A field is empty or not given",
   "wek-se"
 );
 
@@ -61,4 +82,11 @@ module.exports.cannotAccess = errorHandler(
   "User Unauthorized",
   "Request cannopt be handled as user is unauthorized",
   "wek-val"
+);
+
+module.exports.incorrectOTP = errorHandler(
+  false,
+  "OTP Unmatched",
+  "The given OTP does not match the OTP generated for the given email",
+  "wek-nf"
 );

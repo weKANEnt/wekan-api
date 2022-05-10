@@ -1,7 +1,7 @@
 {
   "client": "Thunder Client",
   "collectionName": "weKan",
-  "dateExported": "2022-04-23T05:15:19.757Z",
+  "dateExported": "2022-05-10T14:48:32.893Z",
   "version": "1.1",
   "folders": [],
   "requests": [
@@ -14,12 +14,93 @@
       "method": "GET",
       "sortNum": 10000,
       "created": "2022-04-23T04:47:01.500Z",
-      "modified": "2022-04-23T04:47:01.500Z",
+      "modified": "2022-04-25T01:04:31.698Z",
       "headers": [],
       "params": [],
       "body": {
         "type": "json",
         "raw": "{\n    \"email\": \"example@example.com\"\n}",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "50f5b3af-b6fa-4407-a866-1d818ad2630c",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Register Voter",
+      "url": "http://localhost:8080/uwivotes/admin/addVoter",
+      "method": "POST",
+      "sortNum": 20000,
+      "created": "2022-04-25T00:58:13.490Z",
+      "modified": "2022-05-09T16:43:15.699Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJub2JlbmphbWluMTlAZ21haWwuY29tIiwiaWF0IjoxNjUyMTE0NTgwLCJleHAiOjE2NTIxMTgxODB9.gIZHJ9SXeI19c5NkeEcHVyUSYORpfGFLjvaCBXs6ezY"
+        }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n    \"email\": \"naomibenjamin93@gmail.com\"\n}",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "0c476375-45e0-4f07-8efa-cd1e4deac203",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Admin Login",
+      "url": "http://localhost:8080/uwivotes/admin/login",
+      "method": "POST",
+      "sortNum": 30000,
+      "created": "2022-04-25T02:52:07.976Z",
+      "modified": "2022-05-09T15:58:38.447Z",
+      "headers": [],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n    \"email\": \"nobenjamin19@gmail.com\",\n    \"password\": \"weKAN\"\n}",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "03289a12-31ba-4dd4-81ba-f593372018ea",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Generate OTP",
+      "url": "http://localhost:8080/uwivotes/votes/OTP",
+      "method": "POST",
+      "sortNum": 40000,
+      "created": "2022-05-09T16:01:27.196Z",
+      "modified": "2022-05-10T14:35:11.821Z",
+      "headers": [],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n    \"email\": \"naomibenjamin93@gmail.com\"\n}",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "3705dd65-5d10-4c37-8c92-421bc23993cd",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Does OTP Match",
+      "url": "http://localhost:8080/uwivotes/votes/OTP",
+      "method": "GET",
+      "sortNum": 50000,
+      "created": "2022-05-10T14:46:37.779Z",
+      "modified": "2022-05-10T14:46:37.779Z",
+      "headers": [],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n    \"otp\": \"KKJNEQ\",\n    \"email\": \"naomibenjamin93@gmail.com\"\n}",
         "form": []
       },
       "tests": []
