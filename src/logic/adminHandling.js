@@ -3,7 +3,7 @@ const { users, vdata, admin, candidates, halls, faculties } = require("../db/mod
 /**
  *
  * @param {*} email
- * @returns
+ * @returns the admin  object if the admin exists
  */
 module.exports.findAdmin = async function (email) {
   if (email) {
@@ -42,7 +42,7 @@ module.exports.findAdminById = async function (aid) {
 /**
  * Adds voter to the list of voters
  * @param {*} email
- * @returns
+ * @returns 0 if  the insert was successful
  */
 module.exports.addVoter = async function (email, hid, fid) {
   if (email) {
@@ -87,6 +87,17 @@ module.exports.addVoter = async function (email, hid, fid) {
   return 2;
 };
 
+/**
+ * Adds a candidate - someone who is up for a position in the election
+ * @param {*} fname 
+ * @param {*} lname 
+ * @param {*} email 
+ * @param {*} hid 
+ * @param {*} fid 
+ * @param {*} position 
+ * @param {*} about 
+ * @returns 0 if the insert was successful
+ */
 module.exports.addCandidate = async function (fname, lname, email, hid, fid, position, about){
   if (email) {
     console.log(email)
@@ -97,7 +108,6 @@ module.exports.addCandidate = async function (fname, lname, email, hid, fid, pos
       attributes: ['cid', 'email', 'hall', 'faculty']
     });
 
-    let newCandidate;
     let hall;
     let faculty;
 
@@ -115,7 +125,7 @@ module.exports.addCandidate = async function (fname, lname, email, hid, fid, pos
         }
       });
       console.log(faculty);
-      newCandidate = await candidates.create({
+      const newCandidate = await candidates.create({
       firstName: fname,
       lastName: lname,
       email: email,
