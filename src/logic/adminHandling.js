@@ -98,7 +98,7 @@ module.exports.addVoter = async function (email, hid, fid) {
  * @param {*} about 
  * @returns 0 if the insert was successful
  */
-module.exports.addCandidate = async function (fname, lname, email, hid, fid, position, about){
+module.exports.addCandidate = async function (fname, lname, email, hid, fid, pid, about){
   if (email) {
     console.log(email)
     const candidate = await candidates.findOne({
@@ -110,6 +110,7 @@ module.exports.addCandidate = async function (fname, lname, email, hid, fid, pos
 
     let hall;
     let faculty;
+    let position;
 
     if (!candidate) {
       
@@ -124,6 +125,13 @@ module.exports.addCandidate = async function (fname, lname, email, hid, fid, pos
           fid: fid,
         }
       });
+
+      position = await positions.findOne({
+        where: {
+          pid: pid,
+        }
+      });
+
       console.log(faculty);
       const newCandidate = await candidates.create({
       firstName: fname,
@@ -131,7 +139,7 @@ module.exports.addCandidate = async function (fname, lname, email, hid, fid, pos
       email: email,
       hall: hall.hallName,
       faculty: faculty.facultyName,
-      position: position,
+      position: position.positionTitle,
       about: about
     });
     return 0;

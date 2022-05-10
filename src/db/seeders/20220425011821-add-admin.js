@@ -6,9 +6,9 @@ module.exports = {
     const hash = await bcrypt.hash("weKAN", 10);
     await queryInterface.bulkInsert("admins", [
       {
-        firstName: "Naomi",
-        lastName: "Benjamin",
-        email: "nobenjamin19@gmail.com",
+        firstName: "Kayvia",
+        lastName: "Harriott",
+        email: "kayvia.harriott@mymona.uwi.edu",
         password: hash,
         OTP: "ABC123",
         isValidated: true,
