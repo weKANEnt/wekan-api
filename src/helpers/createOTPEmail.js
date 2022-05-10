@@ -6,11 +6,12 @@
  */
 module.exports = function (sender, receiver, otp) {
   return {
-    from: sender,
+    from: `UWIVotes ${sender}`,
     to: receiver,
     subject: "Welcome to UWIVotes",
     html:
-      `<h3>Hello ${receiver}, Welcome to UWIVotes</h3>` +
-      `<p>Heres your OPT: ${otp}. Enter it on the UWIVotes Website to get your ballot.`,
+      `<h2>Hello ${receiver}, Welcome to UWIVotes</h2>` +
+      `<h4>Heres your OPT: ${otp}.</h4>` + 
+      `<p>Enter it on the UWIVotes Website to get your ballot.</p>`,
   };
 };

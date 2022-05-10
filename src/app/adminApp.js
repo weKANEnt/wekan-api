@@ -189,6 +189,40 @@ module.exports.getAllFaculties = async function (req, res) {
 };
 
 /**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+module.exports.getAllPositions = async function (req, res) {
+  if (req.headers === null || req.headers === "") {
+    res.status(401).json(errorHandler.cannotAccess);
+  } else {
+    const token = getToken(req.headers);
+    const payload = await jwt.verify(token, config.jwt_key);
+    
+    if (payload && payload.id) {
+      try {
+        const adminn = await admin.findAdminById(payload.id);
+        if (!adminn) {
+          res.status(401).json(errorHandler.noAdmins);
+        }else if (adminn){
+          const allPositions = await admin.getAllPositions();
+          if(allPositions){
+            res
+            .status(200)
+            .json(successHandler(true, allPositions));
+          }else{
+            res.status(500).json(errorHandler.serverError);
+          }
+        }
+      }catch(err){
+        res.status(500).json(errorHandler.serverError);
+      }
+    }
+  }
+};
+
+/**
  * Function to add a person who is up for a position in the election - aka a candidate
  * @param {*} req 
  * @param {*} res 

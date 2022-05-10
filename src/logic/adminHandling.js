@@ -1,4 +1,4 @@
-const { users, vdata, admin, candidates, halls, faculties } = require("../db/models");
+const { users, vdata, admin, candidates, halls, faculties, positions } = require("../db/models");
 
 /**
  *
@@ -162,4 +162,15 @@ module.exports.getAllFaculties = async function(){
     attributes: ['fid', 'facultyName']
   })
   return allFaculties;
+}
+
+/**
+ * Gets all positions
+ * @returns 
+ */
+module.exports.getAllPositions = async function(){
+  const allPositions = await positions.findAll({
+    attributes: ['pid', 'positionTitle']
+  })
+  return allPositions;
 }

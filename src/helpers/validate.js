@@ -1,6 +1,6 @@
 const uname = /^[0-9a-zA-Z]+$/;
 const gname = /^[A-Za-z.\s-]+$/;
-const emailR = /.{1,}@[^.]{1,}/;
+const emailR = /.{1,}@mymona.uwi.edu$/;
 const otpR = /^[A-Z0-9]{6}/;
 
 /**
