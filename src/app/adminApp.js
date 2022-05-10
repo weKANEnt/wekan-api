@@ -120,6 +120,79 @@ module.exports.registerVoter = async function (req, res) {
   }
 };
 
+/**
+ * Function to return all halls in the UWI
+ * @param {*} req 
+ * @param {*} res 
+ */
+module.exports.getAllHalls = async function (req, res) {
+  if (req.headers === null || req.headers === "") {
+    res.status(401).json(errorHandler.cannotAccess);
+  } else {
+    const token = getToken(req.headers);
+    const payload = await jwt.verify(token, config.jwt_key);
+    
+    if (payload && payload.id) {
+      try {
+        const adminn = await admin.findAdminById(payload.id);
+        if (!adminn) {
+          res.status(401).json(errorHandler.noAdmins);
+        }else if (adminn){
+          const allHalls = await admin.getAllHalls();
+          if(allHalls){
+            res
+            .status(200)
+            .json(successHandler(true, allHalls));
+          }else{
+            res.status(500).json(errorHandler.serverError);
+          }
+        }
+      }catch(err){
+        res.status(500).json(errorHandler.serverError);
+      }
+    }
+  }
+};
+
+/**
+ * Function to return all faculties in the UWI
+ * @param {*} req 
+ * @param {*} res 
+ */
+module.exports.getAllFaculties = async function (req, res) {
+  if (req.headers === null || req.headers === "") {
+    res.status(401).json(errorHandler.cannotAccess);
+  } else {
+    const token = getToken(req.headers);
+    const payload = await jwt.verify(token, config.jwt_key);
+    
+    if (payload && payload.id) {
+      try {
+        const adminn = await admin.findAdminById(payload.id);
+        if (!adminn) {
+          res.status(401).json(errorHandler.noAdmins);
+        }else if (adminn){
+          const allFaculties = await admin.getAllFaculties();
+          if(allFaculties){
+            res
+            .status(200)
+            .json(successHandler(true, allFaculties));
+          }else{
+            res.status(500).json(errorHandler.serverError);
+          }
+        }
+      }catch(err){
+        res.status(500).json(errorHandler.serverError);
+      }
+    }
+  }
+};
+
+/**
+ * Function to add a person who is up for a position in the election - aka a candidate
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.addCandidate = async function (req, res) {
     if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
@@ -140,11 +213,8 @@ module.exports.addCandidate = async function (req, res) {
           const vLname = validate.valName(lastName);
 
           if (vEmail && vFname && vLname){
-            console.log("here");
             try{
-              console.log("here2");
               const addCandidate = await admin.addCandidate(firstName, lastName, email, hall, faculty, position, about);
-              console.log(addCandidate)
               if (addCandidate === 0) {
                 res
                   .status(200)
@@ -157,7 +227,7 @@ module.exports.addCandidate = async function (req, res) {
                 res.status(500).json(errorHandler.serverError);
               }
             }catch(err){
-              res.status(500).json(err);
+              res.status(500).json(errorHandler.queryError);
             }
           }else if (!vEmail || !vFname || !vLname){
             res.status(401).json(errorHandler.genValidation);
@@ -167,9 +237,4 @@ module.exports.addCandidate = async function (req, res) {
       }
     }
   }}
-}
-
-
-
-
-//module.exports.addNewPosition
+};

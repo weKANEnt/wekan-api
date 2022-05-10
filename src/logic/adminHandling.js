@@ -141,3 +141,25 @@ module.exports.addCandidate = async function (fname, lname, email, hid, fid, pos
   }
   return 2;
 };
+
+/**
+ * Gets all student halls
+ * @returns
+ */
+module.exports.getAllHalls = async function(){
+  const allHalls = await halls.findAll({
+    attributes: ['hid', 'hallName']
+  })
+  return allHalls;
+}
+
+/**
+ * Gets all faculties
+ * @returns 
+ */
+module.exports.getAllFaculties = async function(){
+  const allFaculties = await faculties.findAll({
+    attributes: ['fid', 'facultyName']
+  })
+  return allFaculties;
+}
