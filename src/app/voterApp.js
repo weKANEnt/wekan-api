@@ -55,6 +55,7 @@ module.exports.isVoterRegistered = async function (req, res) {
 
 /**
  * Function returns a unique OTP for a user to access their ballot
+ * Need to add a check to see if the user has already voted
  * @param {*} req
  * @param {*} res
  */
