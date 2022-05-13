@@ -13,6 +13,7 @@ const sequelize = new Sequelize("uwivotes", "postgres", "aLowbrid", {
   },
 });
 
+
 fs.readdirSync(__dirname)
   .filter((file) => {
     return (

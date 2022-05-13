@@ -1,3 +1,4 @@
 node_modules/*
 .env
 src/csvs/Test.csv
+src/db/models/index.js
