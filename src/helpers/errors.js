@@ -97,3 +97,12 @@ module.exports.incorrectOTP = errorHandler(
   "The given OTP does not match the OTP generated for the given email",
   "wek-nf"
 );
+
+module.exports.cannotAddCandidate = errorHandler(
+  false,
+  "Candidate Insert Aborted",
+  "All candidates may have not been added due to empty fields or duplicate entry attempts",
+  "wek-ci"
+);
+
+

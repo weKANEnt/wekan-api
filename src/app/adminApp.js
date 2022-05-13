@@ -223,7 +223,7 @@ module.exports.getAllPositions = async function (req, res) {
 };
 
 /**
- * Function to add a person who is up for a position in the election - aka a candidate
+ * Function to add a people who are up for a position in the election - aka a candidates
  * @param {*} req 
  * @param {*} res 
  */
@@ -233,33 +233,28 @@ module.exports.addCandidate = async function (req, res) {
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
-    const { firstName, lastName, email, hall, faculty, position, about }= req.body
+    //const { firstName, lastName, email, hall, faculty, position, about }= req.body
+    const {candidates} = req.body
     if (payload && payload.id) {
       const adminn = await admin.findAdminById(payload.id);
       if (!adminn) {
         res.status(401).json(errorHandler.noAdmins);
       }else if (adminn){
-        if (! (firstName && lastName && email && hall && faculty && position && about)) {
+        for (let c = 0; c < candidates.length; c++) {
+          if (! (candidates[c].firstName && candidates[c].lastName && candidates[c].email && candidates[c].hall && candidates[c].faculty && candidates[c].position && candidates[c].about)) {
           res.status(400).json(errorHandler.emptyFields);
         } else {
-          const vEmail = validate.valEmail(email);
-          const vFname = validate.valName(firstName);
-          const vLname = validate.valName(lastName);
+          const vEmail = validate.valEmail(candidates[c].email);
+          const vFname = validate.valName(candidates[c].firstName);
+          const vLname = validate.valName(candidates[c].lastName);
 
+          var addCandidate;
+          var addSum = 0;
           if (vEmail && vFname && vLname){
             try{
-              const addCandidate = await admin.addCandidate(firstName, lastName, email, hall, faculty, position, about);
-              if (addCandidate === 0) {
-                res
-                  .status(200)
-                  .json(successHandler(true, "Candidate added successfully"));
-              } else if (addCandidate === 1) {
-                res.status(422).json(errorHandler.causingDuplicate);
-              } else if (addCandidate === 2) {
-                res.status(500).json(errorHandler.emptyParam);
-              } else {
-                res.status(500).json(errorHandler.serverError);
-              }
+              addCandidate = await admin.addCandidate(candidates[c].firstName, candidates[c].lastName, candidates[c].email, candidates[c].hall, candidates[c].faculty, candidates[c].position, candidates[c].about);
+              addSum = addSum + addCandidate;
+              console.log(addCandidate);
             }catch(err){
               res.status(500).json(errorHandler.queryError);
             }
@@ -268,7 +263,16 @@ module.exports.addCandidate = async function (req, res) {
           }else {
             res.status(500).json(errorHandler.serverError);
           }
+        }
       }
-    }
-  }}
-};
+      if (addSum === 0){
+        res
+            .status(200)
+            .json(successHandler(true, "All candidates added successfully"));
+      }else if (addSum < 0){
+          res.status(400).json(errorHandler.serverError);
+      }else{
+          res.status(400).json(errorHandler.cannotAddCandidate);
+      }
+    }}
+  }};
