@@ -1,4 +1,4 @@
-const { users, vdata, admin, candidates, halls, faculties, positions } = require("../db/models");
+const { users, vdata, admin, candidates, halls, faculties, positions, electionData } = require("../db/models");
 
 /**
  *
@@ -100,7 +100,6 @@ module.exports.addVoter = async function (email, hid, fid) {
  */
 module.exports.addCandidate = async function (fname, lname, email, hid, fid, pid, about){
   if (email) {
-    console.log(email)
     const candidate = await candidates.findOne({
       where: {
         email: email,
@@ -181,4 +180,27 @@ module.exports.getAllPositions = async function(){
     attributes: ['pid', 'positionTitle']
   })
   return allPositions;
-}
+};
+
+/**
+ * Inserts the basic election data needed (can be edited later)
+ * @param {*} eName 
+ * @param {*} sDate 
+ * @param {*} eDate 
+ * @param {*} csvLocation 
+ * @returns 
+ */
+module.exports.insertElectionData = async function(eName, sDate, eDate, csvLocation){
+  if(csvLocation){
+    const election = await electionData.create({
+      electionName: eName,
+      startDate: sDate,
+      endDate: eDate,
+      csvLocation: csvLocation
+    });
+  return 0;
+  }else {
+    return 1;
+  }
+};
+  
