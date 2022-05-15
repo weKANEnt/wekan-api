@@ -11,10 +11,11 @@
 
 <body>
     <div class="homePage"> <!-- <p>navbar</p> -->
+       
         <div class="nav">
             <div class="navListLeft">
                 <!-- <p>left</p> -->
-                <ul>
+                <ul> 
                     <li><a href="/src/view/index.html"><img id="navBarLogo" src="/src/imgs/UWIVotes.png" alt=""></a></li>
                     <li><a href="" id="navCandidates" class="redLink">Candidates</a></li>
                     <li><a href="" id="navResults" class="redLink">Results</a></li>
@@ -29,27 +30,41 @@
        </div>
 
        <div class="pageText">
-
+            <p>Welcome to</p>
+            <img id="bodyLogo" src="/src/imgs/UWIVotes.png" alt="">
        </div>
     
+
         <div class="leftContent">
             <!-- <p>image</p> -->
-            <img id="headerImage" src="/src/imgs/headerImage.png" alt="">
+            <h2>Sign In with your One Time Password</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                Praesent pulvinar sapien augue, at molestie arcu imperdiet sit amet. 
+                Integer quis nulla eu velit varius scelerisque.</p>
+            <form>
+                <!--need to be changed from email-->
+                <label for="email">One Time Password</label>
+                <br>
+                <input class="input" type="text" id="email" placeholder="johndoe@uwimona.edu.jm"><br>
+                <br>
+                <input class="redButton" type="submit" value="Sign Up">
+            </form>
         </div>
     
         <div class="rightContent">
             <!-- <p>content</p> -->
-            <img id="bodyLogo" src="/src/imgs/UWIVotes.png" alt="">
-            <h2>First time using UWIVotes?</h2>
-            <p>Put explanation of how you'll received a otp. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                Praesent pulvinar sapien augue, at molestie arcu imperdiet sit amet. 
-                Integer quis nulla eu velit varius scelerisque.</p>
+            
+            <h2>Log In</h2>
+            <p>Lorem ipsum dolor sit amet.</p>
             <form>
                 <label for="email">Email</label><br>
                 <input class="input" type="text" id="email" placeholder="johndoe@uwimona.edu.jm"><br>
                 <br>
-                <input class="redButton" type="submit" value="Get One Time Password">
-                <a href="" class="redLink">Already have your verification code?</a>
+                <label for="password">Password</label><br>
+                <input class="input" type="text" id="password" placeholder="*******"><br>
+                <br>
+                <input class="redButton" type="submit" value="Log In">
+                <a href="" class="redLink">Forgot your password?</a>
             </form>
         </div>
     </div>

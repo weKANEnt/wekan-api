@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     navSignIn.addEventListener("click", function(){
         alert("You clicked SignIn");
+        window.location.href = "logIn.html";
     });
 
     navBarLogo.addEventListener("click", function(){

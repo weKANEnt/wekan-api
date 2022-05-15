@@ -6,9 +6,10 @@ html {
   display: grid;
   grid-template-areas:
     'topBar     topBar    topBar    topBar    topBar'
+    'pageText   pageText  pageText  pageText  pageText'
    /* 'topBar     topBar    topBar    topBarRight    topBarRight'*/
-    'picture    picture   content   content   content'
-    'picture    picture   content   content   content';
+    'leftContent    leftContent   rightContent   rightContent   rightContent'
+    'leftContent    leftContent   rightContent   rightContent   rightContent';
   grid-gap: 10px;
   margin: 0px;
 }
@@ -45,6 +46,11 @@ html {
   grid-area: topBarRight;
 }
 
+.pageText{
+  grid-area: pageText;
+  text-align: center;
+}
+
 /*
 .nav > ul > li{
   float: left;
@@ -63,13 +69,15 @@ html {
   padding: 10px;
 }
 */
-.headerPicture{
-  grid-area: picture;
+.leftContent{
+  grid-area: leftContent;
+  max-width: 500px;
+  padding-top: 30px;
   
 }
 
-.content{
-  grid-area: content;
+.rightContent{
+  grid-area: rightContent;
   max-width: 500px;
   padding-top: 30px;
   
