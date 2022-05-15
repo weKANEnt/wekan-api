@@ -20,6 +20,16 @@ html {
    'topBarLeft     topBarLeft    topBarLeft    topBarLeft    topBarRight';
   grid-gap: 10px;
   margin: 0px;
+
+  /*border: 1px solid;
+  padding: 10px;*/
+  /*
+  box-shadow: 5px 10px 20px#888888;*/
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.17);
+  padding: 20px; 
+  margin-top: -6px;
+  margin-left: -15px;
+  margin-right: -15px;
 }
 
 .navListLeft{
@@ -61,6 +71,7 @@ html {
 .content{
   grid-area: content;
   max-width: 500px;
+  padding-top: 30px;
   
 }
 
