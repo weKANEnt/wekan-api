@@ -60,6 +60,7 @@ html {
 
 .content{
   grid-area: content;
+  max-width: 500px;
   
 }
 
