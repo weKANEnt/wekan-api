@@ -27,6 +27,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+    /**Home Page Buttons*/
+
+
+    /**LogIn Page Buttons*/
+
+    
+    /**Vote Intro Page*/
+
+
 
 
 
