@@ -7,6 +7,7 @@ html {
   grid-template-areas:
     'topBar     topBar    topBar    topBar    topBar'
     'pageText   pageText  pageText  pageText  pageText'
+   /* 'topBar     topBar    topBar    topBarRight    topBarRight'*/
     'leftContent    leftContent   rightContent   rightContent   rightContent'
     'leftContent    leftContent   rightContent   rightContent   rightContent';
   grid-gap: 10px;
@@ -20,6 +21,11 @@ html {
    'topBarLeft     topBarLeft    topBarLeft    topBarLeft    topBarRight';
   grid-gap: 10px;
   margin: 0px;
+
+  /*border: 1px solid;
+  padding: 10px;*/
+  /*
+  box-shadow: 5px 10px 20px#888888;*/
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.17);
   padding: 20px; 
   margin-top: -6px;
@@ -45,6 +51,24 @@ html {
   text-align: center;
 }
 
+/*
+.nav > ul > li{
+  float: left;
+  padding: 10px;
+} */
+
+/*
+.floatLeftList > ul > li{
+  float: left;
+  padding: 10px;
+}
+
+.floatLeftRight > ul > li{
+  grid-area: topBarRight;
+  float: right;
+  padding: 10px;
+}
+*/
 .leftContent{
   grid-area: leftContent;
   max-width: 500px;
@@ -118,3 +142,62 @@ label{
   font-size: 14px;
 }
 
+
+ /* body {
+  width: 1000px;
+    height: 1000px;
+    background-color: red;
+} */
+/*
+.UWIVotesLogo {
+  display: inline;
+}
+
+
+header {
+  box-shadow: 0px 10px rgba(0, 0, 0, 0.074);
+  margin-left: -9px;
+  margin-right: -9px;
+}
+
+header > ul > li {
+  list-style-type: none;
+  display: inline;
+}
+
+.redLink {
+  color: #e45656;
+}
+
+.blackLink {
+  color: black;
+}
+
+
+
+.redButton {
+  background-color: #e45656;
+  color: white;
+  padding: 5px;
+  padding-right: 15px;
+  padding-left: 15px;
+  border-radius: 2px;
+  border-style: none;
+}
+
+
+
+
+
+#headerLogo {
+  height: 20px;
+}
+
+#bodyLogo {
+  height: 40px;
+}
+
+.bodyLogo {
+}
+
+*/

@@ -1,3 +1,5 @@
+/**not sure if im allowed to use js to change the class/hide div, if not then we'll
+  keep two css files*/
 html {
 }
 
@@ -7,11 +9,30 @@ html {
   grid-template-areas:
     'topBar     topBar    topBar    topBar    topBar'
     'pageText   pageText  pageText  pageText  pageText'
-    'leftContent    leftContent   rightContent   rightContent   rightContent'
-    'leftContent    leftContent   rightContent   rightContent   rightContent';
+    'content    content   content   content   content';
   grid-gap: 10px;
   margin: 0px;
 }
+
+.content{
+  display: grid;
+  grid-area: content;
+  grid-template: 
+    'electTitle       electTitle        electTitle        electTitle'
+    'elects           elects            elects            elects';
+  grid-gap: 10px;
+  margin: 0px;
+}
+
+.elects{
+  display: grid;
+  grid-area: elects;
+  grid-template: 
+    'candidate       candidate        senScore        senScore';
+  grid-gap: 10px;
+  margin: 0px;
+}
+
 
 .nav{
   grid-area: topBar;
@@ -27,6 +48,38 @@ html {
   margin-right: -15px;
 }
 
+.candidate{
+  grid-area: candidate;
+  display: grid;
+  padding-left: 50px;
+  padding-right: 50px;
+  grid-template-areas: 
+    'candidatePhoto   candidateInfo   candidateInfo  candidateInfo';
+}
+
+.candidatePhoto{
+  grid-area: candidatePhoto;
+  width: 200px;
+  float: left;
+  padding-right: 15px;
+}
+
+.candidateInfo{
+  grid-area: candidateInfo;
+  max-width: 500px;
+  /**align vertical center**/
+}
+.senScore{
+  grid-area: senScore;
+  text-align: center;
+  min-width: 450px;
+}
+
+.senScore > ul > li{
+  float: left;
+  padding: 20px;
+
+}
 .navListLeft{
   grid-area: topBarLeft;
 }
@@ -40,11 +93,14 @@ html {
   grid-area: topBarRight;
 }
 
+
 .pageText{
   grid-area: pageText;
   text-align: center;
 }
 
+
+/*
 .leftContent{
   grid-area: leftContent;
   max-width: 500px;
@@ -57,7 +113,7 @@ html {
   max-width: 500px;
   padding-top: 30px;
   
-}
+} */
 
 #headerImage {
   max-height: 500px;
@@ -118,3 +174,14 @@ label{
   font-size: 14px;
 }
 
+/******newly*/
+
+.candidate{
+
+}
+
+
+.candidatePhoto{
+  
+  
+}
