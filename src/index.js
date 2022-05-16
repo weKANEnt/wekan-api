@@ -8,8 +8,9 @@ const passport = require("passport");
 //Router imports
 const voters = require("./routes/voterRoute");
 const admin = require("./routes/adminRoute");
+const ballot = require("./routes/ballotRoute");
 
-//
+
 const app = express();
 
 // Initialize Middleware
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use("/uwivotes/votes", voters);
 app.use("/uwivotes", admin);
+app.use("/uwivotes/ballot", ballot);
 
 app.get("/", (req, res, next) => {
   res.json({ message: "from index api" });

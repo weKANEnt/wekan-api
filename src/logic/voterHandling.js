@@ -143,7 +143,7 @@ module.exports.doesOTPMatchEntry = async function (email, otp) {
     });
 
     if (voterData.OTP === otp) {
-      return true;
+      return voter;
     } else {
       return false;
     }

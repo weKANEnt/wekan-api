@@ -5,6 +5,8 @@ const successHandler = require("../helpers/create-success");
 const optGen = require("../helpers/generateOTP");
 const transport = require("../helpers/transport")();
 const mail = require("../helpers/createOTPEmail");
+
+const jwt = require("jsonwebtoken");
 const config = require("../../config/env");
 
 //Small helper
@@ -13,6 +15,14 @@ function success(email) {
     success: true,
     message: "OTP Generated",
     email: email,
+  };
+}
+
+function successT(token) {
+  return {
+    success: true,
+    message: "OTP matches.",
+    token: `JWT ${token}`,
   };
 }
 
@@ -106,8 +116,18 @@ module.exports.isOTPMatch = async function (req, res) {
     try {
       const otpStat = await voter.doesOTPMatchEntry(email, otp);
       console.log(otpStat);
-      if (otpStat === true) {
-        res.status(200).json(successHandler(true, "OTP matches records"));
+      if (otpStat) {
+        const token = jwt.sign(
+          {
+            id: otpStat.ccid,
+            email: otpStat.email,
+          },
+          config.jwt_key,
+          {
+            expiresIn: "1hr",
+          }
+        );
+        res.status(200).json(successT(token));
       } else if (otpStat === false) {
         res.status(401).json(errorHandler.incorrectOTP);
       } else if (otpStat === 1) {

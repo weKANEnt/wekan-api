@@ -77,6 +77,13 @@ module.exports.noAdmins = errorHandler(
   "wek-nf"
 );
 
+module.exports.noVoter = errorHandler(
+  false,
+  "Not Found",
+  "Cannot find voter associated with given email",
+  "wek-nf"
+);
+
 module.exports.jwtError = errorHandler(
   false,
   "JWT Error",
