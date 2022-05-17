@@ -391,6 +391,100 @@ module.exports.getFSTCandidates = async function(req, res) {
 };
 
 /**
+ * This function is just horribly big lol
+ * @param {*} req 
+ * @param {*} res 
+ */
+module.exports.getFacultyCandidates = async function(req, res) {
+    if (req.headers === null || req.headers === ""){
+        res.status(401).json(errorHandler.cannotAccess);
+    } else {
+        const token = getToken(req.headers);
+        const payload = await jwt.verify(token, config.jwt_key);
+        var posNo;
+        var candidates;
+
+        if (payload && payload.id) {
+            const voterr = await voter.isRegistered(payload.email);
+            console.log(voterr);
+            if(voterr === false){
+                res.status(401).json(errorHandler.noVoter);
+            } else if (voterr) {
+                if (await ballot.isInFaculty(payload.id, 1)){
+                    posNo = 19;
+                    try{
+                        candidates = await ballot.selectRequestedCandidates(posNo);
+                    }catch(err){
+                        res.status(500).json(errorHandler.queryError);
+                    }
+                } else if (await ballot.isInFaculty(payload.id, 2)){
+                    posNo = 10;
+                    try{
+                        candidates = await ballot.selectRequestedCandidates(posNo);
+                    }catch(err){
+                        res.status(500).json(errorHandler.queryError);
+                    }
+                }else if (await ballot.isInFaculty(payload.id, 3)){
+                    posNo = 11;
+                    try{
+                        candidates = await ballot.selectRequestedCandidates(posNo);
+                    }catch(err){
+                        res.status(500).json(errorHandler.queryError);
+                    }
+                }else if (await ballot.isInFaculty(payload.id, 4)){
+                    posNo = 12;
+                    try{
+                        candidates = await ballot.selectRequestedCandidates(posNo);
+                    }catch(err){
+                        res.status(500).json(errorHandler.queryError);
+                    }
+                }else if (await ballot.isInFaculty(payload.id, 5)){
+                    posNo = 13;
+                    try{
+                        candidates = await ballot.selectRequestedCandidates(posNo);
+                    }catch(err){
+                        res.status(500).json(errorHandler.queryError);
+                    }
+                }else if (await ballot.isInFaculty(payload.id, 6)){
+                    posNo = 14;
+                    try{
+                        candidates = await ballot.selectRequestedCandidates(posNo);
+                    }catch(err){
+                        res.status(500).json(errorHandler.queryError);
+                    }
+                }else if (await ballot.isInFaculty(payload.id, 7)){
+                    posNo = 15;
+                    try{
+                        candidates = await ballot.selectRequestedCandidates(posNo);
+                    }catch(err){
+                        res.status(500).json(errorHandler.queryError);
+                    }
+                }else if (await ballot.isInFaculty(payload.id, 8)){
+                    posNo = 18;
+                    try{
+                        candidates = await ballot.selectRequestedCandidates(posNo);
+                    }catch(err){
+                        res.status(500).json(errorHandler.queryError);
+                    }
+                }else{
+                    res.status(500).json(errorHandler.queryError);
+                }
+                
+                if(candidates === 1){
+                    res.status(500).json(errorHandler.emptyParam);
+                } else if (candidates){
+                    res.status(200).json(success(candidates, "Faculty Rep."));
+                }
+            }else{
+                res.status(500).json(errorHandler.serverError)
+            }
+        } else {
+            res.status(500).json(errorHandler.jwtError);
+        }
+    }
+};
+
+/**
  * Gets all candidates that are up for the Commuting Rep. position
  * @param {*} req 
  * @param {*} res 
