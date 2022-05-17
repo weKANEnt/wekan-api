@@ -20,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      firstName: DataTypes.STRING,
-      lastName: DataTypes.STRING,
+      name: DataTypes.STRING,
+      position: DataTypes.STRING,
       noOfVotes: DataTypes.INTEGER,
     },
     {

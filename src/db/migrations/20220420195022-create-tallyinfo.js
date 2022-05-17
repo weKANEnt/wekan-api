@@ -8,14 +8,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      ttid: {
-        type: Sequelize.INTEGER,
-        unique: true,
+      name: {
+        type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: "candidateinfos",
-          key: "cid",
-        },
+      },
+      position: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       noOfVotes: {
         type: Sequelize.INTEGER,

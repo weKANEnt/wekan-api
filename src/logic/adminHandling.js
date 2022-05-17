@@ -7,6 +7,7 @@ const {
   faculties,
   positions,
   electionData,
+  tallyinfo,
 } = require("../db/models");
 
 /**
@@ -53,7 +54,13 @@ module.exports.findAdminById = async function (aid) {
  * @param {*} email
  * @returns 0 if  the insert was successful
  */
-module.exports.addVoter = async function (email, hid, fid, doesCommute) {
+module.exports.addVoter = async function (
+  email,
+  hid,
+  fid,
+  doesCommute,
+  isPostGrad
+) {
   if (email) {
     const voter = await vdata.findOne({
       where: {
@@ -88,6 +95,7 @@ module.exports.addVoter = async function (email, hid, fid, doesCommute) {
         hall: hall.hallName,
         faculty: faculty.facultyName,
         doesCommute: doesCommute,
+        isPostGrad: isPostGrad,
       });
       return 0;
     } else {
@@ -148,7 +156,6 @@ module.exports.addCandidate = async function (
         },
       });
 
-      console.log(faculty);
       const newCandidate = await candidates.create({
         firstName: fname,
         lastName: lname,
@@ -225,3 +232,10 @@ module.exports.insertElectionData = async function (
     return 1;
   }
 };
+
+//code to add tally info
+// const newTallyIno = await tallyinfo.create({
+//   name: newCandidate.firstName + ' ' + newCandidate.lastName,
+//   position: newCandidate.position,
+//   noOfVotes: 0
+// });

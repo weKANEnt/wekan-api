@@ -521,3 +521,51 @@ module.exports.getPostGradCandidates = async function (req, res) {
     }
   }
 };
+
+/**
+ * Allows a voter to submit a ballot after selecting candidates they would liek to vote for
+ * @param {*} req 
+ * @param {*} res 
+ */
+module.exports.submittBallot = async function (req, res) {
+  if (req.headers === null || req.headers === "") {
+    res.status(401).json(errorHandler.cannotAccess);
+  } else {
+    const token = getToken(req.headers);
+    const payload = await jwt.verify(token, config.jwt_key);
+    const { cids } = req.body;
+    var verdict = [];
+
+    if (payload && payload.id) {
+      const voterr = await voter.isRegistered(payload.email);
+      if (voterr == false) {
+        res.status(401).json(errorHandler.noVoter);
+      } else if (voterr) {
+        for (var c = 0; c < cids.length; c++) {
+          verdict.push(Number.isInteger(cids[c]));
+        }
+
+        if (verdict.includes(false)) {
+          res.status(400).json(errorHandler.ballotInvalid);
+        } else if (!verdict.includes(false)) {
+          try {
+            const result = await ballot.insertBallotInfo(cids);
+            if (result === 0) {
+              res
+                .status(200)
+                .json(successHandler(true, "Voter ballot submitted"));
+            } else if (result === 1) {
+              res.status(400).json(errorHandler.ballotInvalid);
+            }
+          } catch (err) {
+            res.status(500).json(errorHandler.queryError);
+          }
+        }
+      } else {
+        res.status(500).json(errorHandler.serverError);
+      }
+    } else {
+      res.status(500).json(errorHandler.jwtError);
+    }
+  }
+};

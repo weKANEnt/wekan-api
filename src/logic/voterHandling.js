@@ -38,8 +38,10 @@ module.exports.updateVoteStatus = async function (id, vStat) {
       uid: id,
       votestatus: vStat,
     });
-  } else {
+
     return 0;
+  } else {
+    return 1;
   }
 };
 

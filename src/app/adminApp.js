@@ -76,7 +76,7 @@ module.exports.registerVoter = async function (req, res) {
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
-    const { email, hall, faculty, doesCommute } = req.body;
+    const { email, hall, faculty, doesCommute, isPostGrad } = req.body;
 
     if (payload && payload.id) {
       const adminn = await admin.findAdminById(payload.id);
@@ -92,14 +92,16 @@ module.exports.registerVoter = async function (req, res) {
             vEmail &&
             Number.isInteger(hall) &&
             Number.isInteger(faculty) &&
-            (doesCommute === true || doesCommute === false)
+            (doesCommute === true || doesCommute === false) &&
+            (isPostGrad === true || isPostGrad === false)
           ) {
             try {
               const addVoter = await admin.addVoter(
                 email,
                 hall,
                 faculty,
-                doesCommute
+                doesCommute,
+                isPostGrad
               );
               if (addVoter === 0) {
                 res
@@ -119,7 +121,8 @@ module.exports.registerVoter = async function (req, res) {
             vEmail != true ||
             !Number.isInteger(hall) ||
             !Number.isInteger(faculty) ||
-            !(doesCommute === true || doesCommute === false)
+            !(doesCommute === true || doesCommute === false) ||
+            !(isPostGrad === true || isPostGrad === false)
           ) {
             res.status(401).json(errorHandler.generalValidation);
           } else {

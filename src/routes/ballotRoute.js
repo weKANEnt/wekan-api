@@ -15,5 +15,6 @@ router.route("/eac").get(bApp.getEACCandidates);
 router.route("/facultyrep").get(bApp.getFacultyCandidates);
 router.route("/commuting").get(bApp.getCommutingCandidates);
 router.route("/postgrad").get(bApp.getPostGradCandidates);
+router.route("/submittBallot").patch(bApp.submittBallot);
 
 module.exports = router;

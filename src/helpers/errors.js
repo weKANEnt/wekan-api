@@ -132,3 +132,10 @@ module.exports.isNotPostGraduate = errorHandler(
   "Current user is not a post graduate student",
   "wek-ad"
 );
+
+module.exports.ballotInvalid = errorHandler(
+  false,
+  "Ballot Invalid",
+  "Ballot contains bad data",
+  "wek-ve"
+);

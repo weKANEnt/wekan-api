@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       faculty: DataTypes.STRING,
       position: DataTypes.STRING,
       about: DataTypes.STRING,
+      noOfVotes: DataTypes.INTEGER,
     },
     {
       sequelize,
