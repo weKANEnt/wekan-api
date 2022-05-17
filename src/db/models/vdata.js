@@ -45,6 +45,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
+      isPostGrad: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
     },
     {
       sequelize,

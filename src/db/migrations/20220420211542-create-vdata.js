@@ -34,6 +34,10 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: false,
       },
+      isPostGrad: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
