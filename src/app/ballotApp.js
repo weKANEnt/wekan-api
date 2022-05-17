@@ -482,3 +482,42 @@ module.exports.getCommutingCandidates = async function (req, res) {
     }
   }
 };
+
+/**
+ * Gets all candidates that are up for the Post Graduate Rep. position
+ * @param {*} req
+ * @param {*} res
+ */
+module.exports.getPostGradCandidates = async function (req, res) {
+  if (req.headers === null || req.headers === "") {
+    res.status(401).json(errorHandler.cannotAccess);
+  } else {
+    const token = getToken(req.headers);
+    const payload = await jwt.verify(token, config.jwt_key);
+
+    if (payload && payload.id) {
+      const voterr = await voter.isRegistered(payload.email);
+      if (voterr == false) {
+        res.status(401).json(errorHandler.noVoter);
+      } else if (voterr.isPostGrad === true) {
+        const posNo = 16;
+        try {
+          const candidates = await ballot.selectRequestedCandidates(posNo);
+          if (candidates === 1) {
+            res.status(500).json(errorHandler.emptyParam);
+          } else if (candidates) {
+            res.status(200).json(success(candidates, "Post Grad Rep."));
+          }
+        } catch (err) {
+          res.status(500).json(errorHandler.queryError);
+        }
+      } else if (voterr.doesCommute === false) {
+        res.status(401).json(errorHandler.isNotPostGraduate);
+      } else {
+        res.status(500).json(errorHandler.serverError);
+      }
+    } else {
+      res.status(500).json(errorHandler.jwtError);
+    }
+  }
+};

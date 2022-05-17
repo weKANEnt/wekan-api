@@ -125,3 +125,10 @@ module.exports.isNotFacultyMember = errorHandler(
   "Current user is not a student in the given faculty",
   "wek-ad"
 );
+
+module.exports.isNotPostGraduate = errorHandler(
+  false,
+  "Not Post Graduate",
+  "Current user is not a post graduate student",
+  "wek-ad"
+);
