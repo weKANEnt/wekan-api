@@ -12,7 +12,6 @@ router.route("/gcc").get(bApp.getGCCCandidates);
 router.route("/pro").get(bApp.getPROCandidates);
 router.route("/ceac").get(bApp.getCEACCandidates);
 router.route("/eac").get(bApp.getEACCandidates);
-router.route("/fst").get(bApp.getFSTCandidates);
 router.route("/facultyrep").get(bApp.getFacultyCandidates);
 
 router.route("/commuting").get(bApp.getCommutingCandidates);
