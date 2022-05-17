@@ -62,7 +62,7 @@ module.exports = {
         hallName: "WJC",
         createdAt: new Date(),
         updatedAt: new Date(),
-      }
+      },
     ]);
   },
 

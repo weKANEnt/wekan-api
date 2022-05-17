@@ -1,36 +1,36 @@
-'use strict';
+"use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('electiondata', {
+    await queryInterface.createTable("electiondata", {
       elid: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       electionName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       startDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       endDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       csvLocation: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('electiondata');
-  }
+    await queryInterface.dropTable("electiondata");
+  },
 };

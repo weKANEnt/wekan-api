@@ -1,49 +1,36 @@
-document.addEventListener('DOMContentLoaded', function() {
-    
-
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
     /**Navbar buttons */
     const navCandidates = document.getElementById("navCandidates");
     const navResults = document.getElementById("navResults");
     const navSignIn = document.getElementById("navSignIn");
     const navBarLogo = document.getElementById("navBarLogo");
 
-    navCandidates.addEventListener("click", function(){
-        alert("You clicked Candidates");
+    navCandidates.addEventListener("click", function () {
+      alert("You clicked Candidates");
     });
 
-    navResults.addEventListener("click", function(){
-        alert("You clicked Results");
+    navResults.addEventListener("click", function () {
+      alert("You clicked Results");
     });
 
-    navSignIn.addEventListener("click", function(){
-        alert("You clicked SignIn");
-        window.location.href = "logIn.html";
+    navSignIn.addEventListener("click", function () {
+      alert("You clicked SignIn");
+      window.location.href = "logIn.html";
     });
 
-    navBarLogo.addEventListener("click", function(){
-        alert("You clicked UWIVotes logo");
+    navBarLogo.addEventListener("click", function () {
+      alert("You clicked UWIVotes logo");
     });
-
-
-
 
     /**Home Page Buttons*/
 
-
     /**LogIn Page Buttons*/
 
-    
     /**Vote Intro Page*/
 
-
-
-
-
-
-    
-
     /**Body buttons */
-
 
     /*
     board = document.querySelector("#board"); 
@@ -163,5 +150,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const newGame = document.querySelector('.btn');
     const loadGame = () => {location.reload();}
     newGame.addEventListener('click', loadGame) */
-
-}, false);
+  },
+  false
+);

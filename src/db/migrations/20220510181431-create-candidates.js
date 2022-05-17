@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('candidates', {
+    await queryInterface.createTable("candidates", {
       cid: {
         allowNull: false,
         autoIncrement: true,
@@ -9,37 +9,37 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       firstName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       lastName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       hall: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       faculty: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       position: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       about: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('candidates');
-  }
+    await queryInterface.dropTable("candidates");
+  },
 };

@@ -207,7 +207,7 @@ module.exports = {
         positionTitle: "George Alleyne Deputy Hall Chairman",
         createdAt: new Date(),
         updatedAt: new Date(),
-      }
+      },
     ]);
   },
 

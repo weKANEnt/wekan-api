@@ -10,7 +10,6 @@ const voters = require("./routes/voterRoute");
 const admin = require("./routes/adminRoute");
 const ballot = require("./routes/ballotRoute");
 
-
 const app = express();
 
 // Initialize Middleware

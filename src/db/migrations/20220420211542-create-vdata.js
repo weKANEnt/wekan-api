@@ -22,11 +22,11 @@ module.exports = {
         unique: true,
         allowNull: false,
       },
-      hall:{
+      hall: {
         type: Sequelize.STRING(255),
         allowNull: false,
       },
-      faculty:{
+      faculty: {
         type: Sequelize.STRING(255),
         allowNull: false,
       },

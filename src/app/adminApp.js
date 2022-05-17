@@ -88,9 +88,19 @@ module.exports.registerVoter = async function (req, res) {
         } else {
           const vEmail = validate.valEmail(email);
 
-          if (vEmail && Number.isInteger(hall) && Number.isInteger(faculty) && (doesCommute === true || doesCommute === false)) {
+          if (
+            vEmail &&
+            Number.isInteger(hall) &&
+            Number.isInteger(faculty) &&
+            (doesCommute === true || doesCommute === false)
+          ) {
             try {
-              const addVoter = await admin.addVoter(email, hall, faculty, doesCommute);
+              const addVoter = await admin.addVoter(
+                email,
+                hall,
+                faculty,
+                doesCommute
+              );
               if (addVoter === 0) {
                 res
                   .status(200)
@@ -105,7 +115,12 @@ module.exports.registerVoter = async function (req, res) {
             } catch (err) {
               res.status(500).json(errorHandler.queryError);
             }
-          } else if (vEmail != true || !Number.isInteger(hall) || !Number.isInteger(faculty) || !(doesCommute === true || doesCommute === false)) {
+          } else if (
+            vEmail != true ||
+            !Number.isInteger(hall) ||
+            !Number.isInteger(faculty) ||
+            !(doesCommute === true || doesCommute === false)
+          ) {
             res.status(401).json(errorHandler.generalValidation);
           } else {
             res.status(500).json(errorHandler.serverError);
@@ -122,8 +137,8 @@ module.exports.registerVoter = async function (req, res) {
 
 /**
  * Function to return all halls in the UWI
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 module.exports.getAllHalls = async function (req, res) {
   if (req.headers === null || req.headers === "") {
@@ -131,23 +146,21 @@ module.exports.getAllHalls = async function (req, res) {
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
-    
+
     if (payload && payload.id) {
       try {
         const adminn = await admin.findAdminById(payload.id);
         if (!adminn) {
           res.status(401).json(errorHandler.noAdmins);
-        }else if (adminn){
+        } else if (adminn) {
           const allHalls = await admin.getAllHalls();
-          if(allHalls){
-            res
-            .status(200)
-            .json(successHandler(true, allHalls));
-          }else{
+          if (allHalls) {
+            res.status(200).json(successHandler(true, allHalls));
+          } else {
             res.status(500).json(errorHandler.serverError);
           }
         }
-      }catch(err){
+      } catch (err) {
         res.status(500).json(errorHandler.serverError);
       }
     }
@@ -156,8 +169,8 @@ module.exports.getAllHalls = async function (req, res) {
 
 /**
  * Function to return all faculties in the UWI
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 module.exports.getAllFaculties = async function (req, res) {
   if (req.headers === null || req.headers === "") {
@@ -165,23 +178,21 @@ module.exports.getAllFaculties = async function (req, res) {
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
-    
+
     if (payload && payload.id) {
       try {
         const adminn = await admin.findAdminById(payload.id);
         if (!adminn) {
           res.status(401).json(errorHandler.noAdmins);
-        }else if (adminn){
+        } else if (adminn) {
           const allFaculties = await admin.getAllFaculties();
-          if(allFaculties){
-            res
-            .status(200)
-            .json(successHandler(true, allFaculties));
-          }else{
+          if (allFaculties) {
+            res.status(200).json(successHandler(true, allFaculties));
+          } else {
             res.status(500).json(errorHandler.serverError);
           }
         }
-      }catch(err){
+      } catch (err) {
         res.status(500).json(errorHandler.serverError);
       }
     }
@@ -189,9 +200,9 @@ module.exports.getAllFaculties = async function (req, res) {
 };
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
+ *
+ * @param {*} req
+ * @param {*} res
  */
 module.exports.getAllPositions = async function (req, res) {
   if (req.headers === null || req.headers === "") {
@@ -199,23 +210,21 @@ module.exports.getAllPositions = async function (req, res) {
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
-    
+
     if (payload && payload.id) {
       try {
         const adminn = await admin.findAdminById(payload.id);
         if (!adminn) {
           res.status(401).json(errorHandler.noAdmins);
-        }else if (adminn){
+        } else if (adminn) {
           const allPositions = await admin.getAllPositions();
-          if(allPositions){
-            res
-            .status(200)
-            .json(successHandler(true, allPositions));
-          }else{
+          if (allPositions) {
+            res.status(200).json(successHandler(true, allPositions));
+          } else {
             res.status(500).json(errorHandler.serverError);
           }
         }
-      }catch(err){
+      } catch (err) {
         res.status(500).json(errorHandler.serverError);
       }
     }
@@ -224,55 +233,75 @@ module.exports.getAllPositions = async function (req, res) {
 
 /**
  * Function to add a people who are up for a position in the election - aka a candidates
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 module.exports.addCandidate = async function (req, res) {
-    if (req.headers === null || req.headers === "") {
+  if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
     //const { firstName, lastName, email, hall, faculty, position, about }= req.body
-    const {candidates} = req.body
+    const { candidates } = req.body;
     if (payload && payload.id) {
       const adminn = await admin.findAdminById(payload.id);
       if (!adminn) {
         res.status(401).json(errorHandler.noAdmins);
-      }else if (adminn){
+      } else if (adminn) {
         for (let c = 0; c < candidates.length; c++) {
-          if (! (candidates[c].firstName && candidates[c].lastName && candidates[c].email && candidates[c].hall && candidates[c].faculty && candidates[c].position && candidates[c].about)) {
-          res.status(400).json(errorHandler.emptyFields);
-        } else {
-          const vEmail = validate.valEmail(candidates[c].email);
-          const vFname = validate.valName(candidates[c].firstName);
-          const vLname = validate.valName(candidates[c].lastName);
+          if (
+            !(
+              candidates[c].firstName &&
+              candidates[c].lastName &&
+              candidates[c].email &&
+              candidates[c].hall &&
+              candidates[c].faculty &&
+              candidates[c].position &&
+              candidates[c].about
+            )
+          ) {
+            res.status(400).json(errorHandler.emptyFields);
+          } else {
+            const vEmail = validate.valEmail(candidates[c].email);
+            const vFname = validate.valName(candidates[c].firstName);
+            const vLname = validate.valName(candidates[c].lastName);
 
-          var addCandidate;
-          var addSum = 0;
-          if (vEmail && vFname && vLname){
-            try{
-              addCandidate = await admin.addCandidate(candidates[c].firstName, candidates[c].lastName, candidates[c].email, candidates[c].hall, candidates[c].faculty, candidates[c].position, candidates[c].about);
-              addSum = addSum + addCandidate;
-              console.log(addCandidate);
-            }catch(err){
-              res.status(500).json(errorHandler.queryError);
+            var addCandidate;
+            var addSum = 0;
+            if (vEmail && vFname && vLname) {
+              try {
+                addCandidate = await admin.addCandidate(
+                  candidates[c].firstName,
+                  candidates[c].lastName,
+                  candidates[c].email,
+                  candidates[c].hall,
+                  candidates[c].faculty,
+                  candidates[c].position,
+                  candidates[c].about
+                );
+                addSum = addSum + addCandidate;
+                console.log(addCandidate);
+              } catch (err) {
+                res.status(500).json(errorHandler.queryError);
+              }
+            } else if (!vEmail || !vFname || !vLname) {
+              res.status(401).json(errorHandler.genValidation);
+            } else {
+              res.status(500).json(errorHandler.serverError);
             }
-          }else if (!vEmail || !vFname || !vLname){
-            res.status(401).json(errorHandler.genValidation);
-          }else {
-            res.status(500).json(errorHandler.serverError);
           }
         }
-      }
-      if (addSum === 0){
-        res
+        if (addSum === 0) {
+          res
             .status(200)
             .json(successHandler(true, "All candidates added successfully"));
-      }else if (addSum < 0){
+        } else if (addSum < 0) {
           res.status(400).json(errorHandler.serverError);
-      }else{
+        } else {
           res.status(400).json(errorHandler.cannotAddCandidate);
+        }
       }
-    }}
-  }};
+    }
+  }
+};
