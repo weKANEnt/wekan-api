@@ -351,46 +351,6 @@ module.exports.getEACCandidates = async function(req, res) {
 };
 
 /**
- * Get all candidates for FST Representative
- * @param {*} req 
- * @param {*} res 
- */
-module.exports.getFSTCandidates = async function(req, res) {
-    if (req.headers === null || req.headers === ""){
-        res.status(401).json(errorHandler.cannotAccess);
-    } else {
-        const token = getToken(req.headers);
-        const payload = await jwt.verify(token, config.jwt_key);
-
-        if (payload && payload.id) {
-            const voterr = await voter.isRegistered(payload.email);
-            const facultyValidation = await ballot.isInFaculty(payload.id, 2)
-            if(voterr == false){
-                    res.status(401).json(errorHandler.noVoter);
-                } else if (facultyValidation === true) {
-                    const posNo = 10
-                    try {
-                        const candidates = await ballot.selectRequestedCandidates(posNo);
-                        if(candidates === 1){
-                            res.status(500).json(errorHandler.emptyParam);
-                        } else if (candidates){
-                            res.status(200).json(success(candidates, "FST Rep."));
-                        }
-                    }catch(err) {
-                        res.status(500).json(errorHandler.queryError);
-                    }
-                }else if (facultyValidation === false){
-                    res.status(401).json(errorHandler.isNotFacultyMember);
-                } else{
-                    res.status(500).json(errorHandler.serverError);
-                }
-        } else {
-            res.status(500).json(errorHandler.jwtError);
-        }
-    }
-};
-
-/**
  * This function is just horribly big lol
  * @param {*} req 
  * @param {*} res 
