@@ -112,4 +112,16 @@ module.exports.cannotAddCandidate = errorHandler(
   "wek-ci"
 );
 
+module.exports.isNotHallMember = errorHandler(
+  false,
+  "Not in Hall",
+  "Current user is not a student in the given hall",
+  "wek-ad"
+);
 
+module.exports.isNotFacultyMember = errorHandler(
+  false,
+  "Not in Faculty",
+  "Current user is not a student in the given faculty",
+  "wek-ad"
+);

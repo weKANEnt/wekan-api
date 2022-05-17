@@ -16,7 +16,7 @@ module.exports.isRegistered = async function (email) {
       },
     });
     if (voter) {
-      return true;
+      return voter;
     } else {
       return false;
     }

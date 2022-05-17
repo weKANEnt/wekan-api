@@ -34,7 +34,7 @@ function successT(token) {
  * @returns res
  */
 module.exports.isVoterRegistered = async function (req, res) {
-  const { email } = req.body;
+  const { email } = req.query;
   if (!email) {
     res.status(503).json(errorHandler.missingField);
   }
@@ -105,7 +105,7 @@ module.exports.generateOTP = async function (req, res) {
  * @param {*} res
  */
 module.exports.isOTPMatch = async function (req, res) {
-  const { otp, email } = req.body;
+  const { otp, email } = req.query;
   if (!(email && otp)) {
     res.status(503).json(errorHandler.missingField);
   }
