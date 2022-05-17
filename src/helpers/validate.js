@@ -10,7 +10,7 @@ const otpR = /^[A-Z0-9]{6}/;
  * @return true if it passes the validation, false if it does not or false if the value passed is null or empty
  */
 module.exports.valUsername = function (username) {
-  if (username === null || username === "") {
+  if (username === null || username === "" || username === undefined) {
     return false;
   } else {
     if (!username.match(uname)) {
@@ -28,7 +28,7 @@ module.exports.valUsername = function (username) {
  * @return true if it passes the validation, false if it does not or false if the value passed is null or empty
  */
 module.exports.valName = function (name) {
-  if (name === null || name === "") {
+  if (name === null || name === "" || name === undefined) {
     return false;
   } else {
     if (!name.match(gname)) {
@@ -46,7 +46,7 @@ module.exports.valName = function (name) {
  * @return true if it passes the validation, false if it does not or false if the value passed is null or empty
  */
 module.exports.valPassword = function (password) {
-  if (password === null || password === "") {
+  if (password === null || password === "" || password === undefined) {
     return false;
   } else {
     if (!password.match(uname)) {
@@ -64,7 +64,7 @@ module.exports.valPassword = function (password) {
  * @return true if it passes the validation, false if it does not or false if the value passed is null or empty
  */
 module.exports.valEmail = function (email) {
-  if (email === null || email === "") {
+  if (email === null || email === "" || email === undefined) {
     return false;
   } else {
     if (!email.match(emailR)) {
@@ -82,7 +82,7 @@ module.exports.valEmail = function (email) {
  * @returns
  */
 module.exports.valOTP = function (otp) {
-  if (otp === null || otp === "") {
+  if (otp === null || otp === "" || otp === undefined) {
     return false;
   } else {
     if (!otp.match(otpR)) {
