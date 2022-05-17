@@ -40,7 +40,11 @@ module.exports = (sequelize, DataTypes) => {
       faculty: {
         type: DataTypes.STRING,
         allowNull: false,
-      }
+      },
+      doesCommute: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
     },
     {
       sequelize,

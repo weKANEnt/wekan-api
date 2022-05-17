@@ -44,7 +44,7 @@ module.exports.findAdminById = async function (aid) {
  * @param {*} email
  * @returns 0 if  the insert was successful
  */
-module.exports.addVoter = async function (email, hid, fid) {
+module.exports.addVoter = async function (email, hid, fid, doesCommute) {
   if (email) {
     const voter = await vdata.findOne({
       where: {
@@ -77,7 +77,8 @@ module.exports.addVoter = async function (email, hid, fid) {
         emid: newVoter.uid,
         email: email,
         hall: hall.hallName,
-        faculty: faculty.facultyName
+        faculty: faculty.facultyName,
+        doesCommute: doesCommute
       });
       return 0;
     } else {

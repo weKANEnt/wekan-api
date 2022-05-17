@@ -76,7 +76,7 @@ module.exports.registerVoter = async function (req, res) {
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
-    const { email, hall, faculty } = req.body;
+    const { email, hall, faculty, doesCommute } = req.body;
 
     if (payload && payload.id) {
       const adminn = await admin.findAdminById(payload.id);
@@ -88,9 +88,9 @@ module.exports.registerVoter = async function (req, res) {
         } else {
           const vEmail = validate.valEmail(email);
 
-          if (vEmail) {
+          if (vEmail && Number.isInteger(hall) && Number.isInteger(faculty) && (doesCommute === true || doesCommute === false)) {
             try {
-              const addVoter = await admin.addVoter(email, hall, faculty);
+              const addVoter = await admin.addVoter(email, hall, faculty, doesCommute);
               if (addVoter === 0) {
                 res
                   .status(200)
@@ -105,8 +105,8 @@ module.exports.registerVoter = async function (req, res) {
             } catch (err) {
               res.status(500).json(errorHandler.queryError);
             }
-          } else if (vEmail != true) {
-            res.status(401).json(errorHandler.emailValidation);
+          } else if (vEmail != true || !Number.isInteger(hall) || !Number.isInteger(faculty) || !(doesCommute === true || doesCommute === false)) {
+            res.status(401).json(errorHandler.generalValidation);
           } else {
             res.status(500).json(errorHandler.serverError);
           }
