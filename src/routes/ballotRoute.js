@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.route("/presidents").get(bApp.getPresidentCandidates);
 router.route("/vpssp").get(bApp.getVPSSPCandidates);
-router.route("/vpssp").get(bApp.getVPPSICandidates);
+router.route("/vppsi").get(bApp.getVPPSICandidates);
 router.route("/secretary").get(bApp.getSecretaryCandidates);
 router.route("/treasurer").get(bApp.getTreasurerCandidates);
 router.route("/gcc").get(bApp.getGCCCandidates);

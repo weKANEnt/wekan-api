@@ -151,7 +151,7 @@ module.exports.getSecretaryCandidates = async function(req, res) {
                         if(candidates === 1){
                             res.status(500).json(errorHandler.emptyParam);
                         } else if (candidates){
-                            res.status(200).json(success(candidates, "VP SSP"));
+                            res.status(200).json(success(candidates, "Secretary"));
                         }
                     }catch(err) {
                         res.status(500).json(errorHandler.queryError);
@@ -188,7 +188,7 @@ module.exports.getTreasurerCandidates = async function(req, res) {
                         if(candidates === 1){
                             res.status(500).json(errorHandler.emptyParam);
                         } else if (candidates){
-                            res.status(200).json(success(candidates, "VP SSP"));
+                            res.status(200).json(success(candidates, "Treasuer"));
                         }
                     }catch(err) {
                         res.status(500).json(errorHandler.queryError);
@@ -225,7 +225,7 @@ module.exports.getGCCCandidates = async function(req, res) {
                         if(candidates === 1){
                             res.status(500).json(errorHandler.emptyParam);
                         } else if (candidates){
-                            res.status(200).json(success(candidates, "VP SSP"));
+                            res.status(200).json(success(candidates, "GCC"));
                         }
                     }catch(err) {
                         res.status(500).json(errorHandler.queryError);
@@ -262,7 +262,7 @@ module.exports.getPROCandidates = async function(req, res) {
                         if(candidates === 1){
                             res.status(500).json(errorHandler.emptyParam);
                         } else if (candidates){
-                            res.status(200).json(success(candidates, "VP SSP"));
+                            res.status(200).json(success(candidates, "PRO"));
                         }
                     }catch(err) {
                         res.status(500).json(errorHandler.queryError);
@@ -299,7 +299,7 @@ module.exports.getCEACCandidates = async function(req, res) {
                         if(candidates === 1){
                             res.status(500).json(errorHandler.emptyParam);
                         } else if (candidates){
-                            res.status(200).json(success(candidates, "VP SSP"));
+                            res.status(200).json(success(candidates, "CEAC"));
                         }
                     }catch(err) {
                         res.status(500).json(errorHandler.queryError);
@@ -336,7 +336,7 @@ module.exports.getEACCandidates = async function(req, res) {
                         if(candidates === 1){
                             res.status(500).json(errorHandler.emptyParam);
                         } else if (candidates){
-                            res.status(200).json(success(candidates, "VP SSP"));
+                            res.status(200).json(success(candidates, "EAC"));
                         }
                     }catch(err) {
                         res.status(500).json(errorHandler.queryError);
