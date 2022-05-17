@@ -13,7 +13,6 @@ router.route("/pro").get(bApp.getPROCandidates);
 router.route("/ceac").get(bApp.getCEACCandidates);
 router.route("/eac").get(bApp.getEACCandidates);
 router.route("/facultyrep").get(bApp.getFacultyCandidates);
-
 router.route("/commuting").get(bApp.getCommutingCandidates);
 
 module.exports = router;
