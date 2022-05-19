@@ -75,7 +75,8 @@ module.exports.generateOTP = async function (req, res) {
   otp = optGen.generateOTP();
   try {
     const isOTP = await voter.doesOTPExist(otp);
-    if (isOTP === false) {
+    const hasVoted = await voter.hasVoted(email);
+    if (isOTP === false && hasVoted === false) {
       try {
         const addOTP = await voter.insertOTP(email, otp);
         if (addOTP === false) {
@@ -89,7 +90,7 @@ module.exports.generateOTP = async function (req, res) {
       } catch (err) {
         res.status(500).json(errorHandler.emailUnregistered);
       }
-    } else if (isOTP === true) {
+    } else if (isOTP === true || hasVoted === true) {
       res.status(422).json(errorHandler.causingDuplicate);
     } else if (isOTP === 1) {
       res.status(500).json(errorHandler.queryError);

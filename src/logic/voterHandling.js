@@ -51,11 +51,11 @@ module.exports.updateVoteStatus = async function (id, vStat) {
  * @param {*} email
  * @returns object
  */
-module.exports.hasVoted = async function (id) {
-  if (id) {
+module.exports.hasVoted = async function (email) {
+  if (email) {
     const voter = await vdata.findOne({
       where: {
-        emid: id,
+        email: email,
       },
     });
 
