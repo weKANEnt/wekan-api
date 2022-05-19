@@ -351,8 +351,7 @@ module.exports.getEACCandidates = async function (req, res) {
 };
 
 /**
- * Gets faculty rep candidate based on the faculty that the logged in voter is in
- * This function is just horribly big lol
+ * Gets faculty rep candidates based on the faculty that the logged in voter is in
  * @param {*} req
  * @param {*} res
  */
@@ -410,7 +409,7 @@ module.exports.getFacultyCandidates = async function (req, res) {
 };
 
 /**
- * 
+ * Gets all candiadtes up for hall chair based on the current logged in voter's hall
  * @param {*} req 
  * @param {*} res 
  */
@@ -429,28 +428,40 @@ module.exports.getHallChairmanCandidates = async function (req, res) {
           res.status(401).json(errorHandler.noVoter);
         } else if (voterr) {
           if (await ballot.isInHall(payload.id, 1)) {
+            //AZ Preston
             posNo = 22;
           } else if (await ballot.isInHall(payload.id, 2)) {
+            //Chancellor
             posNo = 24;
           } else if (await ballot.isInHall(payload.id, 3)) {
+            //Irvine
             posNo = 28;
           } else if (await ballot.isInHall(payload.id, 4)) {
+            //Mary Seacole
             posNo = 30;
           } else if (await ballot.isInHall(payload.id, 5)) {
+            //Taylor
             posNo = 34;
           } else if (await ballot.isInHall(payload.id, 6)) {
+            //Rex
             posNo = 32;
           } else if (await ballot.isInHall(payload.id, 7)) {
+            //ABC
             posNo = 20;
           } else if (await ballot.isInHall(payload.id, 8)) {
+            //ELR
             posNo = 26;
           } else if (await ballot.isInHall(payload.id, 9)) {
+            //Marlene Hamilton
             posNo = 42;
           } else if (await ballot.isInHall(payload.id, 10)) {
+            //Leslie Robinson
             posNo = 38;
           } else if (await ballot.isInHall(payload.id, 11)) {
+            //George Alleyne
             posNo = 40;
           } else if (await ballot.isInHall(payload.id, 12)) {
+            //WJC
             posNo = 36;
           } else {
             res.status(500).json(errorHandler.queryError)
@@ -461,6 +472,84 @@ module.exports.getHallChairmanCandidates = async function (req, res) {
               res.status(500).json(errorHandler.emptyParam);
             } else if (candidates) {
               res.status(200).json(success(candidates, "Hall Rep."));
+            }
+          } catch (err) {
+            res.status(500).json(errorHandler.queryError);
+          }
+        } else {
+          res.status(500).json(errorHandler.serverError);
+        }
+      } else {
+        res.status(500).json(errorHandler.jwtError);
+    }
+  }
+};
+
+
+/**
+ * Gets all candiadtes up for deputy hall chair based on the current logged in voter's hall
+ * @param {*} req 
+ * @param {*} res 
+ */
+module.exports.getDHallChairmanCandidates = async function (req, res) {
+  if (req.headers === null || req.headers === "") {
+    res.status(401).json(errorHandler.cannotAccess);
+  } else {
+      const token = getToken(req.headers);
+      const payload = await jwt.verify(token, config.jwt_key);
+      var posNo;
+      var candidates;
+
+      if (payload && payload.id) {
+        const voterr = await voter.isRegistered(payload.email);
+        if (voterr === false) {
+          res.status(401).json(errorHandler.noVoter);
+        } else if (voterr) {
+          if (await ballot.isInHall(payload.id, 1)) {
+            //AZ Preston
+            posNo = 23;
+          } else if (await ballot.isInHall(payload.id, 2)) {
+            //Chancellor
+            posNo = 25;
+          } else if (await ballot.isInHall(payload.id, 3)) {
+            //Irvine
+            posNo = 29;
+          } else if (await ballot.isInHall(payload.id, 4)) {
+            //Mary Seacole
+            posNo = 31;
+          } else if (await ballot.isInHall(payload.id, 5)) {
+            //Taylor
+            posNo = 35;
+          } else if (await ballot.isInHall(payload.id, 6)) {
+            //Rex
+            posNo = 33;
+          } else if (await ballot.isInHall(payload.id, 7)) {
+            //ABC
+            posNo = 21;
+          } else if (await ballot.isInHall(payload.id, 8)) {
+            //ELR
+            posNo = 27;
+          } else if (await ballot.isInHall(payload.id, 9)) {
+            //Marlene Hamilton
+            posNo = 43;
+          } else if (await ballot.isInHall(payload.id, 10)) {
+            //Leslie Robinson
+            posNo = 39;
+          } else if (await ballot.isInHall(payload.id, 11)) {
+            //George Alleyne
+            posNo = 41;
+          } else if (await ballot.isInHall(payload.id, 12)) {
+            //WJC
+            posNo = 37;
+          } else {
+            res.status(500).json(errorHandler.queryError)
+          }
+          try{
+            candidates = await ballot.selectRequestedCandidates(posNo);
+            if (candidates === 1) {
+              res.status(500).json(errorHandler.emptyParam);
+            } else if (candidates) {
+              res.status(200).json(success(candidates, "Deputy Hall Rep."));
             }
           } catch (err) {
             res.status(500).json(errorHandler.queryError);
