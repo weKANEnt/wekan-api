@@ -351,6 +351,7 @@ module.exports.getEACCandidates = async function (req, res) {
 };
 
 /**
+ * Gets faculty rep candidate based on the faculty that the logged in voter is in
  * This function is just horribly big lol
  * @param {*} req
  * @param {*} res
@@ -366,80 +367,109 @@ module.exports.getFacultyCandidates = async function (req, res) {
 
     if (payload && payload.id) {
       const voterr = await voter.isRegistered(payload.email);
-      console.log(voterr);
       if (voterr === false) {
         res.status(401).json(errorHandler.noVoter);
       } else if (voterr) {
         if (await ballot.isInFaculty(payload.id, 1)) {
           posNo = 19;
-          try {
-            candidates = await ballot.selectRequestedCandidates(posNo);
-          } catch (err) {
-            res.status(500).json(errorHandler.queryError);
-          }
         } else if (await ballot.isInFaculty(payload.id, 2)) {
           posNo = 10;
-          try {
-            candidates = await ballot.selectRequestedCandidates(posNo);
-          } catch (err) {
-            res.status(500).json(errorHandler.queryError);
-          }
         } else if (await ballot.isInFaculty(payload.id, 3)) {
           posNo = 11;
-          try {
-            candidates = await ballot.selectRequestedCandidates(posNo);
-          } catch (err) {
-            res.status(500).json(errorHandler.queryError);
-          }
         } else if (await ballot.isInFaculty(payload.id, 4)) {
           posNo = 12;
-          try {
-            candidates = await ballot.selectRequestedCandidates(posNo);
-          } catch (err) {
-            res.status(500).json(errorHandler.queryError);
-          }
         } else if (await ballot.isInFaculty(payload.id, 5)) {
           posNo = 13;
-          try {
-            candidates = await ballot.selectRequestedCandidates(posNo);
-          } catch (err) {
-            res.status(500).json(errorHandler.queryError);
-          }
         } else if (await ballot.isInFaculty(payload.id, 6)) {
           posNo = 14;
-          try {
-            candidates = await ballot.selectRequestedCandidates(posNo);
-          } catch (err) {
-            res.status(500).json(errorHandler.queryError);
-          }
         } else if (await ballot.isInFaculty(payload.id, 7)) {
           posNo = 15;
-          try {
-            candidates = await ballot.selectRequestedCandidates(posNo);
-          } catch (err) {
-            res.status(500).json(errorHandler.queryError);
-          }
         } else if (await ballot.isInFaculty(payload.id, 8)) {
           posNo = 18;
-          try {
-            candidates = await ballot.selectRequestedCandidates(posNo);
-          } catch (err) {
-            res.status(500).json(errorHandler.queryError);
-          }
         } else {
           res.status(500).json(errorHandler.queryError);
         }
 
-        if (candidates === 1) {
-          res.status(500).json(errorHandler.emptyParam);
-        } else if (candidates) {
-          res.status(200).json(success(candidates, "Faculty Rep."));
-        }
+        try{
+          candidates = await ballot.selectRequestedCandidates(posNo);
+          if (candidates === 1) {
+            res.status(500).json(errorHandler.emptyParam);
+          } else if (candidates) {
+            res.status(200).json(success(candidates, "Faculty Rep."));
+          }
+          } catch (err) {
+            res.status(500).json(errorHandler.queryError);
+          }
       } else {
         res.status(500).json(errorHandler.serverError);
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
+    }
+  }
+};
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+module.exports.getHallChairmanCandidates = async function (req, res) {
+  if (req.headers === null || req.headers === "") {
+    res.status(401).json(errorHandler.cannotAccess);
+  } else {
+      const token = getToken(req.headers);
+      const payload = await jwt.verify(token, config.jwt_key);
+      var posNo;
+      var candidates;
+
+      if (payload && payload.id) {
+        const voterr = await voter.isRegistered(payload.email);
+        if (voterr === false) {
+          res.status(401).json(errorHandler.noVoter);
+        } else if (voterr) {
+          if (await ballot.isInHall(payload.id, 1)) {
+            posNo = 22;
+          } else if (await ballot.isInHall(payload.id, 2)) {
+            posNo = 24;
+          } else if (await ballot.isInHall(payload.id, 3)) {
+            posNo = 28;
+          } else if (await ballot.isInHall(payload.id, 4)) {
+            posNo = 30;
+          } else if (await ballot.isInHall(payload.id, 5)) {
+            posNo = 34;
+          } else if (await ballot.isInHall(payload.id, 6)) {
+            posNo = 32;
+          } else if (await ballot.isInHall(payload.id, 7)) {
+            posNo = 20;
+          } else if (await ballot.isInHall(payload.id, 8)) {
+            posNo = 26;
+          } else if (await ballot.isInHall(payload.id, 9)) {
+            posNo = 42;
+          } else if (await ballot.isInHall(payload.id, 10)) {
+            posNo = 38;
+          } else if (await ballot.isInHall(payload.id, 11)) {
+            posNo = 40;
+          } else if (await ballot.isInHall(payload.id, 12)) {
+            posNo = 36;
+          } else {
+            res.status(500).json(errorHandler.queryError)
+          }
+          try{
+            candidates = await ballot.selectRequestedCandidates(posNo);
+            if (candidates === 1) {
+              res.status(500).json(errorHandler.emptyParam);
+            } else if (candidates) {
+              res.status(200).json(success(candidates, "Hall Rep."));
+            }
+          } catch (err) {
+            res.status(500).json(errorHandler.queryError);
+          }
+        } else {
+          res.status(500).json(errorHandler.serverError);
+        }
+      } else {
+        res.status(500).json(errorHandler.jwtError);
     }
   }
 };

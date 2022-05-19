@@ -85,7 +85,7 @@ module.exports.isInHall = async function (id, hid) {
         },
       });
 
-      if (voter.hall == hall.facultyName) {
+      if (voter.hall == hall.hallName) {
         return true;
       } else {
         return false;

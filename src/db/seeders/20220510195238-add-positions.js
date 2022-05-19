@@ -208,6 +208,16 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        positionTitle: "Marlene Hamilton Hall Chairman",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        positionTitle: "Marlene Hamilton Deputy Hall Chairman",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ]);
   },
 

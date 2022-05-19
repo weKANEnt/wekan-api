@@ -25,5 +25,5 @@ app.get("/", (req, res, next) => {
 });
 
 app.listen(8080, () => {
-  console.log(`Server is running`);
+  console.log(`UwiVotes server is running...`);
 });
