@@ -27,7 +27,6 @@ module.exports.loginAdmin = async function (req, res) {
   const { email, password } = req.body;
   if (!(email && password)) {
     res.status(503).json(ifield);
-    return;
   }
   const vEmail = validate.valEmail(email);
   const vPassword = validate.valPassword(password);
