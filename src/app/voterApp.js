@@ -44,9 +44,10 @@ module.exports.isVoterRegistered = async function (req, res) {
   if (vEmail) {
     try {
       const vote = await voter.isRegistered(email);
+      console.log(vote);
       if (vote === false) {
         res.status(401).json(errorHandler.emailUnregistered);
-      } else if (vote === true) {
+      } else if (vote) {
         res
           .status(200)
           .json(successHandler(true, "Email is registered to vote"));
@@ -54,7 +55,7 @@ module.exports.isVoterRegistered = async function (req, res) {
         res.status(500).json(errorHandler.serverError);
       }
     } catch (err) {
-      res.status(500).json(errorHandler.queryError);
+      res.status(500).json(err);
     }
   } else if (vEmail != true) {
     res.status(401).json(errorHandler.emailValidation);
