@@ -40,8 +40,6 @@ module.exports.createElection = async function (req, res) {
                     const vSDate = validate.valDate(sDate);
                     const vEDate = validate.valDate(eDate);
                     const vSEDate = validate.val2Dates(sDate, eDate);
-                    console.log(vTitle, vSDate, vEDate, vSEDate);
-
                     if (vTitle && vSDate && vEDate && vSEDate) {
                         try{
                             const addElection = await election.insertElection(title, sDate, eDate, csvLocation);
