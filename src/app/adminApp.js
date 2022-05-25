@@ -18,10 +18,12 @@ function success(token) {
 }
 
 /**
- *
+ * @function
+ * @name loginAdmin
+ * @description Function to allow admin to login to admin portal to access admin functionality
  * @param {*} req
  * @param {*} res
- * @returns
+ * @returns {Promise, 0, 1}
  */
 module.exports.loginAdmin = async function (req, res) {
   const { email, password } = req.body;
@@ -71,10 +73,12 @@ module.exports.loginAdmin = async function (req, res) {
 };
 
 /**
- * Function to register a voter given that the given email is not currently registered
- * Need to add that email should not be in admin table
+ * @function
+ * @name registerVoter
+ * @description Function to register a voter given that the given email is not currently registered
  * @param {*} req
  * @param {*} res
+ * Need to add that email should not be in admin table
  */
 module.exports.registerVoter = async function (req, res) {
   if (req.headers === null || req.headers === "") {
@@ -157,9 +161,12 @@ module.exports.registerVoter = async function (req, res) {
 };
 
 /**
- * Function to return all halls in the UWI
+ * @function
+ * @name getAllHalls
+ * @description Function to return all halls in the UWI
  * @param {*} req
  * @param {*} res
+ * @return {Promise, 0, 1}
  */
 module.exports.getAllHalls = async function (req, res) {
   if (req.headers === null || req.headers === "") {
@@ -189,9 +196,12 @@ module.exports.getAllHalls = async function (req, res) {
 };
 
 /**
- * Function to return all faculties in the UWI
+ * @function
+ * @name getAllFaculties
+ * @description Function to return all faculties in the UWI
  * @param {*} req
  * @param {*} res
+ * @return {Promise, 0, 1}
  */
 module.exports.getAllFaculties = async function (req, res) {
   if (req.headers === null || req.headers === "") {
@@ -253,9 +263,12 @@ module.exports.getAllPositions = async function (req, res) {
 };
 
 /**
- * Function to add a people who are up for a position in the election - aka a candidates
+ * @function
+ * @name addCandidate
+ * @description Function to add a people who are up for a position in the election - aka a candidates
  * @param {*} req
  * @param {*} res
+ * @return {Promise, 0, 1}
  */
 module.exports.addCandidate = async function (req, res) {
   if (req.headers === null || req.headers === "") {
