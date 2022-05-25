@@ -23,34 +23,16 @@ function success(candidates, pos) {
  * @param {*} res
  */
 module.exports.getPresidentCandidates = async function (req, res) {
-  if (req.headers === null || req.headers === "") {
-    res.status(401).json(errorHandler.cannotAccess);
-  } else {
-    const token = getToken(req.headers);
-    const payload = await jwt.verify(token, config.jwt_key);
-
-    if (payload && payload.id) {
-      const voterr = await voter.isRegistered(payload.email);
-      if (!voterr) {
-        res.status(401).json(errorHandler.noVoter);
-      } else if (voterr) {
-        const posNo = 1;
-        try {
-          const candidates = await ballot.selectRequestedCandidates(posNo);
-          if (candidates === 1) {
-            res.status(500).json(errorHandler.emptyParam);
-          } else if (candidates) {
-            res.status(200).json(success(candidates, "President"));
-          }
-        } catch (err) {
-          res.status(500).json(errorHandler.queryError);
-        }
-      } else {
-        res.status(500).json(errorHandler.serverError);
-      }
-    } else {
-      res.status(500).json(errorHandler.jwtError);
+  const posNo = 1;
+  try {
+    const candidates = await ballot.selectRequestedCandidates(posNo);
+    if (candidates === 1) {
+      res.status(500).json(errorHandler.emptyParam);
+    } else if (candidates) {
+      res.status(200).json(success(candidates, "President"));
     }
+  } catch (err) {
+    res.status(500).json(errorHandler.queryError);
   }
 };
 
@@ -60,34 +42,16 @@ module.exports.getPresidentCandidates = async function (req, res) {
  * @param {*} res
  */
 module.exports.getVPSSPCandidates = async function (req, res) {
-  if (req.headers === null || req.headers === "") {
-    res.status(401).json(errorHandler.cannotAccess);
-  } else {
-    const token = getToken(req.headers);
-    const payload = await jwt.verify(token, config.jwt_key);
-
-    if (payload && payload.id) {
-      const voterr = await voter.isRegistered(payload.email);
-      if (!voterr) {
-        res.status(401).json(errorHandler.noVoter);
-      } else if (voterr) {
-        const posNo = 2;
-        try {
-          const candidates = await ballot.selectRequestedCandidates(posNo);
-          if (candidates === 1) {
-            res.status(500).json(errorHandler.emptyParam);
-          } else if (candidates) {
-            res.status(200).json(success(candidates, "VP SSP"));
-          }
-        } catch (err) {
-          res.status(500).json(errorHandler.queryError);
-        }
-      } else {
-        res.status(500).json(errorHandler.serverError);
-      }
-    } else {
-      res.status(500).json(errorHandler.jwtError);
+  const posNo = 2;
+  try {
+    const candidates = await ballot.selectRequestedCandidates(posNo);
+    if (candidates === 1) {
+      res.status(500).json(errorHandler.emptyParam);
+    } else if (candidates) {
+      res.status(200).json(success(candidates, "VP SSP"));
     }
+  } catch (err) {
+    res.status(500).json(errorHandler.queryError);
   }
 };
 
@@ -97,35 +61,17 @@ module.exports.getVPSSPCandidates = async function (req, res) {
  * @param {*} res
  */
 module.exports.getVPPSICandidates = async function (req, res) {
-  if (req.headers === null || req.headers === "") {
-    res.status(401).json(errorHandler.cannotAccess);
-  } else {
-    const token = getToken(req.headers);
-    const payload = await jwt.verify(token, config.jwt_key);
-
-    if (payload && payload.id) {
-      const voterr = await voter.isRegistered(payload.email);
-      if (!voterr) {
-        res.status(401).json(errorHandler.noVoter);
-      } else if (voterr) {
-        const posNo = 3;
-        try {
-          const candidates = await ballot.selectRequestedCandidates(posNo);
-          if (candidates === 1) {
-            res.status(500).json(errorHandler.emptyParam);
-          } else if (candidates) {
-            res.status(200).json(success(candidates, "VP PSI"));
-          }
-        } catch (err) {
-          res.status(500).json(errorHandler.queryError);
-        }
-      } else {
-        res.status(500).json(errorHandler.serverError);
-      }
-    } else {
-      res.status(500).json(errorHandler.jwtError);
+  const posNo = 3;
+  try {
+    const candidates = await ballot.selectRequestedCandidates(posNo);
+    if (candidates === 1) {
+      res.status(500).json(errorHandler.emptyParam);
+    } else if (candidates) {
+      res.status(200).json(success(candidates, "VP PSI"));
     }
-  }
+  } catch (err) {
+    res.status(500).json(errorHandler.queryError);
+  }    
 };
 
 /**
@@ -134,34 +80,16 @@ module.exports.getVPPSICandidates = async function (req, res) {
  * @param {*} res
  */
 module.exports.getSecretaryCandidates = async function (req, res) {
-  if (req.headers === null || req.headers === "") {
-    res.status(401).json(errorHandler.cannotAccess);
-  } else {
-    const token = getToken(req.headers);
-    const payload = await jwt.verify(token, config.jwt_key);
-
-    if (payload && payload.id) {
-      const voterr = await voter.isRegistered(payload.email);
-      if (!voterr) {
-        res.status(401).json(errorHandler.noVoter);
-      } else if (voterr) {
-        const posNo = 4;
-        try {
-          const candidates = await ballot.selectRequestedCandidates(posNo);
-          if (candidates === 1) {
-            res.status(500).json(errorHandler.emptyParam);
-          } else if (candidates) {
-            res.status(200).json(success(candidates, "Secretary"));
-          }
-        } catch (err) {
-          res.status(500).json(errorHandler.queryError);
-        }
-      } else {
-        res.status(500).json(errorHandler.serverError);
-      }
-    } else {
-      res.status(500).json(errorHandler.jwtError);
+  const posNo = 4;
+  try {
+    const candidates = await ballot.selectRequestedCandidates(posNo);
+    if (candidates === 1) {
+      res.status(500).json(errorHandler.emptyParam);
+    } else if (candidates) {
+      res.status(200).json(success(candidates, "Secretary"));
     }
+  } catch (err) {
+    res.status(500).json(errorHandler.queryError);
   }
 };
 
@@ -171,34 +99,16 @@ module.exports.getSecretaryCandidates = async function (req, res) {
  * @param {*} res
  */
 module.exports.getTreasurerCandidates = async function (req, res) {
-  if (req.headers === null || req.headers === "") {
-    res.status(401).json(errorHandler.cannotAccess);
-  } else {
-    const token = getToken(req.headers);
-    const payload = await jwt.verify(token, config.jwt_key);
-
-    if (payload && payload.id) {
-      const voterr = await voter.isRegistered(payload.email);
-      if (!voterr) {
-        res.status(401).json(errorHandler.noVoter);
-      } else if (voterr) {
-        const posNo = 5;
-        try {
-          const candidates = await ballot.selectRequestedCandidates(posNo);
-          if (candidates === 1) {
-            res.status(500).json(errorHandler.emptyParam);
-          } else if (candidates) {
-            res.status(200).json(success(candidates, "Treasuer"));
-          }
-        } catch (err) {
-          res.status(500).json(errorHandler.queryError);
-        }
-      } else {
-        res.status(500).json(errorHandler.serverError);
-      }
-    } else {
-      res.status(500).json(errorHandler.jwtError);
+  const posNo = 5;
+  try {
+    const candidates = await ballot.selectRequestedCandidates(posNo);
+    if (candidates === 1) {
+      res.status(500).json(errorHandler.emptyParam);
+    } else if (candidates) {
+      res.status(200).json(success(candidates, "Treasuer"));
     }
+  } catch (err) {
+    res.status(500).json(errorHandler.queryError);
   }
 };
 
@@ -208,34 +118,16 @@ module.exports.getTreasurerCandidates = async function (req, res) {
  * @param {*} res
  */
 module.exports.getGCCCandidates = async function (req, res) {
-  if (req.headers === null || req.headers === "") {
-    res.status(401).json(errorHandler.cannotAccess);
-  } else {
-    const token = getToken(req.headers);
-    const payload = await jwt.verify(token, config.jwt_key);
-
-    if (payload && payload.id) {
-      const voterr = await voter.isRegistered(payload.email);
-      if (!voterr) {
-        res.status(401).json(errorHandler.noVoter);
-      } else if (voterr) {
-        const posNo = 6;
-        try {
-          const candidates = await ballot.selectRequestedCandidates(posNo);
-          if (candidates === 1) {
-            res.status(500).json(errorHandler.emptyParam);
-          } else if (candidates) {
-            res.status(200).json(success(candidates, "GCC"));
-          }
-        } catch (err) {
-          res.status(500).json(errorHandler.queryError);
-        }
-      } else {
-        res.status(500).json(errorHandler.serverError);
-      }
-    } else {
-      res.status(500).json(errorHandler.jwtError);
+  const posNo = 6;
+  try {
+    const candidates = await ballot.selectRequestedCandidates(posNo);
+    if (candidates === 1) {
+      res.status(500).json(errorHandler.emptyParam);
+    } else if (candidates) {
+      res.status(200).json(success(candidates, "GCC"));
     }
+  } catch (err) {
+    res.status(500).json(errorHandler.queryError);
   }
 };
 
@@ -245,34 +137,16 @@ module.exports.getGCCCandidates = async function (req, res) {
  * @param {*} res
  */
 module.exports.getPROCandidates = async function (req, res) {
-  if (req.headers === null || req.headers === "") {
-    res.status(401).json(errorHandler.cannotAccess);
-  } else {
-    const token = getToken(req.headers);
-    const payload = await jwt.verify(token, config.jwt_key);
-
-    if (payload && payload.id) {
-      const voterr = await voter.isRegistered(payload.email);
-      if (!voterr) {
-        res.status(401).json(errorHandler.noVoter);
-      } else if (voterr) {
-        const posNo = 7;
-        try {
-          const candidates = await ballot.selectRequestedCandidates(posNo);
-          if (candidates === 1) {
-            res.status(500).json(errorHandler.emptyParam);
-          } else if (candidates) {
-            res.status(200).json(success(candidates, "PRO"));
-          }
-        } catch (err) {
-          res.status(500).json(errorHandler.queryError);
-        }
-      } else {
-        res.status(500).json(errorHandler.serverError);
-      }
-    } else {
-      res.status(500).json(errorHandler.jwtError);
+  const posNo = 7;
+  try {
+    const candidates = await ballot.selectRequestedCandidates(posNo);
+    if (candidates === 1) {
+      res.status(500).json(errorHandler.emptyParam);
+    } else if (candidates) {
+      res.status(200).json(success(candidates, "PRO"));
     }
+  } catch (err) {
+    res.status(500).json(errorHandler.queryError);
   }
 };
 
@@ -282,34 +156,16 @@ module.exports.getPROCandidates = async function (req, res) {
  * @param {*} res
  */
 module.exports.getCEACCandidates = async function (req, res) {
-  if (req.headers === null || req.headers === "") {
-    res.status(401).json(errorHandler.cannotAccess);
-  } else {
-    const token = getToken(req.headers);
-    const payload = await jwt.verify(token, config.jwt_key);
-
-    if (payload && payload.id) {
-      const voterr = await voter.isRegistered(payload.email);
-      if (!voterr) {
-        res.status(401).json(errorHandler.noVoter);
-      } else if (voterr) {
-        const posNo = 8;
-        try {
-          const candidates = await ballot.selectRequestedCandidates(posNo);
-          if (candidates === 1) {
-            res.status(500).json(errorHandler.emptyParam);
-          } else if (candidates) {
-            res.status(200).json(success(candidates, "CEAC"));
-          }
-        } catch (err) {
-          res.status(500).json(errorHandler.queryError);
-        }
-      } else {
-        res.status(500).json(errorHandler.serverError);
-      }
-    } else {
-      res.status(500).json(errorHandler.jwtError);
+  const posNo = 8;
+  try {
+    const candidates = await ballot.selectRequestedCandidates(posNo);
+    if (candidates === 1) {
+      res.status(500).json(errorHandler.emptyParam);
+    } else if (candidates) {
+      res.status(200).json(success(candidates, "CEAC"));
     }
+  } catch (err) {
+    res.status(500).json(errorHandler.queryError);
   }
 };
 
@@ -319,39 +175,22 @@ module.exports.getCEACCandidates = async function (req, res) {
  * @param {*} res
  */
 module.exports.getEACCandidates = async function (req, res) {
-  if (req.headers === null || req.headers === "") {
-    res.status(401).json(errorHandler.cannotAccess);
-  } else {
-    const token = getToken(req.headers);
-    const payload = await jwt.verify(token, config.jwt_key);
-
-    if (payload && payload.id) {
-      const voterr = await voter.isRegistered(payload.email);
-      if (!voterr) {
-        res.status(401).json(errorHandler.noVoter);
-      } else if (voterr) {
-        const posNo = 9;
-        try {
-          const candidates = await ballot.selectRequestedCandidates(posNo);
-          if (candidates === 1) {
-            res.status(500).json(errorHandler.emptyParam);
-          } else if (candidates) {
-            res.status(200).json(success(candidates, "EAC"));
-          }
-        } catch (err) {
-          res.status(500).json(errorHandler.queryError);
-        }
-      } else {
-        res.status(500).json(errorHandler.serverError);
-      }
-    } else {
-      res.status(500).json(errorHandler.jwtError);
+  const posNo = 9;
+  try {
+    const candidates = await ballot.selectRequestedCandidates(posNo);
+    if (candidates === 1) {
+      res.status(500).json(errorHandler.emptyParam);
+    } else if (candidates) {
+      res.status(200).json(success(candidates, "EAC"));
     }
+  } catch (err) {
+    res.status(500).json(errorHandler.queryError);
   }
 };
 
 /**
  * Gets faculty rep candidates based on the faculty that the logged in voter is in
+ * This wouldbe during voting, currently no endpoint to just get the faculty candidates for viewing
  * @param {*} req
  * @param {*} res
  */
