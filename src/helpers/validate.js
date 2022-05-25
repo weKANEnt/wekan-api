@@ -1,3 +1,5 @@
+const e = require("cors");
+
 const uname = /^[0-9a-zA-Z]+$/;
 const gname = /^[A-Za-z.\s-]+$/;
 const emailR = /.{1,}@mymona.uwi.edu$/;
@@ -111,7 +113,7 @@ module.exports.valOTP = function (otp) {
 };
 
 /**
- * Date erver side validation
+ * @description Date erver side validation
  * @param {*} dateString 
  * @returns 
  */
@@ -123,6 +125,34 @@ module.exports.valDate = function (dateString) {
       return false;
     } else {
       return true;
+    }
+  }
+};
+
+/**
+ * @description Determine if the start and end dates are vaoid in relation to each other
+ * @param {*} sDate 
+ * @param {*} eDate 
+ * @returns {Boolean}
+ */
+module.exports.val2Dates = function (sDate, eDate){
+  if (sDate === undefined || sDate === null || sDate === ""){
+    return false;
+  } else {
+    if (eDate === undefined || eDate === null || eDate === ""){
+      return false;
+    } else {
+      const vD1 = isValidDate(sDate);
+      const vD2 = isValidDate(eDate);
+      if (!(vD1 && vD2)){
+        return false;
+      } else {
+        if (sDate > eDate){
+          return false;
+        } else if (sDate <= eDate){
+          return true;
+        }
+      }
     }
   }
 };
