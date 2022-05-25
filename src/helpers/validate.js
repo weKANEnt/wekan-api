@@ -3,13 +3,30 @@ const gname = /^[A-Za-z.\s-]+$/;
 const emailR = /.{1,}@mymona.uwi.edu$/;
 const otpR = /^[A-Z0-9]{6}/;
 
+//Helper
+/**
+ * Function to determine is a date string follows the yyyy/mm/dd format
+ * @author Goblinlord
+ * @see https://stackoverflow.com/questions/18758772/how-do-i-validate-a-date-in-this-format-yyyy-mm-dd-using-jquery
+ * @param {*} dateString 
+ * @returns 
+ */
+function isValidDate(dateString) {
+  var regEx = /^\d{4}-\d{2}-\d{2}$/;
+  if(!dateString.match(regEx)) return false;  // Invalid format
+  var d = new Date(dateString);
+  var dNum = d.getTime();
+  if(!dNum && dNum !== 0) return false; // NaN value, Invalid date
+  return d.toISOString().slice(0,10) === dateString;
+}
+
 /**
  * Username server side validation
  * @version 1.0
  * @author Spark-Inc
  * @return true if it passes the validation, false if it does not or false if the value passed is null or empty
  */
-module.exports.valUsername = function (username) {
+module.exports.valAlphanumeric = function (username) {
   if (username === null || username === "" || username === undefined) {
     return false;
   } else {
@@ -86,6 +103,23 @@ module.exports.valOTP = function (otp) {
     return false;
   } else {
     if (!otp.match(otpR)) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+};
+
+/**
+ * Date erver side validation
+ * @param {*} dateString 
+ * @returns 
+ */
+module.exports.valDate = function (dateString) {
+  if (dateString === undefined || dateString === null || dateString === "") {
+    return false;
+  } else {
+    if (!isValidDate(dateString)){
       return false;
     } else {
       return true;
