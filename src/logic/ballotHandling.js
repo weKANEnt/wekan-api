@@ -101,13 +101,15 @@ module.exports.isInHall = async function (id, hid) {
  * @param {*} cids
  */
 module.exports.insertBallotInfo = async function (cids) {
+  console.log("insertBallot")
   if (cids) {
-    for (var c = 0; c <= cids.length; c++) {
+    for (var c = 0; c < cids.length; c++) {
       const candidate = await candidates.findOne({
         where: {
-          cid: cids[0],
+          cid: cids[c],
         },
       });
+      console.log(candidate);
       var up = candidate.noOfVotes + 1;
 
       await candidates.upsert({
