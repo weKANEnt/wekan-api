@@ -26,7 +26,8 @@ function success(token) {
 module.exports.loginAdmin = async function (req, res) {
   const { email, password } = req.body;
   if (!(email && password)) {
-    res.status(503).json(ifield);
+    res.status(503).json(errorHandler.emptyParam);
+    return 1;
   }
   const vEmail = validate.valEmail(email);
   const vPassword = validate.valPassword(password);
@@ -38,6 +39,7 @@ module.exports.loginAdmin = async function (req, res) {
         res.status(401).json(errorHandler.noAdmins);
       } else if (adminn) {
         if (bcrypt.compareSync(password, adminn.password)) {
+          console.log(config.jwt_key)
           const token = jwt.sign(
             {
               id: adminn.aid,
@@ -48,18 +50,23 @@ module.exports.loginAdmin = async function (req, res) {
               expiresIn: "1h",
             }
           );
+          console.log(token)
           res.status(200).json(success(token));
         }
       } else {
         res.status(500).json(errorHandler.serverError);
+        return 1;
       }
     } catch (err) {
       res.status(500).json(errorHandler.jwtError);
+      return 1;
     }
   } else if (vEmail !== true || vPassword !== true) {
     res.status(401).json(errorHandler.emailValidation);
+    return 1;
   } else {
     res.status(500).json(errorHandler.serverError);
+    return 0;
   }
 };
 
@@ -72,6 +79,7 @@ module.exports.loginAdmin = async function (req, res) {
 module.exports.registerVoter = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
+    return 1;
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
@@ -81,9 +89,11 @@ module.exports.registerVoter = async function (req, res) {
       const adminn = await admin.findAdminById(payload.id);
       if (!adminn) {
         res.status(401).json(errorHandler.noAdmins);
+        return 1;
       } else if (adminn) {
-        if (!email) {
+        if ( !(email && hall && faculty  && doesCommute && isPostGrad)) {
           res.status(400).json(errorHandler.emptyParam);
+          return 1;
         } else {
           const vEmail = validate.valEmail(email);
 
@@ -106,15 +116,20 @@ module.exports.registerVoter = async function (req, res) {
                 res
                   .status(200)
                   .json(successHandler(true, "Voter added successfully"));
+                return 0;
               } else if (addVoter === 1) {
                 res.status(422).json(errorHandler.causingDuplicate);
+                return 1;
               } else if (addVoter === 2) {
                 res.status(500).json(errorHandler.emptyParam);
+                return 1;
               } else {
                 res.status(500).json(errorHandler.serverError);
+                return 1;
               }
             } catch (err) {
               res.status(500).json(errorHandler.queryError);
+              return 1;
             }
           } else if (
             vEmail != true ||
@@ -124,15 +139,19 @@ module.exports.registerVoter = async function (req, res) {
             !(isPostGrad === true || isPostGrad === false)
           ) {
             res.status(401).json(errorHandler.generalValidation);
+            return 1;
           } else {
             res.status(500).json(errorHandler.serverError);
+            return 1;
           }
         }
       } else {
         res.status(500).json(errorHandler.serverError);
+        return 1;
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
+      return 1;
     }
   }
 };
