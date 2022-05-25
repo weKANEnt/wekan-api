@@ -146,3 +146,10 @@ module.exports.electionAlreadyExists = errorHandler(
   "Currently,only a single election can be accomodated",
   "wek-ci"
 );
+
+module.exports.nothingToRemove = errorHandler(
+  false,
+  "Nothing to remove",
+  "There is nothing to delete",
+  "wek-nf"
+);
