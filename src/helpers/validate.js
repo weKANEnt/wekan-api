@@ -1,7 +1,7 @@
 const e = require("cors");
 
-const uname = /^[0-9a-zA-Z]+$/;      
-const title = /^[\w\s]+$/;            
+const uname = /^[0-9a-zA-Z]+$/;
+const title = /^[\w\s]+$/;
 const gname = /^[A-Za-z.\s-]+$/;
 const emailR = /.{1,}@mymona.uwi.edu$/;
 const otpR = /^[A-Z0-9]{6}/;
@@ -11,16 +11,16 @@ const otpR = /^[A-Z0-9]{6}/;
  * Function to determine is a date string follows the yyyy/mm/dd format
  * @author Goblinlord
  * @see https://stackoverflow.com/questions/18758772/how-do-i-validate-a-date-in-this-format-yyyy-mm-dd-using-jquery
- * @param {*} dateString 
- * @returns 
+ * @param {*} dateString
+ * @returns
  */
 function isValidDate(dateString) {
   var regEx = /^\d{4}-\d{2}-\d{2}$/;
-  if(!dateString.match(regEx)) return false;  // Invalid format
+  if (!dateString.match(regEx)) return false; // Invalid format
   var d = new Date(dateString);
   var dNum = d.getTime();
-  if(!dNum && dNum !== 0) return false; // NaN value, Invalid date
-  return d.toISOString().slice(0,10) === dateString;
+  if (!dNum && dNum !== 0) return false; // NaN value, Invalid date
+  return d.toISOString().slice(0, 10) === dateString;
 }
 
 /**
@@ -115,14 +115,14 @@ module.exports.valOTP = function (otp) {
 
 /**
  * @description Date erver side validation
- * @param {*} dateString 
- * @returns 
+ * @param {*} dateString
+ * @returns
  */
 module.exports.valDate = function (dateString) {
   if (dateString === undefined || dateString === null || dateString === "") {
     return false;
   } else {
-    if (!isValidDate(dateString)){
+    if (!isValidDate(dateString)) {
       return false;
     } else {
       return true;
@@ -132,28 +132,28 @@ module.exports.valDate = function (dateString) {
 
 /**
  * @description Determine if the start and end dates are vaoid in relation to each other
- * @param {*} sDate 
- * @param {*} eDate 
+ * @param {*} sDate
+ * @param {*} eDate
  * @returns {Boolean}
  */
-module.exports.val2Dates = function (sDate, eDate){
-  if (sDate === undefined || sDate === null || sDate === ""){
+module.exports.val2Dates = function (sDate, eDate) {
+  if (sDate === undefined || sDate === null || sDate === "") {
     return false;
   } else {
-    if (eDate === undefined || eDate === null || eDate === ""){
+    if (eDate === undefined || eDate === null || eDate === "") {
       return false;
     } else {
       const vD1 = isValidDate(sDate);
       const vD2 = isValidDate(eDate);
-      if (!(vD1 && vD2)){
+      if (!(vD1 && vD2)) {
         return false;
       } else {
-        if (sDate > eDate){
+        if (sDate > eDate) {
           return false;
-        } else if (sDate <= eDate){
-          const today = new Date().toISOString().slice(0,10);
-          if (new Date(sDate).toISOString().slice(0,10) >= today) {
-            if (new Date(eDate).toISOString().slice(0,10) >= today) {
+        } else if (sDate <= eDate) {
+          const today = new Date().toISOString().slice(0, 10);
+          if (new Date(sDate).toISOString().slice(0, 10) >= today) {
+            if (new Date(eDate).toISOString().slice(0, 10) >= today) {
               return true;
             } else {
               return false;

@@ -1,1 +1,412 @@
-{"client":"Thunder Client","collectionName":"weKan","dateExported":"2022-05-19T02:27:34.527Z","version":"1.1","folders":[],"requests":[{"_id":"4a7743a6-7d9f-422c-bcf4-280efaa21640","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"checkIfVoterisRegistered","url":"http://localhost:8080/uwivotes/votes?email=naomi.benjamin@mymona.uwi.edu","method":"GET","sortNum":10000,"created":"2022-04-23T04:47:01.500Z","modified":"2022-05-17T20:03:11.311Z","headers":[],"params":[{"name":"email","value":"naomi.benjamin@mymona.uwi.edu","isPath":false}],"tests":[]},{"_id":"50f5b3af-b6fa-4407-a866-1d818ad2630c","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Register Voter","url":"http://localhost:8080/uwivotes/admin/addVoter","method":"POST","sortNum":20000,"created":"2022-04-25T00:58:13.490Z","modified":"2022-05-17T22:57:33.550Z","headers":[{"name":"Authorization","value":"{{adminToken}}"}],"params":[],"body":{"type":"json","raw":"{\n    \"email\": \"kayvia.harriott@mymona.uwi.edu\",\n    \"hall\": 1,\n    \"faculty\": 2,\n    \"doesCommute\": false,\n    \"isPostGrad\": false\n}","form":[]},"tests":[]},{"_id":"0c476375-45e0-4f07-8efa-cd1e4deac203","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Admin Login","url":"http://localhost:8080/uwivotes/admin/login","method":"POST","sortNum":30000,"created":"2022-04-25T02:52:07.976Z","modified":"2022-05-17T20:44:08.421Z","headers":[],"params":[],"body":{"type":"json","raw":"{\n    \"email\": \"kayvia.harriott@mymona.uwi.edu\",\n    \"password\": \"weKAN\"\n}","form":[]},"tests":[{"type":"set-env-var","custom":"json.token","action":"setto","value":"{{adminToken}}"}]},{"_id":"03289a12-31ba-4dd4-81ba-f593372018ea","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Generate OTP","url":"http://localhost:8080/uwivotes/votes/OTP","method":"PATCH","sortNum":40000,"created":"2022-05-09T16:01:27.196Z","modified":"2022-05-17T20:47:51.790Z","headers":[],"params":[],"body":{"type":"json","raw":"{\n    \"email\": \"kayvia.harriott@mymona.uwi.edu\"\n}","form":[]},"tests":[]},{"_id":"3705dd65-5d10-4c37-8c92-421bc23993cd","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Does OTP Match","url":"http://localhost:8080/uwivotes/votes/OTP?otp=9KEUBB&email=kayvia.harriott@mymona.uwi.edu","method":"GET","sortNum":50000,"created":"2022-05-10T14:46:37.779Z","modified":"2022-05-19T02:10:54.973Z","headers":[],"params":[{"name":"otp","value":"9KEUBB","isPath":false},{"name":"email","value":"kayvia.harriott@mymona.uwi.edu","isPath":false}],"tests":[{"type":"set-env-var","custom":"json.token","action":"setto","value":"{{voterToken}}"}]},{"_id":"43afccd3-91dd-4fc8-860f-62d7fff2533a","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Add Candidate(s)","url":"http://localhost:8080/uwivotes/admin/addCandidate","method":"POST","sortNum":60000,"created":"2022-05-10T18:21:39.653Z","modified":"2022-05-19T02:19:43.429Z","headers":[{"name":"Authorization","value":"{{adminToken}}"}],"params":[],"body":{"type":"json","raw":"{\n    \"candidates\": [\n        {\n            \"firstName\": \"Noelle\",\n            \"lastName\": \"Benjamin\",\n            \"email\": \"oliviaaaa.benjamin@mymona.uwi.edu\",\n            \"hall\": 1,\n            \"faculty\": 2,\n            \"position\": 10,\n            \"about\": \"lorem test\"   \n        },\n        {\n            \"firstName\": \"Leah\",\n            \"lastName\": \"Thompson\",\n            \"email\": \"alanaaa.thompson@mymona.uwi.edu\",\n            \"hall\": 6,\n            \"faculty\": 6,\n            \"position\": 10,\n            \"about\": \"lorem test 2\"\n        }\n    ]\n}","form":[]},"tests":[]},{"_id":"bceecf6a-2400-4ea7-b8f9-083fd4dbb9e6","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Get UWI Halls","url":"http://localhost:8080/uwivotes/admin/halls","method":"GET","sortNum":70000,"created":"2022-05-10T18:42:34.004Z","modified":"2022-05-10T18:46:15.761Z","headers":[{"name":"Authorization","value":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJub2JlbmphbWluMTlAZ21haWwuY29tIiwiaWF0IjoxNjUyMjA2NzY2LCJleHAiOjE2NTIyMTAzNjZ9.SCid8aFoC0vTEgq6U45cVPJoUGGCr8-5AxMPzhFjpUk"}],"params":[],"tests":[]},{"_id":"61b0cd51-8948-485d-acbf-e6e419353a00","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Get UWI Faculties","url":"http://localhost:8080/uwivotes/admin/halls","method":"GET","sortNum":80000,"created":"2022-05-10T18:46:02.272Z","modified":"2022-05-17T20:31:43.185Z","headers":[{"name":"Authorization","value":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJub2JlbmphbWluMTlAZ21haWwuY29tIiwiaWF0IjoxNjUyMjA2NzY2LCJleHAiOjE2NTIyMTAzNjZ9.SCid8aFoC0vTEgq6U45cVPJoUGGCr8-5AxMPzhFjpUk"}],"params":[],"tests":[]},{"_id":"bd516c7b-3553-4f6f-bcd4-8be7dd096295","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Get UWI Positions","url":"http://localhost:8080/uwivotes/admin/positions","method":"GET","sortNum":90000,"created":"2022-05-10T20:12:40.547Z","modified":"2022-05-10T20:13:39.796Z","headers":[{"name":"Authorization","value":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJub2JlbmphbWluMTlAZ21haWwuY29tIiwiaWF0IjoxNjUyMjEzNjAxLCJleHAiOjE2NTIyMTcyMDF9.Pa6qQDPQXhJ9e25ZpSrDy4GUeoFFB3xp1C5yGPL-Sro"}],"params":[],"tests":[]},{"_id":"c0104e25-a78b-4ae9-ae3b-4f117768222f","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Get Candidates - President","url":"http://localhost:8080/uwivotes/ballot/presidents","method":"GET","sortNum":100000,"created":"2022-05-16T23:33:12.870Z","modified":"2022-05-17T20:31:20.447Z","headers":[{"name":"Authorization","value":"{{voterToken}}"}],"params":[],"tests":[]},{"_id":"03eb6dcd-994c-4437-9b8e-a72bd830a662","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Get Candidates - VP SSP","url":"http://localhost:8080/uwivotes/ballot/vpssp","method":"GET","sortNum":110000,"created":"2022-05-16T23:51:44.838Z","modified":"2022-05-17T20:31:50.737Z","headers":[{"name":"Authorization","value":"{{voterToken}}"}],"params":[],"tests":[]},{"_id":"4775c4a5-6ccf-4e4e-a443-715eca899d07","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Get Candidates - VP PSI","url":"http://localhost:8080/uwivotes/ballot/vppsi","method":"GET","sortNum":120000,"created":"2022-05-17T00:06:21.348Z","modified":"2022-05-17T20:31:58.012Z","headers":[{"name":"Authorization","value":"{{voterToken}}"}],"params":[],"tests":[]},{"_id":"04e34673-a00e-49f0-b012-5fe66ad326ab","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Get Candidates - Secretary","url":"http://localhost:8080/uwivotes/ballot/secretary","method":"GET","sortNum":130000,"created":"2022-05-17T00:08:05.503Z","modified":"2022-05-17T20:32:30.773Z","headers":[{"name":"Authorization","value":"{{voterToken}}"}],"params":[],"tests":[]},{"_id":"be5a634d-f08d-45d2-8cb3-7cc4fad132ac","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Get Candidates - Treasurer","url":"http://localhost:8080/uwivotes/ballot/treasurer","method":"GET","sortNum":140000,"created":"2022-05-17T00:08:57.703Z","modified":"2022-05-17T20:32:39.091Z","headers":[{"name":"Authorization","value":"{{voterToken}}"}],"params":[],"tests":[]},{"_id":"a8345154-e0e4-4a9b-a115-a9982fd0543e","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Get Candidates - GCC","url":"http://localhost:8080/uwivotes/ballot/gcc","method":"GET","sortNum":150000,"created":"2022-05-17T00:09:16.536Z","modified":"2022-05-17T20:32:55.958Z","headers":[{"name":"Authorization","value":"{{voterToken}}"}],"params":[],"tests":[]},{"_id":"24193f08-d4db-4497-91bb-84088e9850f6","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Get Candidates - PRO","url":"http://localhost:8080/uwivotes/ballot/pro","method":"GET","sortNum":160000,"created":"2022-05-17T00:09:34.949Z","modified":"2022-05-17T20:33:02.753Z","headers":[{"name":"Authorization","value":"{{voterToken}}"}],"params":[],"tests":[]},{"_id":"a5b7328f-37fc-49c2-b12c-bde75555febe","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Get Candidates - CEAC","url":"http://localhost:8080/uwivotes/ballot/ceac","method":"GET","sortNum":170000,"created":"2022-05-17T00:09:52.992Z","modified":"2022-05-17T20:33:07.943Z","headers":[{"name":"Authorization","value":"{{voterToken}}"}],"params":[],"tests":[]},{"_id":"46021046-1a0a-46bd-a4d4-b4cbad51972c","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Get Candidates - EAC","url":"http://localhost:8080/uwivotes/ballot/eac","method":"GET","sortNum":180000,"created":"2022-05-17T00:10:10.495Z","modified":"2022-05-17T20:33:14.858Z","headers":[{"name":"Authorization","value":"{{voterToken}}"}],"params":[],"tests":[]},{"_id":"0187f000-55fd-4254-aeeb-295028466fc4","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Get Candidates - Faculty Rep","url":"http://localhost:8080/uwivotes/ballot/facultyrep","method":"GET","sortNum":187500,"created":"2022-05-17T21:46:31.200Z","modified":"2022-05-17T21:46:41.672Z","headers":[{"name":"Authorization","value":"{{voterToken}}"}],"params":[],"tests":[]},{"_id":"86106f56-3cd5-4ea4-a4e6-e44fc6dc42e1","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Get Candidates - Commuting","url":"http://localhost:8080/uwivotes/ballot/commuting","method":"GET","sortNum":190000,"created":"2022-05-17T20:40:40.982Z","modified":"2022-05-17T20:40:47.450Z","headers":[{"name":"Authorization","value":"{{voterToken}}"}],"params":[],"tests":[]},{"_id":"26c11f3f-e85a-4888-9f12-ccd0ab741126","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Get Candidates - Post Graduate","url":"http://localhost:8080/uwivotes/ballot/postgrad","method":"GET","sortNum":200000,"created":"2022-05-17T22:05:11.279Z","modified":"2022-05-17T22:05:19.768Z","headers":[{"name":"Authorization","value":"{{voterToken}}"}],"params":[],"tests":[]},{"_id":"3e3b3a0b-ea00-458b-83dc-05fa9fa555c1","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Get Candidates - Hall Chair","url":"http://localhost:8080/uwivotes/ballot/hallchair","method":"GET","sortNum":205000,"created":"2022-05-19T02:09:56.753Z","modified":"2022-05-19T02:10:08.917Z","headers":[{"name":"Authorization","value":"{{voterToken}}"}],"params":[],"tests":[]},{"_id":"eb07d006-4a3b-43f5-827e-62f2d3652334","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Get Candidates - Deputy Hall Chair ","url":"http://localhost:8080/uwivotes/ballot/dhallchair","method":"GET","sortNum":207500,"created":"2022-05-19T02:26:25.407Z","modified":"2022-05-19T02:26:54.751Z","headers":[{"name":"Authorization","value":"{{voterToken}}"}],"params":[],"tests":[]},{"_id":"b35982d6-8b6a-4cc2-888a-e8f5cf833bfa","colId":"aea8285c-ed84-458c-b644-a404de09014a","containerId":"","name":"Submit Ballot","url":"http://localhost:8080/uwivotes/ballot/submittBallot","method":"PATCH","sortNum":210000,"created":"2022-05-17T23:02:40.964Z","modified":"2022-05-17T23:26:47.672Z","headers":[{"name":"Authorization","value":"{{voterToken}}"}],"params":[],"body":{"type":"json","raw":"{\n    \"cids\": [1,2]\n}","form":[]},"tests":[]}]}
+{
+  "client": "Thunder Client",
+  "collectionName": "weKan",
+  "dateExported": "2022-05-19T02:27:34.527Z",
+  "version": "1.1",
+  "folders": [],
+  "requests": [
+    {
+      "_id": "4a7743a6-7d9f-422c-bcf4-280efaa21640",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "checkIfVoterisRegistered",
+      "url": "http://localhost:8080/uwivotes/votes?email=naomi.benjamin@mymona.uwi.edu",
+      "method": "GET",
+      "sortNum": 10000,
+      "created": "2022-04-23T04:47:01.500Z",
+      "modified": "2022-05-17T20:03:11.311Z",
+      "headers": [],
+      "params": [
+        {
+          "name": "email",
+          "value": "naomi.benjamin@mymona.uwi.edu",
+          "isPath": false
+        }
+      ],
+      "tests": []
+    },
+    {
+      "_id": "50f5b3af-b6fa-4407-a866-1d818ad2630c",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Register Voter",
+      "url": "http://localhost:8080/uwivotes/admin/addVoter",
+      "method": "POST",
+      "sortNum": 20000,
+      "created": "2022-04-25T00:58:13.490Z",
+      "modified": "2022-05-17T22:57:33.550Z",
+      "headers": [{ "name": "Authorization", "value": "{{adminToken}}" }],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n    \"email\": \"kayvia.harriott@mymona.uwi.edu\",\n    \"hall\": 1,\n    \"faculty\": 2,\n    \"doesCommute\": false,\n    \"isPostGrad\": false\n}",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "0c476375-45e0-4f07-8efa-cd1e4deac203",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Admin Login",
+      "url": "http://localhost:8080/uwivotes/admin/login",
+      "method": "POST",
+      "sortNum": 30000,
+      "created": "2022-04-25T02:52:07.976Z",
+      "modified": "2022-05-17T20:44:08.421Z",
+      "headers": [],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n    \"email\": \"kayvia.harriott@mymona.uwi.edu\",\n    \"password\": \"weKAN\"\n}",
+        "form": []
+      },
+      "tests": [
+        {
+          "type": "set-env-var",
+          "custom": "json.token",
+          "action": "setto",
+          "value": "{{adminToken}}"
+        }
+      ]
+    },
+    {
+      "_id": "03289a12-31ba-4dd4-81ba-f593372018ea",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Generate OTP",
+      "url": "http://localhost:8080/uwivotes/votes/OTP",
+      "method": "PATCH",
+      "sortNum": 40000,
+      "created": "2022-05-09T16:01:27.196Z",
+      "modified": "2022-05-17T20:47:51.790Z",
+      "headers": [],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n    \"email\": \"kayvia.harriott@mymona.uwi.edu\"\n}",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "3705dd65-5d10-4c37-8c92-421bc23993cd",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Does OTP Match",
+      "url": "http://localhost:8080/uwivotes/votes/OTP?otp=9KEUBB&email=kayvia.harriott@mymona.uwi.edu",
+      "method": "GET",
+      "sortNum": 50000,
+      "created": "2022-05-10T14:46:37.779Z",
+      "modified": "2022-05-19T02:10:54.973Z",
+      "headers": [],
+      "params": [
+        { "name": "otp", "value": "9KEUBB", "isPath": false },
+        {
+          "name": "email",
+          "value": "kayvia.harriott@mymona.uwi.edu",
+          "isPath": false
+        }
+      ],
+      "tests": [
+        {
+          "type": "set-env-var",
+          "custom": "json.token",
+          "action": "setto",
+          "value": "{{voterToken}}"
+        }
+      ]
+    },
+    {
+      "_id": "43afccd3-91dd-4fc8-860f-62d7fff2533a",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Add Candidate(s)",
+      "url": "http://localhost:8080/uwivotes/admin/addCandidate",
+      "method": "POST",
+      "sortNum": 60000,
+      "created": "2022-05-10T18:21:39.653Z",
+      "modified": "2022-05-19T02:19:43.429Z",
+      "headers": [{ "name": "Authorization", "value": "{{adminToken}}" }],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n    \"candidates\": [\n        {\n            \"firstName\": \"Noelle\",\n            \"lastName\": \"Benjamin\",\n            \"email\": \"oliviaaaa.benjamin@mymona.uwi.edu\",\n            \"hall\": 1,\n            \"faculty\": 2,\n            \"position\": 10,\n            \"about\": \"lorem test\"   \n        },\n        {\n            \"firstName\": \"Leah\",\n            \"lastName\": \"Thompson\",\n            \"email\": \"alanaaa.thompson@mymona.uwi.edu\",\n            \"hall\": 6,\n            \"faculty\": 6,\n            \"position\": 10,\n            \"about\": \"lorem test 2\"\n        }\n    ]\n}",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "bceecf6a-2400-4ea7-b8f9-083fd4dbb9e6",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Get UWI Halls",
+      "url": "http://localhost:8080/uwivotes/admin/halls",
+      "method": "GET",
+      "sortNum": 70000,
+      "created": "2022-05-10T18:42:34.004Z",
+      "modified": "2022-05-10T18:46:15.761Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJub2JlbmphbWluMTlAZ21haWwuY29tIiwiaWF0IjoxNjUyMjA2NzY2LCJleHAiOjE2NTIyMTAzNjZ9.SCid8aFoC0vTEgq6U45cVPJoUGGCr8-5AxMPzhFjpUk"
+        }
+      ],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "61b0cd51-8948-485d-acbf-e6e419353a00",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Get UWI Faculties",
+      "url": "http://localhost:8080/uwivotes/admin/halls",
+      "method": "GET",
+      "sortNum": 80000,
+      "created": "2022-05-10T18:46:02.272Z",
+      "modified": "2022-05-17T20:31:43.185Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJub2JlbmphbWluMTlAZ21haWwuY29tIiwiaWF0IjoxNjUyMjA2NzY2LCJleHAiOjE2NTIyMTAzNjZ9.SCid8aFoC0vTEgq6U45cVPJoUGGCr8-5AxMPzhFjpUk"
+        }
+      ],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "bd516c7b-3553-4f6f-bcd4-8be7dd096295",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Get UWI Positions",
+      "url": "http://localhost:8080/uwivotes/admin/positions",
+      "method": "GET",
+      "sortNum": 90000,
+      "created": "2022-05-10T20:12:40.547Z",
+      "modified": "2022-05-10T20:13:39.796Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJub2JlbmphbWluMTlAZ21haWwuY29tIiwiaWF0IjoxNjUyMjEzNjAxLCJleHAiOjE2NTIyMTcyMDF9.Pa6qQDPQXhJ9e25ZpSrDy4GUeoFFB3xp1C5yGPL-Sro"
+        }
+      ],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "c0104e25-a78b-4ae9-ae3b-4f117768222f",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Get Candidates - President",
+      "url": "http://localhost:8080/uwivotes/ballot/presidents",
+      "method": "GET",
+      "sortNum": 100000,
+      "created": "2022-05-16T23:33:12.870Z",
+      "modified": "2022-05-17T20:31:20.447Z",
+      "headers": [{ "name": "Authorization", "value": "{{voterToken}}" }],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "03eb6dcd-994c-4437-9b8e-a72bd830a662",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Get Candidates - VP SSP",
+      "url": "http://localhost:8080/uwivotes/ballot/vpssp",
+      "method": "GET",
+      "sortNum": 110000,
+      "created": "2022-05-16T23:51:44.838Z",
+      "modified": "2022-05-17T20:31:50.737Z",
+      "headers": [{ "name": "Authorization", "value": "{{voterToken}}" }],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "4775c4a5-6ccf-4e4e-a443-715eca899d07",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Get Candidates - VP PSI",
+      "url": "http://localhost:8080/uwivotes/ballot/vppsi",
+      "method": "GET",
+      "sortNum": 120000,
+      "created": "2022-05-17T00:06:21.348Z",
+      "modified": "2022-05-17T20:31:58.012Z",
+      "headers": [{ "name": "Authorization", "value": "{{voterToken}}" }],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "04e34673-a00e-49f0-b012-5fe66ad326ab",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Get Candidates - Secretary",
+      "url": "http://localhost:8080/uwivotes/ballot/secretary",
+      "method": "GET",
+      "sortNum": 130000,
+      "created": "2022-05-17T00:08:05.503Z",
+      "modified": "2022-05-17T20:32:30.773Z",
+      "headers": [{ "name": "Authorization", "value": "{{voterToken}}" }],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "be5a634d-f08d-45d2-8cb3-7cc4fad132ac",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Get Candidates - Treasurer",
+      "url": "http://localhost:8080/uwivotes/ballot/treasurer",
+      "method": "GET",
+      "sortNum": 140000,
+      "created": "2022-05-17T00:08:57.703Z",
+      "modified": "2022-05-17T20:32:39.091Z",
+      "headers": [{ "name": "Authorization", "value": "{{voterToken}}" }],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "a8345154-e0e4-4a9b-a115-a9982fd0543e",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Get Candidates - GCC",
+      "url": "http://localhost:8080/uwivotes/ballot/gcc",
+      "method": "GET",
+      "sortNum": 150000,
+      "created": "2022-05-17T00:09:16.536Z",
+      "modified": "2022-05-17T20:32:55.958Z",
+      "headers": [{ "name": "Authorization", "value": "{{voterToken}}" }],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "24193f08-d4db-4497-91bb-84088e9850f6",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Get Candidates - PRO",
+      "url": "http://localhost:8080/uwivotes/ballot/pro",
+      "method": "GET",
+      "sortNum": 160000,
+      "created": "2022-05-17T00:09:34.949Z",
+      "modified": "2022-05-17T20:33:02.753Z",
+      "headers": [{ "name": "Authorization", "value": "{{voterToken}}" }],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "a5b7328f-37fc-49c2-b12c-bde75555febe",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Get Candidates - CEAC",
+      "url": "http://localhost:8080/uwivotes/ballot/ceac",
+      "method": "GET",
+      "sortNum": 170000,
+      "created": "2022-05-17T00:09:52.992Z",
+      "modified": "2022-05-17T20:33:07.943Z",
+      "headers": [{ "name": "Authorization", "value": "{{voterToken}}" }],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "46021046-1a0a-46bd-a4d4-b4cbad51972c",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Get Candidates - EAC",
+      "url": "http://localhost:8080/uwivotes/ballot/eac",
+      "method": "GET",
+      "sortNum": 180000,
+      "created": "2022-05-17T00:10:10.495Z",
+      "modified": "2022-05-17T20:33:14.858Z",
+      "headers": [{ "name": "Authorization", "value": "{{voterToken}}" }],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "0187f000-55fd-4254-aeeb-295028466fc4",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Get Candidates - Faculty Rep",
+      "url": "http://localhost:8080/uwivotes/ballot/facultyrep",
+      "method": "GET",
+      "sortNum": 187500,
+      "created": "2022-05-17T21:46:31.200Z",
+      "modified": "2022-05-17T21:46:41.672Z",
+      "headers": [{ "name": "Authorization", "value": "{{voterToken}}" }],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "86106f56-3cd5-4ea4-a4e6-e44fc6dc42e1",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Get Candidates - Commuting",
+      "url": "http://localhost:8080/uwivotes/ballot/commuting",
+      "method": "GET",
+      "sortNum": 190000,
+      "created": "2022-05-17T20:40:40.982Z",
+      "modified": "2022-05-17T20:40:47.450Z",
+      "headers": [{ "name": "Authorization", "value": "{{voterToken}}" }],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "26c11f3f-e85a-4888-9f12-ccd0ab741126",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Get Candidates - Post Graduate",
+      "url": "http://localhost:8080/uwivotes/ballot/postgrad",
+      "method": "GET",
+      "sortNum": 200000,
+      "created": "2022-05-17T22:05:11.279Z",
+      "modified": "2022-05-17T22:05:19.768Z",
+      "headers": [{ "name": "Authorization", "value": "{{voterToken}}" }],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "3e3b3a0b-ea00-458b-83dc-05fa9fa555c1",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Get Candidates - Hall Chair",
+      "url": "http://localhost:8080/uwivotes/ballot/hallchair",
+      "method": "GET",
+      "sortNum": 205000,
+      "created": "2022-05-19T02:09:56.753Z",
+      "modified": "2022-05-19T02:10:08.917Z",
+      "headers": [{ "name": "Authorization", "value": "{{voterToken}}" }],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "eb07d006-4a3b-43f5-827e-62f2d3652334",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Get Candidates - Deputy Hall Chair ",
+      "url": "http://localhost:8080/uwivotes/ballot/dhallchair",
+      "method": "GET",
+      "sortNum": 207500,
+      "created": "2022-05-19T02:26:25.407Z",
+      "modified": "2022-05-19T02:26:54.751Z",
+      "headers": [{ "name": "Authorization", "value": "{{voterToken}}" }],
+      "params": [],
+      "tests": []
+    },
+    {
+      "_id": "b35982d6-8b6a-4cc2-888a-e8f5cf833bfa",
+      "colId": "aea8285c-ed84-458c-b644-a404de09014a",
+      "containerId": "",
+      "name": "Submit Ballot",
+      "url": "http://localhost:8080/uwivotes/ballot/submittBallot",
+      "method": "PATCH",
+      "sortNum": 210000,
+      "created": "2022-05-17T23:02:40.964Z",
+      "modified": "2022-05-17T23:26:47.672Z",
+      "headers": [{ "name": "Authorization", "value": "{{voterToken}}" }],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n    \"cids\": [1,2]\n}",
+        "form": []
+      },
+      "tests": []
+    }
+  ]
+}

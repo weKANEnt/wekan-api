@@ -16,7 +16,7 @@ router.route("/facultyrep").get(bApp.getFacultyCandidates);
 router.route("/commuting").get(bApp.getCommutingCandidates);
 router.route("/postgrad").get(bApp.getPostGradCandidates);
 router.route("/submittBallot").patch(bApp.submittBallot);
-router.route("/hallchair").get(bApp.getHallChairmanCandidates)
-router.route("/dhallchair").get(bApp.getDHallChairmanCandidates)
+router.route("/hallchair").get(bApp.getHallChairmanCandidates);
+router.route("/dhallchair").get(bApp.getDHallChairmanCandidates);
 
 module.exports = router;

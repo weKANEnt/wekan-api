@@ -10,8 +10,8 @@ const {
 
 /**
  *Function gets candidates in given category
- * @param {*} posNo 
- * @returns 
+ * @param {*} posNo
+ * @returns
  */
 module.exports.selectRequestedCandidates = async function (posNo) {
   if (posNo) {

@@ -41,7 +41,7 @@ module.exports.loginAdmin = async function (req, res) {
         res.status(401).json(errorHandler.noAdmins);
       } else if (adminn) {
         if (bcrypt.compareSync(password, adminn.password)) {
-          console.log(config.jwt_key)
+          console.log(config.jwt_key);
           const token = jwt.sign(
             {
               id: adminn.aid,
@@ -52,7 +52,7 @@ module.exports.loginAdmin = async function (req, res) {
               expiresIn: "1h",
             }
           );
-          console.log(token)
+          console.log(token);
           res.status(200).json(success(token));
           return;
         }
@@ -97,7 +97,7 @@ module.exports.registerVoter = async function (req, res) {
         res.status(401).json(errorHandler.noAdmins);
         return;
       } else if (adminn) {
-        if ( !(email && hall && faculty)) {
+        if (!(email && hall && faculty)) {
           res.status(400).json(errorHandler.emptyParam);
           return;
         } else {
