@@ -30,3 +30,11 @@ module.exports.insertElection = async function (title, sDate, eDate, csvLocation
     }
     return 1;
  };
+
+ module.exports.selectElection = async function (elid = 1) {
+     if (elid){
+        const election = await electiondata.findAll({});
+        return election;
+     }
+     return 1;
+ };

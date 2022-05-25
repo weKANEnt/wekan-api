@@ -40,27 +40,33 @@ module.exports.createElection = async function (req, res) {
                     const vSDate = validate.valDate(sDate);
                     const vEDate = validate.valDate(eDate);
                     const vSEDate = validate.val2Dates(sDate, eDate);
-                    if (vTitle && vSDate && vEDate && vSEDate) {
-                        try{
-                            const addElection = await election.insertElection(title, sDate, eDate, csvLocation);
-                            if (addElection === 0) {
-                                res.status(200).json(successHandler(true, "Election created"));
-                                return;
-                            } else if (addElection === 1){
-                                res.status(500).json(errorHandler.emptyParam);
-                                return;
-                            } else {
-                                res.status(500).json(errorHandler.serverError);
+                    const electionn = await election.selectElection();
+                    
+                    if (vTitle && vSDate && vEDate && vSEDate ) {
+                        if (electionn.length == 0){
+                            try{
+                                const addElection = await election.insertElection(title, sDate, eDate, csvLocation);
+                                    if (addElection === 0) {
+                                        res.status(200).json(successHandler(true, "Election created"));
+                                        return;
+                                    } else if (addElection === 1){
+                                        res.status(500).json(errorHandler.emptyParam);
+                                        return;
+                                    } else {
+                                        res.status(500).json(errorHandler.serverError);
+                                        return;
+                                    }
+                            } catch(err){
+                                res.status(500).json(errorHandler.queryError);
                                 return;
                             }
-                        } catch(err){
-                            res.status(500).json(errorHandler.queryError);
-                            return;
-                        }
+                        } else if (electionn.length > 0){
+                            res.status(400).json(errorHandler.electionAlreadyExists);
+                        }  
                     } else if ( !vTitle || !vSDate || !vEDate || !vSEDate){
                         res.status(401).json(errorHandler.generalValidation);
                         return;
-                    }
+                    } 
                 }
             } else {
                 res.status(500).json(errorHandler.serverError);

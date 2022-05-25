@@ -139,3 +139,10 @@ module.exports.ballotInvalid = errorHandler(
   "Ballot contains bad data",
   "wek-ve"
 );
+
+module.exports.electionAlreadyExists = errorHandler(
+  false,
+  "Single Election",
+  "Currently,only a single election can be accomodated",
+  "wek-ci"
+);
