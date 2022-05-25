@@ -97,7 +97,7 @@ module.exports.registerVoter = async function (req, res) {
         res.status(401).json(errorHandler.noAdmins);
         return;
       } else if (adminn) {
-        if ( !(email && hall && faculty  && doesCommute && isPostGrad)) {
+        if ( !(email && hall && faculty)) {
           res.status(400).json(errorHandler.emptyParam);
           return;
         } else {

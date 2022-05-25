@@ -9,6 +9,7 @@ const passport = require("passport");
 const voters = require("./routes/voterRoute");
 const admin = require("./routes/adminRoute");
 const ballot = require("./routes/ballotRoute");
+const election = require("./routes/electionRoute");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(passport.initialize());
 app.use("/uwivotes/votes", voters);
 app.use("/uwivotes", admin);
 app.use("/uwivotes/ballot", ballot);
+app.use("/uwivotes/election", election);
 
 app.get("/", (req, res, next) => {
   res.json({ message: "from index api" });

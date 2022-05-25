@@ -1,6 +1,7 @@
 const e = require("cors");
 
-const uname = /^[0-9a-zA-Z]+$/;
+const uname = /^[0-9a-zA-Z]+$/;      
+const title = /^[\w\s]+$/;            
 const gname = /^[A-Za-z.\s-]+$/;
 const emailR = /.{1,}@mymona.uwi.edu$/;
 const otpR = /^[A-Z0-9]{6}/;
@@ -32,7 +33,7 @@ module.exports.valAlphanumeric = function (username) {
   if (username === null || username === "" || username === undefined) {
     return false;
   } else {
-    if (!username.match(uname)) {
+    if (!username.match(title)) {
       return false;
     } else {
       return true;
@@ -150,7 +151,16 @@ module.exports.val2Dates = function (sDate, eDate){
         if (sDate > eDate){
           return false;
         } else if (sDate <= eDate){
-          return true;
+          const today = new Date().toISOString().slice(0,10);
+          if (new Date(sDate).toISOString().slice(0,10) >= today) {
+            if (new Date(eDate).toISOString().slice(0,10) >= today) {
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            return false;
+          }
         }
       }
     }
