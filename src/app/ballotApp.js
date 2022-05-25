@@ -647,7 +647,6 @@ module.exports.getPostGradCandidates = async function (req, res) {
  * @param {*} res 
  */
 module.exports.submittBallot = async function (req, res) {
-  console.log("yoooo")
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
   } else {
@@ -669,7 +668,6 @@ module.exports.submittBallot = async function (req, res) {
           res.status(400).json(errorHandler.ballotInvalid);
         } else if (!verdict.includes(false)) {
           try {
-            console.log(cids)
             const result = await ballot.insertBallotInfo(cids);
             if (result === 0) {
               res

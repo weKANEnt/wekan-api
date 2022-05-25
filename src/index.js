@@ -24,6 +24,6 @@ app.get("/", (req, res, next) => {
   res.json({ message: "from index api" });
 });
 
-app.listen(8081, () => {
+app.listen(8080, () => {
   console.log(`UwiVotes server is running...`);
 });
