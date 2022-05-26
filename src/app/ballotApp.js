@@ -630,7 +630,7 @@ module.exports.submittBallot = async function (req, res) {
       } else if (electionDetails.length === 1) {
         const hasStarted = electionHandler.haselectionStarted(electionDetails[0].startDate);
         const hasEnded = electionHandler.hasElectionEnded(electionDetails[0].endDate);
-        console.log(hasStarted, hasEnded);
+        
         if (hasStarted === true && hasEnded === false){
           const voterr = await voter.isRegistered(payload.email);
           if (voterr == false) {
@@ -662,7 +662,6 @@ module.exports.submittBallot = async function (req, res) {
               }
             }
           } else {
-            console.log("you must submit")
             res.status(500).json(errorHandler.serverError);
             return;
           }
@@ -673,7 +672,6 @@ module.exports.submittBallot = async function (req, res) {
           res.status(400).json(errorHandler.electionEnded);
           return;
         } else {
-          console.log("yerrr")
           res.status(400).json(errorHandler.generalValidation);
           return;
         }
