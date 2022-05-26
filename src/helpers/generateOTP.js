@@ -1,5 +1,7 @@
 /**
  * Function that generates a OTP of length 6
+ * @function
+ * @returns {String}
  */
 module.exports.generateOTP = function () {
   const alphaNum = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

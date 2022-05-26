@@ -12,7 +12,7 @@ const otpR = /^[A-Z0-9]{6}/;
  * @author Goblinlord
  * @see https://stackoverflow.com/questions/18758772/how-do-i-validate-a-date-in-this-format-yyyy-mm-dd-using-jquery
  * @param {*} dateString
- * @returns
+ * @returns {Boolean}
  */
 function isValidDate(dateString) {
   var regEx = /^\d{4}-\d{2}-\d{2}$/;
@@ -27,7 +27,7 @@ function isValidDate(dateString) {
  * Username server side validation
  * @version 1.0
  * @author Spark-Inc
- * @return true if it passes the validation, false if it does not or false if the value passed is null or empty
+ * @return {Boolean}
  */
 module.exports.valAlphanumeric = function (username) {
   if (username === null || username === "" || username === undefined) {
@@ -40,13 +40,13 @@ module.exports.valAlphanumeric = function (username) {
     }
   }
 };
-// just a test
+
 /**
  * Name server side validation
  * @version 1.0
  * @author Spark-Inc
- * @return true if it passes the validation, false if it does not or false if the value passed is null or empty
- */
+ * @return {Boolean}
+*/
 module.exports.valName = function (name) {
   if (name === null || name === "" || name === undefined) {
     return false;
@@ -63,7 +63,7 @@ module.exports.valName = function (name) {
  * Password server side validation
  * @version 1.0
  * @author Spark-Inc
- * @return true if it passes the validation, false if it does not or false if the value passed is null or empty
+ * @return {Boolean}
  */
 module.exports.valPassword = function (password) {
   if (password === null || password === "" || password === undefined) {
@@ -81,7 +81,7 @@ module.exports.valPassword = function (password) {
  * Email server side validation
  * @version 1.0
  * @author Spark-Inc
- * @return true if it passes the validation, false if it does not or false if the value passed is null or empty
+ * @return {Boolean}
  */
 module.exports.valEmail = function (email) {
   if (email === null || email === "" || email === undefined) {
@@ -116,7 +116,7 @@ module.exports.valOTP = function (otp) {
 /**
  * @description Date erver side validation
  * @param {*} dateString
- * @returns
+ * @returns {Boolean}
  */
 module.exports.valDate = function (dateString) {
   if (dateString === undefined || dateString === null || dateString === "") {
