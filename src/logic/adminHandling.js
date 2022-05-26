@@ -11,9 +11,11 @@ const {
 } = require("../db/models");
 
 /**
- *
+ * Attempts to find an adin associated with the given email address
+ * @function
+ * @name findAdmin
  * @param {*} email
- * @returns the admin  object if the admin exists
+ * @returns {Object}
  */
 module.exports.findAdmin = async function (email) {
   if (email) {
@@ -32,6 +34,13 @@ module.exports.findAdmin = async function (email) {
   }
 };
 
+/**
+ * Attempts to find an adin associated with the given id
+ * @function
+ * @name findAdminById
+ * @param {*} aid 
+ * @returns {Object}
+ */
 module.exports.findAdminById = async function (aid) {
   if (aid) {
     const adminn = await admin.findOne({
@@ -51,8 +60,10 @@ module.exports.findAdminById = async function (aid) {
 
 /**
  * Adds voter to the list of voters
+ * @function
+ * @name addVoter
  * @param {*} email
- * @returns 0 if  the insert was successful
+ * @returns {Number}
  */
 module.exports.addVoter = async function (
   email,
@@ -107,6 +118,8 @@ module.exports.addVoter = async function (
 
 /**
  * Adds a candidate - someone who is up for a position in the election
+ * @function
+ * @name addCandidate
  * @param {*} fname
  * @param {*} lname
  * @param {*} email
@@ -114,7 +127,7 @@ module.exports.addVoter = async function (
  * @param {*} fid
  * @param {*} position
  * @param {*} about
- * @returns 0 if the insert was successful
+ * @returns {Number}
  */
 module.exports.addCandidate = async function (
   fname,
@@ -175,7 +188,9 @@ module.exports.addCandidate = async function (
 
 /**
  * Gets all student halls
- * @returns
+ * @function
+ * @name getAllHalls
+ * @returns {Array<halls>}
  */
 module.exports.getAllHalls = async function () {
   const allHalls = await halls.findAll({
@@ -186,7 +201,9 @@ module.exports.getAllHalls = async function () {
 
 /**
  * Gets all faculties
- * @returns
+ * @function
+ * @name getAllFaculties
+ * @returns {Array<faculties>}
  */
 module.exports.getAllFaculties = async function () {
   const allFaculties = await faculties.findAll({
@@ -197,7 +214,9 @@ module.exports.getAllFaculties = async function () {
 
 /**
  * Gets all positions
- * @returns
+ * @function
+ * @name getAllPositions
+ * @returns {Array<positions>}
  */
 module.exports.getAllPositions = async function () {
   const allPositions = await positions.findAll({
@@ -208,11 +227,13 @@ module.exports.getAllPositions = async function () {
 
 /**
  * Inserts the basic election data needed (can be edited later)
+ * @function
+ * @name insertElectionData
  * @param {*} eName
  * @param {*} sDate
  * @param {*} eDate
  * @param {*} csvLocation
- * @returns
+ * @returns {Number}
  */
 module.exports.insertElectionData = async function (
   eName,
