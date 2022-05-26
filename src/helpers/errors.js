@@ -153,3 +153,31 @@ module.exports.nothingToRemove = errorHandler(
   "There is nothing to delete",
   "wek-nf"
 );
+
+module.exports.electionStarted = errorHandler(
+  false,
+  "Cannot complete action",
+  "The election has started, this action cannot be completed",
+  "wek-na"
+);
+
+module.exports.electionEnded = errorHandler(
+  false,
+  "Cannot complete action",
+  "The election has ended, this action cannot be completed",
+  "wek-na"
+);
+
+module.exports.electionNotStarted = errorHandler(
+  false,
+  "Cannot complete action",
+  "The election has not started, this action cannot be completed",
+  "wek-na"
+);
+
+module.exports.electionNotEnded = errorHandler(
+  false,
+  "Cannot complete action",
+  "The election has not ended, this action cannot be completed",
+  "wek-na"
+);

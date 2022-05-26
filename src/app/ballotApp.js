@@ -5,6 +5,7 @@ const election = require("../logic/electionHandling");
 const errorHandler = require("../helpers/errors");
 const successHandler = require("../helpers/create-success");
 const getToken = require("../helpers/getToken");
+const electionHandler = require("../helpers/electionHas");
 
 const jwt = require("jsonwebtoken");
 const config = require("../../config/env");
@@ -623,38 +624,59 @@ module.exports.submittBallot = async function (req, res) {
     var verdict = [];
 
     if (payload && payload.id) {
-      const voterr = await voter.isRegistered(payload.email);
-      if (voterr == false) {
-        res.status(401).json(errorHandler.noVoter);
-        return;
-      } else if (voterr) {
-        for (var c = 0; c < cids.length; c++) {
-          verdict.push(Number.isInteger(cids[c]));
-        }
+      const electionDetails = await election.selectElection();
+      if (electionDetails.length === 0) {
+        res.status(500).json(errorHandler.serverError);
+      } else if (electionDetails.length === 1) {
+        const hasStarted = electionHandler.haselectionStarted(electionDetails[0].startDate);
+        const hasEnded = electionHandler.hasElectionEnded(electionDetails[0].endDate);
+        console.log(hasStarted, hasEnded);
+        if (hasStarted === true && hasEnded === false){
+          const voterr = await voter.isRegistered(payload.email);
+          if (voterr == false) {
+            res.status(401).json(errorHandler.noVoter);
+            return;
+          } else if (voterr) {
+            for (var c = 0; c < cids.length; c++) {
+              verdict.push(Number.isInteger(cids[c]));
+            }
 
-        if (verdict.includes(false)) {
-          res.status(400).json(errorHandler.ballotInvalid);
-          return;
-        } else if (!verdict.includes(false)) {
-          try {
-            const result = await ballot.insertBallotInfo(cids);
-            if (result === 0) {
-              res
-                .status(200)
-                .json(successHandler(true, "Voter ballot submitted"));
-              return;
-            } else if (result === 1) {
+            if (verdict.includes(false)) {
               res.status(400).json(errorHandler.ballotInvalid);
               return;
+            } else if (!verdict.includes(false)) {
+              try {
+                const result = await ballot.insertBallotInfo(cids);
+                if (result === 0) {
+                  res
+                    .status(200)
+                    .json(successHandler(true, "Voter ballot submitted"));
+                  return;
+                } else if (result === 1) {
+                  res.status(400).json(errorHandler.ballotInvalid);
+                  return;
+                }
+              } catch (err) {
+                res.status(500).json(errorHandler.queryError);
+                return;
+              }
             }
-          } catch (err) {
-            res.status(500).json(errorHandler.queryError);
+          } else {
+            console.log("you must submit")
+            res.status(500).json(errorHandler.serverError);
             return;
           }
+        } else if (hasStarted === false) {
+          res.status(400).json(errorHandler.electionNotStarted)
+          return;
+        } else if (hasEnded === true) {
+          res.status(400).json(errorHandler.electionEnded);
+          return;
+        } else {
+          console.log("yerrr")
+          res.status(400).json(errorHandler.generalValidation);
+          return;
         }
-      } else {
-        res.status(500).json(errorHandler.serverError);
-        return;
       }
     } else {
       res.status(500).json(errorHandler.jwtError);

@@ -67,9 +67,6 @@ module.exports.selectElection = async function (elid = 1) {
 module.exports.deleteElection = async function (elid = 1) {
   if (elid) {
     const election = await electiondata.findOne({
-      where: {
-        elid: elid,
-      },
     });
 
     if (election) {
