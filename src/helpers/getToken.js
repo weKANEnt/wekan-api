@@ -1,7 +1,7 @@
 /**
  * Function that extracts a JWT Token from a given request header
  * @function
- * @param {*} header 
+ * @param {*} header
  * @returns {String}
  */
 module.exports = function (header) {

@@ -46,7 +46,7 @@ module.exports.valAlphanumeric = function (username) {
  * @version 1.0
  * @author Spark-Inc
  * @return {Boolean}
-*/
+ */
 module.exports.valName = function (name) {
   if (name === null || name === "" || name === undefined) {
     return false;

@@ -151,7 +151,7 @@ module.exports.getTreasurerCandidates = async function (req, res) {
 /**
  * Gets all candidates that are up for the GCC position
  * @function
- * @async 
+ * @async
  * @name getGCCCandidates
  * @param {*} req
  * @param {*} res
@@ -504,7 +504,7 @@ module.exports.getDHallChairmanCandidates = async function (req, res) {
 /**
  * Gets all candidates that are up for the Commuting Rep. position
  * @function
- * @async 
+ * @async
  * @name getCommutingCandidates
  * @param {*} req
  * @param {*} res
@@ -642,7 +642,7 @@ module.exports.submittBallot = async function (req, res) {
               res
                 .status(200)
                 .json(successHandler(true, "Voter ballot submitted"));
-                return;
+              return;
             } else if (result === 1) {
               res.status(400).json(errorHandler.ballotInvalid);
               return;

@@ -54,7 +54,7 @@ module.exports.isVoterRegistered = async function (req, res) {
         res
           .status(200)
           .json(successHandler(true, "Email is registered to vote"));
-          return;
+        return;
       } else {
         res.status(500).json(errorHandler.serverError);
         return;
@@ -76,7 +76,7 @@ module.exports.isVoterRegistered = async function (req, res) {
  * Function returns a unique OTP for a user to access their ballot
  * Need to add a check to see if the user has already voted
  * @function
- * @async 
+ * @async
  * @name generate
  * @param {*} req
  * @param {*} res

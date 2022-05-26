@@ -40,7 +40,7 @@ module.exports.findAdmin = async function (email) {
  * @function
  * @async
  * @name findAdminById
- * @param {*} aid 
+ * @param {*} aid
  * @returns {Object}
  */
 module.exports.findAdminById = async function (aid) {
@@ -193,7 +193,7 @@ module.exports.addCandidate = async function (
 /**
  * Gets all student halls
  * @function
- * @async 
+ * @async
  * @name getAllHalls
  * @returns {Array<halls>}
  */

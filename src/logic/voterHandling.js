@@ -82,8 +82,8 @@ module.exports.hasVoted = async function (email) {
  * @function
  * @async
  * @name insertOTP
- * @param {*} email 
- * @param {*} otp 
+ * @param {*} email
+ * @param {*} otp
  * @returns {Boolean}
  */
 module.exports.insertOTP = async function (email, otp) {
