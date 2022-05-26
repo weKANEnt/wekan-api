@@ -18,9 +18,10 @@ function success(token) {
 }
 
 /**
+ * Function to allow admin to login to admin portal to access admin functionality
  * @function
+ * @async
  * @name loginAdmin
- * @description Function to allow admin to login to admin portal to access admin functionality
  * @param {*} req
  * @param {*} res
  * @returns {Promise}
