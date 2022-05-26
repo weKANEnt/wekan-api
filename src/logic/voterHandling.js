@@ -4,9 +4,11 @@ const { users, vdata } = require("../db/models");
 
 /**
  * Checks if a user with given email exists in database
+ * @function
  * @async
+ * @name isRegistered
  * @param {string} email
- * @returns boolean
+ * @returns {Boolean}
  */
 module.exports.isRegistered = async function (email) {
   if (email) {
@@ -27,10 +29,12 @@ module.exports.isRegistered = async function (email) {
 
 /**
  * Updates the vote status of a given user with the given status
+ * @function
  * @async
+ * @name updateVoteStatus
  * @param {string} uid
  * @param {boolean} vStat
- * @returns -
+ * @returns {Number}
  */
 module.exports.updateVoteStatus = async function (id, vStat) {
   if (id & vStat) {
@@ -47,9 +51,11 @@ module.exports.updateVoteStatus = async function (id, vStat) {
 
 /**
  * Checks if given voter's vote status
+ * @function
  * @async
+ * @name hasVoted
  * @param {*} email
- * @returns object
+ * @returns {Boolean}
  */
 module.exports.hasVoted = async function (email) {
   if (email) {
@@ -72,7 +78,13 @@ module.exports.hasVoted = async function (email) {
 };
 
 /**
- *
+ * Function that inserts a generated OTP into the user with the given email
+ * @function
+ * @async
+ * @name insertOTP
+ * @param {*} email 
+ * @param {*} otp 
+ * @returns {Boolean}
  */
 module.exports.insertOTP = async function (email, otp) {
   if ((email != undefined) & (otp != undefined)) {
@@ -105,8 +117,11 @@ module.exports.insertOTP = async function (email, otp) {
 
 /**
  * Function that checks if a generated OTP already exists for any voter
+ * @function
+ * @async
+ * @name doesOTPExist
  * @param {*} otp
- * @returns
+ * @returns {Boolean}
  */
 module.exports.doesOTPExist = async function (otp) {
   if (otp) {
@@ -126,9 +141,12 @@ module.exports.doesOTPExist = async function (otp) {
 
 /**
  * Function that checks if the given emaila nd otp exist for the same record
+ * @function
+ * @async
+ * @name doesOTPMatchEntry
  * @param {*} email
  * @param {*} otp
- * @returns
+ * @returns {Object}
  */
 module.exports.doesOTPMatchEntry = async function (email, otp) {
   if (email) {

@@ -13,6 +13,7 @@ const {
 /**
  * Attempts to find an adin associated with the given email address
  * @function
+ * @async
  * @name findAdmin
  * @param {*} email
  * @returns {Object}
@@ -37,6 +38,7 @@ module.exports.findAdmin = async function (email) {
 /**
  * Attempts to find an adin associated with the given id
  * @function
+ * @async
  * @name findAdminById
  * @param {*} aid 
  * @returns {Object}
@@ -61,6 +63,7 @@ module.exports.findAdminById = async function (aid) {
 /**
  * Adds voter to the list of voters
  * @function
+ * @async
  * @name addVoter
  * @param {*} email
  * @returns {Number}
@@ -119,6 +122,7 @@ module.exports.addVoter = async function (
 /**
  * Adds a candidate - someone who is up for a position in the election
  * @function
+ * @async
  * @name addCandidate
  * @param {*} fname
  * @param {*} lname
@@ -189,6 +193,7 @@ module.exports.addCandidate = async function (
 /**
  * Gets all student halls
  * @function
+ * @async 
  * @name getAllHalls
  * @returns {Array<halls>}
  */
@@ -202,6 +207,7 @@ module.exports.getAllHalls = async function () {
 /**
  * Gets all faculties
  * @function
+ * @async
  * @name getAllFaculties
  * @returns {Array<faculties>}
  */
@@ -215,6 +221,7 @@ module.exports.getAllFaculties = async function () {
 /**
  * Gets all positions
  * @function
+ * @async
  * @name getAllPositions
  * @returns {Array<positions>}
  */
@@ -228,6 +235,7 @@ module.exports.getAllPositions = async function () {
 /**
  * Inserts the basic election data needed (can be edited later)
  * @function
+ * @async
  * @name insertElectionData
  * @param {*} eName
  * @param {*} sDate

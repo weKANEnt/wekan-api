@@ -11,6 +11,7 @@ const {
 /**
  *Function gets candidates in given category
  * @function
+ * @async
  * @name selectRequestedCandidates
  * @param {*} posNo
  * @returns {Object}
@@ -37,6 +38,7 @@ module.exports.selectRequestedCandidates = async function (posNo) {
 /**
  * Function checks to see if voter is in given faculty
  * @function
+ * @async
  * @name isInFaculty
  * @param {*} id
  * @param {*} fid
@@ -71,6 +73,7 @@ module.exports.isInFaculty = async function (id, fid) {
 /**
  * Function checks to see if voter is in given hall
  * @function
+ * @async
  * @name isInHall
  * @param {*} id
  * @param {*} hid
@@ -105,6 +108,7 @@ module.exports.isInHall = async function (id, hid) {
 /**
  * Takes in a list of candudate ids and increments their vote count
  * @function
+ * @async
  * @name insertBallotInfo
  * @param {*} cids
  * @return {Boolean}

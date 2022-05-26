@@ -3,10 +3,14 @@ const { electiondata, tallyinfo } = require("../db/models");
 
 /**
  * Adds election
+ * @function
+ * @async
+ * @name insertElection
  * @param {*} title
  * @param {*} sDate
  * @param {*} eDate
  * @param {*} csvLocation
+ * @returns {Number}
  */
 module.exports.insertElection = async function (
   title,
@@ -38,8 +42,11 @@ module.exports.insertElection = async function (
 
 /**
  * Finds an election
+ * @function
+ * @async
+ * @name selectElection
  * @param {*} elid
- * @returns
+ * @returns {Object}
  */
 module.exports.selectElection = async function (elid = 1) {
   if (elid) {
@@ -51,8 +58,11 @@ module.exports.selectElection = async function (elid = 1) {
 
 /**
  * Removes an election
+ * @function
+ * @async
+ * @name deleteElection
  * @param {*} elid
- * @returns
+ * @returns {Number}
  */
 module.exports.deleteElection = async function (elid = 1) {
   if (elid) {
