@@ -628,7 +628,7 @@ module.exports.submittBallot = async function (req, res) {
       if (electionDetails.length === 0) {
         res.status(500).json(errorHandler.serverError);
       } else if (electionDetails.length === 1) {
-        const hasStarted = electionHandler.haselectionStarted(electionDetails[0].startDate);
+        const hasStarted = electionHandler.hasElectionStarted(electionDetails[0].startDate);
         const hasEnded = electionHandler.hasElectionEnded(electionDetails[0].endDate);
         
         if (hasStarted === true && hasEnded === false){

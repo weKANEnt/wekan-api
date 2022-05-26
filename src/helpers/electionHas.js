@@ -5,7 +5,7 @@
  * @param {*} sDate 
  * @returns {Boolean}
  */
-module.exports.haselectionStarted = function (sDate) {
+module.exports.hasElectionStarted = function (sDate) {
     const today = new Date().toISOString().slice(0, 10);
     if (sDate === undefined || sDate === null || sDate === "") {
         return "Err with given date"
