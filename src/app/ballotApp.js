@@ -20,8 +20,12 @@ function success(candidates, pos) {
 
 /**
  * Gets all candidates that are up for the Guild President position
+ * @function
+ * @async
+ * @name getPresidentCandidates
  * @param {*} req
  * @param {*} res
+ * @return {Promise}
  */
 module.exports.getPresidentCandidates = async function (req, res) {
   const posNo = 1;
@@ -29,18 +33,25 @@ module.exports.getPresidentCandidates = async function (req, res) {
     const candidates = await ballot.selectRequestedCandidates(posNo);
     if (candidates === 1) {
       res.status(500).json(errorHandler.emptyParam);
+      return;
     } else if (candidates) {
       res.status(200).json(success(candidates, "President"));
+      return;
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
+    return;
   }
 };
 
 /**
  * Gets all candidates that are up for the VP SSP position
+ * @function
+ * @async
+ * @name getVPSSPCandidates
  * @param {*} req
  * @param {*} res
+ * @return {Promise}
  */
 module.exports.getVPSSPCandidates = async function (req, res) {
   const posNo = 2;
@@ -48,18 +59,25 @@ module.exports.getVPSSPCandidates = async function (req, res) {
     const candidates = await ballot.selectRequestedCandidates(posNo);
     if (candidates === 1) {
       res.status(500).json(errorHandler.emptyParam);
+      return;
     } else if (candidates) {
       res.status(200).json(success(candidates, "VP SSP"));
+      return;
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
+    return;
   }
 };
 
 /**
  * Gets all candidates that are up for the VP SSP position
+ * @function
+ * @async
+ * @name getVPPSICandidates
  * @param {*} req
  * @param {*} res
+ * @return {Promise}
  */
 module.exports.getVPPSICandidates = async function (req, res) {
   const posNo = 3;
@@ -67,18 +85,25 @@ module.exports.getVPPSICandidates = async function (req, res) {
     const candidates = await ballot.selectRequestedCandidates(posNo);
     if (candidates === 1) {
       res.status(500).json(errorHandler.emptyParam);
+      return;
     } else if (candidates) {
       res.status(200).json(success(candidates, "VP PSI"));
+      return;
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
+    return;
   }
 };
 
 /**
  * Gets all candidates that are up for the Secretary position
+ * @function
+ * @async
+ * @name getSecretaryCandidates
  * @param {*} req
  * @param {*} res
+ * @return {Promise}
  */
 module.exports.getSecretaryCandidates = async function (req, res) {
   const posNo = 4;
@@ -86,18 +111,25 @@ module.exports.getSecretaryCandidates = async function (req, res) {
     const candidates = await ballot.selectRequestedCandidates(posNo);
     if (candidates === 1) {
       res.status(500).json(errorHandler.emptyParam);
+      return;
     } else if (candidates) {
       res.status(200).json(success(candidates, "Secretary"));
+      return;
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
+    return;
   }
 };
 
 /**
  * Gets all candidates that are up for the Secretary position
+ * @function
+ * @async
+ * @name getTreasurerCandidates
  * @param {*} req
  * @param {*} res
+ * @return {Promise}
  */
 module.exports.getTreasurerCandidates = async function (req, res) {
   const posNo = 5;
@@ -105,18 +137,25 @@ module.exports.getTreasurerCandidates = async function (req, res) {
     const candidates = await ballot.selectRequestedCandidates(posNo);
     if (candidates === 1) {
       res.status(500).json(errorHandler.emptyParam);
+      return;
     } else if (candidates) {
       res.status(200).json(success(candidates, "Treasuer"));
+      return;
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
+    return;
   }
 };
 
 /**
  * Gets all candidates that are up for the GCC position
+ * @function
+ * @async 
+ * @name getGCCCandidates
  * @param {*} req
  * @param {*} res
+ * @return {Promise}
  */
 module.exports.getGCCCandidates = async function (req, res) {
   const posNo = 6;
@@ -124,18 +163,25 @@ module.exports.getGCCCandidates = async function (req, res) {
     const candidates = await ballot.selectRequestedCandidates(posNo);
     if (candidates === 1) {
       res.status(500).json(errorHandler.emptyParam);
+      return;
     } else if (candidates) {
       res.status(200).json(success(candidates, "GCC"));
+      return;
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
+    return;
   }
 };
 
 /**
  * Gets all candidates that are up for the PRO position
+ * @function
+ * @async
+ * @name getPROCandidates
  * @param {*} req
  * @param {*} res
+ * @return {Promise}
  */
 module.exports.getPROCandidates = async function (req, res) {
   const posNo = 7;
@@ -143,18 +189,25 @@ module.exports.getPROCandidates = async function (req, res) {
     const candidates = await ballot.selectRequestedCandidates(posNo);
     if (candidates === 1) {
       res.status(500).json(errorHandler.emptyParam);
+      return;
     } else if (candidates) {
       res.status(200).json(success(candidates, "PRO"));
+      return;
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
+    return;
   }
 };
 
 /**
  * Gets all candidates that are up for the CEAC position
+ * @function
+ * @async
+ * @name getCEACCandidates
  * @param {*} req
  * @param {*} res
+ * @return {Promise}
  */
 module.exports.getCEACCandidates = async function (req, res) {
   const posNo = 8;
@@ -162,18 +215,25 @@ module.exports.getCEACCandidates = async function (req, res) {
     const candidates = await ballot.selectRequestedCandidates(posNo);
     if (candidates === 1) {
       res.status(500).json(errorHandler.emptyParam);
+      return;
     } else if (candidates) {
       res.status(200).json(success(candidates, "CEAC"));
+      return;
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
+    return;
   }
 };
 
 /**
  * Gets all candidates that are up for the EAC position
+ * @function
+ * @async
+ * @name getEACCandidates
  * @param {*} req
  * @param {*} res
+ * @return {Promise}
  */
 module.exports.getEACCandidates = async function (req, res) {
   const posNo = 9;
@@ -181,23 +241,31 @@ module.exports.getEACCandidates = async function (req, res) {
     const candidates = await ballot.selectRequestedCandidates(posNo);
     if (candidates === 1) {
       res.status(500).json(errorHandler.emptyParam);
+      return;
     } else if (candidates) {
       res.status(200).json(success(candidates, "EAC"));
+      return;
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
+    return;
   }
 };
 
 /**
  * Gets faculty rep candidates based on the faculty that the logged in voter is in
  * This wouldbe during voting, currently no endpoint to just get the faculty candidates for viewing
+ * @function
+ * @async
+ * @name getFacultyCandidates
  * @param {*} req
  * @param {*} res
+ * @return {Promise}
  */
 module.exports.getFacultyCandidates = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
+    return;
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
@@ -208,6 +276,7 @@ module.exports.getFacultyCandidates = async function (req, res) {
       const voterr = await voter.isRegistered(payload.email);
       if (voterr === false) {
         res.status(401).json(errorHandler.noVoter);
+        return;
       } else if (voterr) {
         if (await ballot.isInFaculty(payload.id, 1)) {
           posNo = 19;
@@ -227,35 +296,46 @@ module.exports.getFacultyCandidates = async function (req, res) {
           posNo = 18;
         } else {
           res.status(500).json(errorHandler.queryError);
+          return;
         }
 
         try {
           candidates = await ballot.selectRequestedCandidates(posNo);
           if (candidates === 1) {
             res.status(500).json(errorHandler.emptyParam);
+            return;
           } else if (candidates) {
             res.status(200).json(success(candidates, "Faculty Rep."));
+            return;
           }
         } catch (err) {
           res.status(500).json(errorHandler.queryError);
+          return;
         }
       } else {
         res.status(500).json(errorHandler.serverError);
+        return;
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
+      return;
     }
   }
 };
 
 /**
  * Gets all candiadtes up for hall chair based on the current logged in voter's hall
+ * @function
+ * @async
+ * @name getHallChairmanCandidates
  * @param {*} req
  * @param {*} res
+ * @return {Promise}
  */
 module.exports.getHallChairmanCandidates = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
+    return;
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
@@ -266,6 +346,7 @@ module.exports.getHallChairmanCandidates = async function (req, res) {
       const voterr = await voter.isRegistered(payload.email);
       if (voterr === false) {
         res.status(401).json(errorHandler.noVoter);
+        return;
       } else if (voterr) {
         if (await ballot.isInHall(payload.id, 1)) {
           //AZ Preston
@@ -305,34 +386,45 @@ module.exports.getHallChairmanCandidates = async function (req, res) {
           posNo = 36;
         } else {
           res.status(500).json(errorHandler.queryError);
+          return;
         }
         try {
           candidates = await ballot.selectRequestedCandidates(posNo);
           if (candidates === 1) {
             res.status(500).json(errorHandler.emptyParam);
+            return;
           } else if (candidates) {
             res.status(200).json(success(candidates, "Hall Rep."));
+            return;
           }
         } catch (err) {
           res.status(500).json(errorHandler.queryError);
+          return;
         }
       } else {
         res.status(500).json(errorHandler.serverError);
+        return;
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
+      return;
     }
   }
 };
 
 /**
  * Gets all candiadtes up for deputy hall chair based on the current logged in voter's hall
+ * @function
+ * @async
+ * @name getDHallChairmanCandidates
  * @param {*} req
  * @param {*} res
+ * @return {Promise}
  */
 module.exports.getDHallChairmanCandidates = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
+    return;
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
@@ -343,6 +435,7 @@ module.exports.getDHallChairmanCandidates = async function (req, res) {
       const voterr = await voter.isRegistered(payload.email);
       if (voterr === false) {
         res.status(401).json(errorHandler.noVoter);
+        return;
       } else if (voterr) {
         if (await ballot.isInHall(payload.id, 1)) {
           //AZ Preston
@@ -382,34 +475,45 @@ module.exports.getDHallChairmanCandidates = async function (req, res) {
           posNo = 37;
         } else {
           res.status(500).json(errorHandler.queryError);
+          return;
         }
         try {
           candidates = await ballot.selectRequestedCandidates(posNo);
           if (candidates === 1) {
             res.status(500).json(errorHandler.emptyParam);
+            return;
           } else if (candidates) {
             res.status(200).json(success(candidates, "Deputy Hall Rep."));
+            return;
           }
         } catch (err) {
           res.status(500).json(errorHandler.queryError);
+          return;
         }
       } else {
         res.status(500).json(errorHandler.serverError);
+        return;
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
+      return;
     }
   }
 };
 
 /**
  * Gets all candidates that are up for the Commuting Rep. position
+ * @function
+ * @async 
+ * @name getCommutingCandidates
  * @param {*} req
  * @param {*} res
+ * @return {Promise}
  */
 module.exports.getCommutingCandidates = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
+    return;
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
@@ -418,37 +522,49 @@ module.exports.getCommutingCandidates = async function (req, res) {
       const voterr = await voter.isRegistered(payload.email);
       if (voterr == false) {
         res.status(401).json(errorHandler.noVoter);
+        return;
       } else if (voterr.doesCommute === true) {
         const posNo = 17;
         try {
           const candidates = await ballot.selectRequestedCandidates(posNo);
           if (candidates === 1) {
             res.status(500).json(errorHandler.emptyParam);
+            return;
           } else if (candidates) {
             res.status(200).json(success(candidates, "Communting Rep."));
+            return;
           }
         } catch (err) {
           res.status(500).json(errorHandler.queryError);
+          return;
         }
       } else if (voterr.doesCommute === false) {
         res.status(401).json(errorHandler.isNotHallMember);
+        return;
       } else {
         res.status(500).json(errorHandler.serverError);
+        return;
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
+      return;
     }
   }
 };
 
 /**
  * Gets all candidates that are up for the Post Graduate Rep. position
+ * @function
+ * @async
+ * @name getPostGradCandidates
  * @param {*} req
  * @param {*} res
+ * @return {Promise}
  */
 module.exports.getPostGradCandidates = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
+    return;
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
@@ -457,37 +573,49 @@ module.exports.getPostGradCandidates = async function (req, res) {
       const voterr = await voter.isRegistered(payload.email);
       if (voterr == false) {
         res.status(401).json(errorHandler.noVoter);
+        return;
       } else if (voterr.isPostGrad === true) {
         const posNo = 16;
         try {
           const candidates = await ballot.selectRequestedCandidates(posNo);
           if (candidates === 1) {
             res.status(500).json(errorHandler.emptyParam);
+            return;
           } else if (candidates) {
             res.status(200).json(success(candidates, "Post Grad Rep."));
+            return;
           }
         } catch (err) {
           res.status(500).json(errorHandler.queryError);
+          return;
         }
       } else if (voterr.doesCommute === false) {
         res.status(401).json(errorHandler.isNotPostGraduate);
+        return;
       } else {
         res.status(500).json(errorHandler.serverError);
+        return;
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
+      return;
     }
   }
 };
 
 /**
  * Allows a voter to submit a ballot after selecting candidates they would liek to vote for
+ * @function
+ * @async
+ * @name submittBallot
  * @param {*} req
  * @param {*} res
+ * @return {Promise}
  */
 module.exports.submittBallot = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
+    return;
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
@@ -498,6 +626,7 @@ module.exports.submittBallot = async function (req, res) {
       const voterr = await voter.isRegistered(payload.email);
       if (voterr == false) {
         res.status(401).json(errorHandler.noVoter);
+        return;
       } else if (voterr) {
         for (var c = 0; c < cids.length; c++) {
           verdict.push(Number.isInteger(cids[c]));
@@ -505,6 +634,7 @@ module.exports.submittBallot = async function (req, res) {
 
         if (verdict.includes(false)) {
           res.status(400).json(errorHandler.ballotInvalid);
+          return;
         } else if (!verdict.includes(false)) {
           try {
             const result = await ballot.insertBallotInfo(cids);
@@ -512,18 +642,23 @@ module.exports.submittBallot = async function (req, res) {
               res
                 .status(200)
                 .json(successHandler(true, "Voter ballot submitted"));
+                return;
             } else if (result === 1) {
               res.status(400).json(errorHandler.ballotInvalid);
+              return;
             }
           } catch (err) {
             res.status(500).json(errorHandler.queryError);
+            return;
           }
         }
       } else {
         res.status(500).json(errorHandler.serverError);
+        return;
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
+      return;
     }
   }
 };
