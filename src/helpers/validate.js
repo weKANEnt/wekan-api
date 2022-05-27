@@ -57,7 +57,8 @@ module.exports.valAlphanumeric = function (username) {
     username === null ||
     username === "" ||
     username === undefined ||
-    isBoolean(username)
+    isBoolean(username) ||
+    Number.isInteger(username)
   ) {
     return false;
   } else {
@@ -76,7 +77,13 @@ module.exports.valAlphanumeric = function (username) {
  * @return {Boolean}
  */
 module.exports.valName = function (name) {
-  if (name === null || name === "" || name === undefined || isBoolean(name)) {
+  if (
+    name === null ||
+    name === "" ||
+    name === undefined ||
+    isBoolean(name) ||
+    Number.isInteger(name)
+  ) {
     return false;
   } else {
     if (!name.match(gname)) {
@@ -121,7 +128,8 @@ module.exports.valEmail = function (email) {
     email === null ||
     email === "" ||
     email === undefined ||
-    isBoolean(email)
+    isBoolean(email) ||
+    Number.isInteger(email)
   ) {
     return false;
   } else {
@@ -161,7 +169,8 @@ module.exports.valDate = function (dateString) {
     dateString === undefined ||
     dateString === null ||
     dateString === "" ||
-    isBoolean(dateString)
+    isBoolean(dateString) ||
+    Number.isInteger(dateString)
   ) {
     return false;
   } else {
@@ -184,7 +193,8 @@ module.exports.val2Dates = function (sDate, eDate) {
     sDate === undefined ||
     sDate === null ||
     sDate === "" ||
-    isBoolean(sDate)
+    isBoolean(sDate) ||
+    Number.isInteger(sDate)
   ) {
     return false;
   } else {
@@ -192,7 +202,8 @@ module.exports.val2Dates = function (sDate, eDate) {
       eDate === undefined ||
       eDate === null ||
       eDate === "" ||
-      isBoolean(eDate)
+      isBoolean(eDate) ||
+      Number.isInteger(eDate)
     ) {
       return false;
     } else {
