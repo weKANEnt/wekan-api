@@ -40,13 +40,22 @@ function getToday(){
 };
 
 /**
+ * 
+ * @param {*} val 
+ * @returns {Booleam}
+ */
+function isBoolean(val) {
+  return val === false || val === true;
+}
+
+/**
  * Username server side validation
  * @version 1.0
  * @author Spark-Inc
  * @return {Boolean}
  */
 module.exports.valAlphanumeric = function (username) {
-  if (username === null || username === "" || username === undefined) {
+  if (username === null || username === "" || username === undefined || isBoolean(username)) {
     return false;
   } else {
     if (!username.match(title)) {
@@ -64,7 +73,7 @@ module.exports.valAlphanumeric = function (username) {
  * @return {Boolean}
  */
 module.exports.valName = function (name) {
-  if (name === null || name === "" || name === undefined) {
+  if (name === null || name === "" || name === undefined || isBoolean(name)) {
     return false;
   } else {
     if (!name.match(gname)) {
@@ -82,7 +91,7 @@ module.exports.valName = function (name) {
  * @return {Boolean}
  */
 module.exports.valPassword = function (password) {
-  if (password === null || password === "" || password === undefined) {
+  if (password === null || password === "" || password === undefined || isBoolean(password)) {
     return false;
   } else {
     if (!password.match(uname)) {
@@ -100,7 +109,7 @@ module.exports.valPassword = function (password) {
  * @return {Boolean}
  */
 module.exports.valEmail = function (email) {
-  if (email === null || email === "" || email === undefined) {
+  if (email === null || email === "" || email === undefined || isBoolean(email)) {
     return false;
   } else {
     if (!email.match(emailR)) {
@@ -118,7 +127,7 @@ module.exports.valEmail = function (email) {
  * @returns
  */
 module.exports.valOTP = function (otp) {
-  if (otp === null || otp === "" || otp === undefined) {
+  if (otp === null || otp === "" || otp === undefined || isBoolean(otp)) {
     return false;
   } else {
     if (!otp.match(otpR)) {
@@ -135,7 +144,7 @@ module.exports.valOTP = function (otp) {
  * @returns {Boolean}
  */
 module.exports.valDate = function (dateString) {
-  if (dateString === undefined || dateString === null || dateString === "") {
+  if (dateString === undefined || dateString === null || dateString === "" || isBoolean(dateString)) {
     return false;
   } else {
     if (!isValidDate(dateString)) {
@@ -153,10 +162,10 @@ module.exports.valDate = function (dateString) {
  * @returns {Boolean}
  */
 module.exports.val2Dates = function (sDate, eDate) {
-  if (sDate === undefined || sDate === null || sDate === "") {
+  if (sDate === undefined || sDate === null || sDate === "" || isBoolean(sDate)) {
     return false;
   } else {
-    if (eDate === undefined || eDate === null || eDate === "") {
+    if (eDate === undefined || eDate === null || eDate === "" || isBoolean(eDate)) {
       return false;
     } else {
       const vD1 = isValidDate(sDate);

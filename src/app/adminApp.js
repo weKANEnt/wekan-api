@@ -65,7 +65,7 @@ module.exports.loginAdmin = async function (req, res) {
       return;
     }
   } else if (vEmail !== true || vPassword !== true) {
-    res.status(401).json(errorHandler.emailValidation);
+    res.status(401).json(errorHandler.generalValidation);
     return;
   } else {
     res.status(500).json(errorHandler.serverError);
