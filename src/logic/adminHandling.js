@@ -7,6 +7,7 @@ const {
   faculties,
   positions,
   electionData,
+  tallyinfo
 } = require("../db/models");
 
 /**
@@ -261,9 +262,49 @@ module.exports.insertElectionData = async function (
   }
 };
 
-// code to add tally info
-// const newTallyIno = await tallyinfo.create({
-//   name: newCandidate.firstName + ' ' + newCandidate.lastName,
-//   position: newCandidate.position,
-//   noOfVotes: 0
-// });
+/**
+ * Function that returns all the candidates participating in the election
+ * @function
+ * @async
+ * @name getAllCandidates
+ * @returns {Array<candidates>}
+ */
+module.exports.getAllCandidates = async function (){
+  const allCandidates = await candidates.findAll({
+    attributes: ["firstName", "lastName", "position", "noOfVotes"],
+  });
+
+  if (allCandidates.length > 0) {
+    return allCandidates;
+  } else {
+    return 1;
+  }
+};
+
+/**
+ * Insert winners into the tally info table
+ * @function
+ * @async
+ * @name insertWinner
+ * @param {*} name 
+ * @param {*} position 
+ * @param {*} noOfVotes 
+ * @returns {Number}
+ */
+module.exports.insertWinner = async function (name, position, noOfVotes) {
+  if (name) {
+    if (position) {
+      if (noOfVotes) {
+        await tallyinfo.create({
+          name: name,
+          position: position,
+          noOfVotes: noOfVotes
+        });
+        return 0;
+      }
+      return 1;
+    }
+    return 1;
+  }
+  return 1;
+};
