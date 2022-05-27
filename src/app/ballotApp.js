@@ -32,7 +32,7 @@ module.exports.getPresidentCandidates = async function (req, res) {
   const posNo = 1;
   try {
     const candidates = await ballot.selectRequestedCandidates(posNo);
-    if (candidates === 1) {
+    if (candidates == 1) {
       res.status(500).json(errorHandler.emptyParam);
       return;
     } else if (candidates) {
@@ -58,7 +58,7 @@ module.exports.getVPSSPCandidates = async function (req, res) {
   const posNo = 2;
   try {
     const candidates = await ballot.selectRequestedCandidates(posNo);
-    if (candidates === 1) {
+    if (candidates == 1) {
       res.status(500).json(errorHandler.emptyParam);
       return;
     } else if (candidates) {
@@ -84,7 +84,7 @@ module.exports.getVPPSICandidates = async function (req, res) {
   const posNo = 3;
   try {
     const candidates = await ballot.selectRequestedCandidates(posNo);
-    if (candidates === 1) {
+    if (candidates == 1) {
       res.status(500).json(errorHandler.emptyParam);
       return;
     } else if (candidates) {
@@ -110,7 +110,7 @@ module.exports.getSecretaryCandidates = async function (req, res) {
   const posNo = 4;
   try {
     const candidates = await ballot.selectRequestedCandidates(posNo);
-    if (candidates === 1) {
+    if (candidates == 1) {
       res.status(500).json(errorHandler.emptyParam);
       return;
     } else if (candidates) {
@@ -136,7 +136,7 @@ module.exports.getTreasurerCandidates = async function (req, res) {
   const posNo = 5;
   try {
     const candidates = await ballot.selectRequestedCandidates(posNo);
-    if (candidates === 1) {
+    if (candidates == 1) {
       res.status(500).json(errorHandler.emptyParam);
       return;
     } else if (candidates) {
@@ -162,7 +162,7 @@ module.exports.getGCCCandidates = async function (req, res) {
   const posNo = 6;
   try {
     const candidates = await ballot.selectRequestedCandidates(posNo);
-    if (candidates === 1) {
+    if (candidates == 1) {
       res.status(500).json(errorHandler.emptyParam);
       return;
     } else if (candidates) {
@@ -188,7 +188,7 @@ module.exports.getPROCandidates = async function (req, res) {
   const posNo = 7;
   try {
     const candidates = await ballot.selectRequestedCandidates(posNo);
-    if (candidates === 1) {
+    if (candidates == 1) {
       res.status(500).json(errorHandler.emptyParam);
       return;
     } else if (candidates) {
@@ -214,7 +214,7 @@ module.exports.getCEACCandidates = async function (req, res) {
   const posNo = 8;
   try {
     const candidates = await ballot.selectRequestedCandidates(posNo);
-    if (candidates === 1) {
+    if (candidates == 1) {
       res.status(500).json(errorHandler.emptyParam);
       return;
     } else if (candidates) {
@@ -240,7 +240,7 @@ module.exports.getEACCandidates = async function (req, res) {
   const posNo = 9;
   try {
     const candidates = await ballot.selectRequestedCandidates(posNo);
-    if (candidates === 1) {
+    if (candidates == 1) {
       res.status(500).json(errorHandler.emptyParam);
       return;
     } else if (candidates) {
