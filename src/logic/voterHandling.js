@@ -70,7 +70,6 @@ module.exports.hasVoted = async function (email) {
         uid: voter.emid,
       },
     });
-
     return voterData.votestatus;
   } else {
     return 0;

@@ -2,6 +2,8 @@ const voter = require("../logic/voterHandling");
 const validate = require("../helpers/validate");
 const errorHandler = require("../helpers/errors");
 const successHandler = require("../helpers/create-success");
+const electionHandler = require("../helpers/electionHas");
+const election = require("../logic/electionHandling");
 const optGen = require("../helpers/generateOTP");
 const transport = require("../helpers/transport")();
 const mail = require("../helpers/createOTPEmail");
@@ -85,39 +87,64 @@ module.exports.isVoterRegistered = async function (req, res) {
  */
 module.exports.generateOTP = async function (req, res) {
   const { email } = req.body;
-  let otp;
-  otp = optGen.generateOTP();
-  try {
-    const isOTP = await voter.doesOTPExist(otp);
-    const hasVoted = await voter.hasVoted(email);
-    if (isOTP === false && hasVoted === false) {
+  const electionDetails = await election.selectElection();
+
+  if (electionDetails.length === 0){
+    res.status(500).json(errorHandler.electionNotActive);
+    return;
+  } else if (electionDetails.length === 1){
+    const hasStarted = electionHandler.hasElectionStarted(electionDetails[0].startDate);
+    const hasEnded = electionHandler.hasElectionEnded(electionDetails[0].endDate);
+    if (hasStarted === true && hasEnded === false) {
       try {
-        const addOTP = await voter.insertOTP(email, otp);
-        if (addOTP === false) {
-          res.status(422).json(errorHandler.queryError);
+        let otp;
+        otp = optGen.generateOTP();
+        const isOTP = await voter.doesOTPExist(otp);
+        const hasVoted = await voter.hasVoted(email);
+        console.log(hasVoted)
+        if (isOTP === false && hasVoted === false) {
+          console.log(otp)
+          try {
+            console.log(otp)
+            const addOTP = await voter.insertOTP(email, otp);
+            console.log(addOTP)
+            if (addOTP === false) {
+              res.status(422).json(errorHandler.queryError);
+              return;
+            } else if (addOTP === true) {
+              await transport.sendMail(mail(config.email, email, otp));
+              res.status(200).json(success(email));
+              return;
+            } else if (addOTP === 1) {
+              res.status(422).json(errorHandler.queryError);
+              return;
+            }
+          } catch (err) {
+            res.status(500).json(errorHandler.emailUnregistered);
+            return;
+          }
+        } else if (isOTP === true || hasVoted === true) {
+          res.status(422).json(errorHandler.causingDuplicate);
           return;
-        } else if (addOTP === true) {
-          await transport.sendMail(mail(config.email, email, otp));
-          res.status(200).json(success(email));
-          return;
-        } else if (addOTP === 1) {
-          res.status(422).json(errorHandler.queryError);
+        } else if (isOTP === 1) {
+          res.status(500).json(errorHandler.queryError);
           return;
         }
       } catch (err) {
-        res.status(500).json(errorHandler.emailUnregistered);
+        console.error("uuuuu");
+        res.status(500).json(errorHandler.serverError);
         return;
       }
-    } else if (isOTP === true || hasVoted === true) {
-      res.status(422).json(errorHandler.causingDuplicate);
+    } else if (hasStarted === false) {
+      res.status(400).json(errorHandler.electionNotStarted);
       return;
-    } else if (isOTP === 1) {
-      res.status(500).json(errorHandler.queryError);
+    } else if (hasEnded === true) {
+      res.status(400).json(errorHandler.electionEnded);
+      return;
+    } else {
+      res.status(400).json(errorHandler.generalValidation);
       return;
     }
-  } catch (err) {
-    res.status(500).json(errorHandler.serverError);
-    return;
   }
 };
 

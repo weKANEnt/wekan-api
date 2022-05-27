@@ -181,3 +181,10 @@ module.exports.electionNotEnded = errorHandler(
   "The election has not ended, this action cannot be completed",
   "wek-na"
 );
+
+module.exports.electionNotActive = errorHandler(
+  false,
+  "Cannot complete action",
+  "No election has been established",
+  "wek-na"
+);

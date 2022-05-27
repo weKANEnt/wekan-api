@@ -1,39 +1,59 @@
+const { get } = require("express/lib/response");
+
+/**
+ * Function to return todaay's date in the required format
+ * @author Naomi Benjamin
+ * @returns {DateString}
+ */
+function getToday() {
+  var today = new Date()
+    .toLocaleDateString("zh-Hans-CN", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+    .replaceAll("/", "-");
+  return today;
+};
+
 /**
  * Dertermines whether or not the election has started
  * @function
  * @name haselectionStarted
- * @param {*} sDate 
+ * @param {*} sDate
  * @returns {Boolean}
  */
 module.exports.hasElectionStarted = function (sDate) {
-    const today = new Date().toISOString().slice(0, 10);
-    if (sDate === undefined || sDate === null || sDate === "") {
-        return "Err with given date"
+  const today = getToday();
+  sDate = new Date(sDate).toISOString().slice(0, 10);
+  if (sDate === undefined || sDate === null || sDate === "") {
+    return "Err with given date";
+  } else {
+    if (sDate <= today) {
+      return true;
     } else {
-        if (sDate <= today) {
-            return true;
-        } else {
-            return false;
-        }
+      return false;
     }
+  }
 };
 
 /**
  * Determines whether or not the election has ended
  * @function
  * @name hasElectionEnded
- * @param {*} eDate 
+ * @param {*} eDate
  * @returns {Boolean}
  */
 module.exports.hasElectionEnded = function (eDate) {
-    const today = new Date().toISOString().slice(0, 10);
-    if (eDate === undefined || eDate === null || eDate === "") {
-        return "Err with given date"
+  const today = getToday();
+  eDate = new Date(eDate).toISOString().slice(0, 10);
+  if (eDate === undefined || eDate === null || eDate === "") {
+    return "Err with given date";
+  } else {
+    if (eDate < today) {
+      return true;
     } else {
-        if (eDate < today) {
-            return true;
-        } else {
-            return false;
-        }
+      return false;
     }
+  }
 };

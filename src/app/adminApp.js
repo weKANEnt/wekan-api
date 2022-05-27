@@ -53,7 +53,6 @@ module.exports.loginAdmin = async function (req, res) {
               expiresIn: "1h",
             }
           );
-          console.log(token);
           res.status(200).json(success(token));
           return;
         }

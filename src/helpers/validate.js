@@ -6,7 +6,7 @@ const gname = /^[A-Za-z.\s-]+$/;
 const emailR = /.{1,}@mymona.uwi.edu$/;
 const otpR = /^[A-Z0-9]{6}/;
 
-//Helper
+//Helpers
 /**
  * Function to determine is a date string follows the yyyy/mm/dd format
  * @author Goblinlord
@@ -21,7 +21,23 @@ function isValidDate(dateString) {
   var dNum = d.getTime();
   if (!dNum && dNum !== 0) return false; // NaN value, Invalid date
   return d.toISOString().slice(0, 10) === dateString;
-}
+};
+
+/**
+ * Function to return todaay's date in the required format
+ * @author Naomi Benjamin
+ * @returns {DateString}
+ */
+function getToday(){
+  var today = new Date()
+    .toLocaleDateString("zh-Hans-CN", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+    .replaceAll("/", "-");
+  return today;
+};
 
 /**
  * Username server side validation
@@ -151,7 +167,7 @@ module.exports.val2Dates = function (sDate, eDate) {
         if (sDate > eDate) {
           return false;
         } else if (sDate <= eDate) {
-          const today = new Date().toISOString().slice(0, 10);
+          const today = getToday();
           if (new Date(sDate).toISOString().slice(0, 10) >= today) {
             if (new Date(eDate).toISOString().slice(0, 10) >= today) {
               return true;
