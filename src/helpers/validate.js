@@ -1,12 +1,10 @@
-const e = require("cors");
-
 const uname = /^[0-9a-zA-Z]+$/;
 const title = /^[\w\s]+$/;
 const gname = /^[A-Za-z.\s-]+$/;
 const emailR = /.{1,}@mymona.uwi.edu$/;
 const otpR = /^[A-Z0-9]{6}/;
 
-//Helpers
+// Helpers
 /**
  * Function to determine is a date string follows the yyyy/mm/dd format
  * @author Goblinlord
@@ -15,21 +13,21 @@ const otpR = /^[A-Z0-9]{6}/;
  * @returns {Boolean}
  */
 function isValidDate(dateString) {
-  var regEx = /^\d{4}-\d{2}-\d{2}$/;
+  const regEx = /^\d{4}-\d{2}-\d{2}$/;
   if (!dateString.match(regEx)) return false; // Invalid format
-  var d = new Date(dateString);
-  var dNum = d.getTime();
+  const d = new Date(dateString);
+  const dNum = d.getTime();
   if (!dNum && dNum !== 0) return false; // NaN value, Invalid date
   return d.toISOString().slice(0, 10) === dateString;
-};
+}
 
 /**
  * Function to return todaay's date in the required format
  * @author Naomi Benjamin
  * @returns {DateString}
  */
-function getToday(){
-  var today = new Date()
+function getToday() {
+  const today = new Date()
     .toLocaleDateString("zh-Hans-CN", {
       year: "numeric",
       month: "2-digit",
@@ -37,11 +35,11 @@ function getToday(){
     })
     .replaceAll("/", "-");
   return today;
-};
+}
 
 /**
- * 
- * @param {*} val 
+ *
+ * @param {*} val
  * @returns {Booleam}
  */
 function isBoolean(val) {
@@ -55,7 +53,12 @@ function isBoolean(val) {
  * @return {Boolean}
  */
 module.exports.valAlphanumeric = function (username) {
-  if (username === null || username === "" || username === undefined || isBoolean(username)) {
+  if (
+    username === null ||
+    username === "" ||
+    username === undefined ||
+    isBoolean(username)
+  ) {
     return false;
   } else {
     if (!username.match(title)) {
@@ -91,7 +94,12 @@ module.exports.valName = function (name) {
  * @return {Boolean}
  */
 module.exports.valPassword = function (password) {
-  if (password === null || password === "" || password === undefined || isBoolean(password)) {
+  if (
+    password === null ||
+    password === "" ||
+    password === undefined ||
+    isBoolean(password)
+  ) {
     return false;
   } else {
     if (!password.match(uname)) {
@@ -109,7 +117,12 @@ module.exports.valPassword = function (password) {
  * @return {Boolean}
  */
 module.exports.valEmail = function (email) {
-  if (email === null || email === "" || email === undefined || isBoolean(email)) {
+  if (
+    email === null ||
+    email === "" ||
+    email === undefined ||
+    isBoolean(email)
+  ) {
     return false;
   } else {
     if (!email.match(emailR)) {
@@ -144,7 +157,12 @@ module.exports.valOTP = function (otp) {
  * @returns {Boolean}
  */
 module.exports.valDate = function (dateString) {
-  if (dateString === undefined || dateString === null || dateString === "" || isBoolean(dateString)) {
+  if (
+    dateString === undefined ||
+    dateString === null ||
+    dateString === "" ||
+    isBoolean(dateString)
+  ) {
     return false;
   } else {
     if (!isValidDate(dateString)) {
@@ -162,10 +180,20 @@ module.exports.valDate = function (dateString) {
  * @returns {Boolean}
  */
 module.exports.val2Dates = function (sDate, eDate) {
-  if (sDate === undefined || sDate === null || sDate === "" || isBoolean(sDate)) {
+  if (
+    sDate === undefined ||
+    sDate === null ||
+    sDate === "" ||
+    isBoolean(sDate)
+  ) {
     return false;
   } else {
-    if (eDate === undefined || eDate === null || eDate === "" || isBoolean(eDate)) {
+    if (
+      eDate === undefined ||
+      eDate === null ||
+      eDate === "" ||
+      isBoolean(eDate)
+    ) {
       return false;
     } else {
       const vD1 = isValidDate(sDate);

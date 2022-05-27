@@ -1,12 +1,10 @@
-const { get } = require("express/lib/response");
-
 /**
  * Function to return todaay's date in the required format
  * @author Naomi Benjamin
  * @returns {DateString}
  */
 function getToday() {
-  var today = new Date()
+  const today = new Date()
     .toLocaleDateString("zh-Hans-CN", {
       year: "numeric",
       month: "2-digit",
@@ -14,7 +12,7 @@ function getToday() {
     })
     .replaceAll("/", "-");
   return today;
-};
+}
 
 /**
  * Dertermines whether or not the election has started

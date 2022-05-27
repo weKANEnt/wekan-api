@@ -1,5 +1,4 @@
-const e = require("cors");
-const { electiondata, tallyinfo } = require("../db/models");
+const { electiondata } = require("../db/models");
 
 /**
  * Adds election
@@ -22,8 +21,7 @@ module.exports.insertElection = async function (
     if (sDate) {
       if (eDate) {
         if (csvLocation) {
-          let newElection;
-          newElection = await electiondata.create({
+          await electiondata.create({
             electionName: title,
             startDate: sDate,
             endDate: eDate,
@@ -66,8 +64,7 @@ module.exports.selectElection = async function (elid = 1) {
  */
 module.exports.deleteElection = async function (elid = 1) {
   if (elid) {
-    const election = await electiondata.findOne({
-    });
+    const election = await electiondata.findOne({});
 
     if (election) {
       await electiondata.destroy({

@@ -10,7 +10,7 @@ const electionHandler = require("../helpers/electionHas");
 const jwt = require("jsonwebtoken");
 const config = require("../../config/env");
 
-//small helper
+// small helper
 function success(candidates, pos) {
   return {
     success: true,
@@ -41,7 +41,6 @@ module.exports.getPresidentCandidates = async function (req, res) {
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
-    return;
   }
 };
 
@@ -67,7 +66,6 @@ module.exports.getVPSSPCandidates = async function (req, res) {
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
-    return;
   }
 };
 
@@ -93,7 +91,6 @@ module.exports.getVPPSICandidates = async function (req, res) {
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
-    return;
   }
 };
 
@@ -119,7 +116,6 @@ module.exports.getSecretaryCandidates = async function (req, res) {
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
-    return;
   }
 };
 
@@ -145,7 +141,6 @@ module.exports.getTreasurerCandidates = async function (req, res) {
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
-    return;
   }
 };
 
@@ -171,7 +166,6 @@ module.exports.getGCCCandidates = async function (req, res) {
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
-    return;
   }
 };
 
@@ -197,7 +191,6 @@ module.exports.getPROCandidates = async function (req, res) {
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
-    return;
   }
 };
 
@@ -223,7 +216,6 @@ module.exports.getCEACCandidates = async function (req, res) {
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
-    return;
   }
 };
 
@@ -249,7 +241,6 @@ module.exports.getEACCandidates = async function (req, res) {
     }
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
-    return;
   }
 };
 
@@ -266,18 +257,16 @@ module.exports.getEACCandidates = async function (req, res) {
 module.exports.getFacultyCandidates = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
-    return;
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
-    var posNo;
-    var candidates;
+    let posNo;
+    let candidates;
 
     if (payload && payload.id) {
       const voterr = await voter.isRegistered(payload.email);
       if (voterr === false) {
         res.status(401).json(errorHandler.noVoter);
-        return;
       } else if (voterr) {
         if (await ballot.isInFaculty(payload.id, 1)) {
           posNo = 19;
@@ -311,15 +300,12 @@ module.exports.getFacultyCandidates = async function (req, res) {
           }
         } catch (err) {
           res.status(500).json(errorHandler.queryError);
-          return;
         }
       } else {
         res.status(500).json(errorHandler.serverError);
-        return;
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
-      return;
     }
   }
 };
@@ -336,54 +322,52 @@ module.exports.getFacultyCandidates = async function (req, res) {
 module.exports.getHallChairmanCandidates = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
-    return;
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
-    var posNo;
-    var candidates;
+    let posNo;
+    let candidates;
 
     if (payload && payload.id) {
       const voterr = await voter.isRegistered(payload.email);
       if (voterr === false) {
         res.status(401).json(errorHandler.noVoter);
-        return;
       } else if (voterr) {
         if (await ballot.isInHall(payload.id, 1)) {
-          //AZ Preston
+          // AZ Preston
           posNo = 22;
         } else if (await ballot.isInHall(payload.id, 2)) {
-          //Chancellor
+          // Chancellor
           posNo = 24;
         } else if (await ballot.isInHall(payload.id, 3)) {
-          //Irvine
+          // Irvine
           posNo = 28;
         } else if (await ballot.isInHall(payload.id, 4)) {
-          //Mary Seacole
+          // Mary Seacole
           posNo = 30;
         } else if (await ballot.isInHall(payload.id, 5)) {
-          //Taylor
+          // Taylor
           posNo = 34;
         } else if (await ballot.isInHall(payload.id, 6)) {
-          //Rex
+          // Rex
           posNo = 32;
         } else if (await ballot.isInHall(payload.id, 7)) {
-          //ABC
+          // ABC
           posNo = 20;
         } else if (await ballot.isInHall(payload.id, 8)) {
-          //ELR
+          // ELR
           posNo = 26;
         } else if (await ballot.isInHall(payload.id, 9)) {
-          //Marlene Hamilton
+          // Marlene Hamilton
           posNo = 42;
         } else if (await ballot.isInHall(payload.id, 10)) {
-          //Leslie Robinson
+          // Leslie Robinson
           posNo = 38;
         } else if (await ballot.isInHall(payload.id, 11)) {
-          //George Alleyne
+          // George Alleyne
           posNo = 40;
         } else if (await ballot.isInHall(payload.id, 12)) {
-          //WJC
+          // WJC
           posNo = 36;
         } else {
           res.status(500).json(errorHandler.queryError);
@@ -400,15 +384,12 @@ module.exports.getHallChairmanCandidates = async function (req, res) {
           }
         } catch (err) {
           res.status(500).json(errorHandler.queryError);
-          return;
         }
       } else {
         res.status(500).json(errorHandler.serverError);
-        return;
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
-      return;
     }
   }
 };
@@ -425,54 +406,52 @@ module.exports.getHallChairmanCandidates = async function (req, res) {
 module.exports.getDHallChairmanCandidates = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
-    return;
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
-    var posNo;
-    var candidates;
+    let posNo;
+    let candidates;
 
     if (payload && payload.id) {
       const voterr = await voter.isRegistered(payload.email);
       if (voterr === false) {
         res.status(401).json(errorHandler.noVoter);
-        return;
       } else if (voterr) {
         if (await ballot.isInHall(payload.id, 1)) {
-          //AZ Preston
+          // AZ Preston
           posNo = 23;
         } else if (await ballot.isInHall(payload.id, 2)) {
-          //Chancellor
+          // Chancellor
           posNo = 25;
         } else if (await ballot.isInHall(payload.id, 3)) {
-          //Irvine
+          // Irvine
           posNo = 29;
         } else if (await ballot.isInHall(payload.id, 4)) {
-          //Mary Seacole
+          // Mary Seacole
           posNo = 31;
         } else if (await ballot.isInHall(payload.id, 5)) {
-          //Taylor
+          // Taylor
           posNo = 35;
         } else if (await ballot.isInHall(payload.id, 6)) {
-          //Rex
+          // Rex
           posNo = 33;
         } else if (await ballot.isInHall(payload.id, 7)) {
-          //ABC
+          // ABC
           posNo = 21;
         } else if (await ballot.isInHall(payload.id, 8)) {
-          //ELR
+          // ELR
           posNo = 27;
         } else if (await ballot.isInHall(payload.id, 9)) {
-          //Marlene Hamilton
+          // Marlene Hamilton
           posNo = 43;
         } else if (await ballot.isInHall(payload.id, 10)) {
-          //Leslie Robinson
+          // Leslie Robinson
           posNo = 39;
         } else if (await ballot.isInHall(payload.id, 11)) {
-          //George Alleyne
+          // George Alleyne
           posNo = 41;
         } else if (await ballot.isInHall(payload.id, 12)) {
-          //WJC
+          // WJC
           posNo = 37;
         } else {
           res.status(500).json(errorHandler.queryError);
@@ -489,15 +468,12 @@ module.exports.getDHallChairmanCandidates = async function (req, res) {
           }
         } catch (err) {
           res.status(500).json(errorHandler.queryError);
-          return;
         }
       } else {
         res.status(500).json(errorHandler.serverError);
-        return;
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
-      return;
     }
   }
 };
@@ -514,7 +490,6 @@ module.exports.getDHallChairmanCandidates = async function (req, res) {
 module.exports.getCommutingCandidates = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
-    return;
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
@@ -523,7 +498,6 @@ module.exports.getCommutingCandidates = async function (req, res) {
       const voterr = await voter.isRegistered(payload.email);
       if (voterr == false) {
         res.status(401).json(errorHandler.noVoter);
-        return;
       } else if (voterr.doesCommute === true) {
         const posNo = 17;
         try {
@@ -537,18 +511,14 @@ module.exports.getCommutingCandidates = async function (req, res) {
           }
         } catch (err) {
           res.status(500).json(errorHandler.queryError);
-          return;
         }
       } else if (voterr.doesCommute === false) {
         res.status(401).json(errorHandler.isNotHallMember);
-        return;
       } else {
         res.status(500).json(errorHandler.serverError);
-        return;
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
-      return;
     }
   }
 };
@@ -565,7 +535,6 @@ module.exports.getCommutingCandidates = async function (req, res) {
 module.exports.getPostGradCandidates = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
-    return;
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
@@ -574,7 +543,6 @@ module.exports.getPostGradCandidates = async function (req, res) {
       const voterr = await voter.isRegistered(payload.email);
       if (voterr == false) {
         res.status(401).json(errorHandler.noVoter);
-        return;
       } else if (voterr.isPostGrad === true) {
         const posNo = 16;
         try {
@@ -588,18 +556,14 @@ module.exports.getPostGradCandidates = async function (req, res) {
           }
         } catch (err) {
           res.status(500).json(errorHandler.queryError);
-          return;
         }
       } else if (voterr.doesCommute === false) {
         res.status(401).json(errorHandler.isNotPostGraduate);
-        return;
       } else {
         res.status(500).json(errorHandler.serverError);
-        return;
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
-      return;
     }
   }
 };
@@ -616,36 +580,36 @@ module.exports.getPostGradCandidates = async function (req, res) {
 module.exports.submitBallot = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
-    return;
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
     const { cids } = req.body;
-    var verdict = [];
+    const verdict = [];
 
     if (payload && payload.id) {
       const electionDetails = await election.selectElection();
       if (electionDetails.length === 0) {
         res.status(500).json(errorHandler.serverError);
-        return;
       } else if (electionDetails.length === 1) {
-        const hasStarted = electionHandler.hasElectionStarted(electionDetails[0].startDate);
-        const hasEnded = electionHandler.hasElectionEnded(electionDetails[0].endDate);
+        const hasStarted = electionHandler.hasElectionStarted(
+          electionDetails[0].startDate
+        );
+        const hasEnded = electionHandler.hasElectionEnded(
+          electionDetails[0].endDate
+        );
         const hasVoted = await voter.hasVoted(payload.email);
 
-        if (hasStarted === true && hasEnded === false && hasVoted === false){
+        if (hasStarted === true && hasEnded === false && hasVoted === false) {
           const voterr = await voter.isRegistered(payload.email);
           if (voterr == false) {
             res.status(401).json(errorHandler.noVoter);
-            return;
           } else if (voterr) {
-            for (var c = 0; c < cids.length; c++) {
+            for (let c = 0; c < cids.length; c++) {
               verdict.push(Number.isInteger(cids[c]));
             }
 
             if (verdict.includes(false)) {
               res.status(400).json(errorHandler.ballotInvalid);
-              return;
             } else if (!verdict.includes(false)) {
               try {
                 const result = await ballot.insertBallotInfo(cids);
@@ -661,30 +625,23 @@ module.exports.submitBallot = async function (req, res) {
                 }
               } catch (err) {
                 res.status(500).json(errorHandler.queryError);
-                return;
               }
             }
           } else {
             res.status(500).json(errorHandler.serverError);
-            return;
           }
         } else if (hasStarted === false) {
-          res.status(400).json(errorHandler.electionNotStarted)
-          return;
+          res.status(400).json(errorHandler.electionNotStarted);
         } else if (hasEnded === true) {
           res.status(400).json(errorHandler.electionEnded);
-          return;
         } else if (hasVoted === true) {
           res.status(401).json(errorHandler.userHasVoted);
-          return;
         } else {
           res.status(400).json(errorHandler.generalValidation);
-          return;
         }
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
-      return;
     }
   }
 };

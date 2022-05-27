@@ -11,7 +11,7 @@ const mail = require("../helpers/createOTPEmail");
 const jwt = require("jsonwebtoken");
 const config = require("../../config/env");
 
-//Small helper
+// Small helper
 function success(email) {
   return {
     success: true,
@@ -63,14 +63,11 @@ module.exports.isVoterRegistered = async function (req, res) {
       }
     } catch (err) {
       res.status(500).json(err);
-      return;
     }
   } else if (vEmail != true) {
     res.status(401).json(errorHandler.emailValidation);
-    return;
   } else {
     res.status(500).json(errorHandler.serverError);
-    return;
   }
 };
 
@@ -89,12 +86,15 @@ module.exports.generateOTP = async function (req, res) {
   const { email } = req.body;
   const electionDetails = await election.selectElection();
 
-  if (electionDetails.length === 0){
+  if (electionDetails.length === 0) {
     res.status(500).json(errorHandler.electionNotActive);
-    return;
-  } else if (electionDetails.length === 1){
-    const hasStarted = electionHandler.hasElectionStarted(electionDetails[0].startDate);
-    const hasEnded = electionHandler.hasElectionEnded(electionDetails[0].endDate);
+  } else if (electionDetails.length === 1) {
+    const hasStarted = electionHandler.hasElectionStarted(
+      electionDetails[0].startDate
+    );
+    const hasEnded = electionHandler.hasElectionEnded(
+      electionDetails[0].endDate
+    );
     if (hasStarted === true && hasEnded === false) {
       try {
         let otp;
@@ -125,23 +125,19 @@ module.exports.generateOTP = async function (req, res) {
         } else if (hasVoted === true) {
           res.status(401).json(errorHandler.userHasVoted);
           return;
-        }else if (isOTP === 1) {
+        } else if (isOTP === 1) {
           res.status(500).json(errorHandler.queryError);
           return;
         }
       } catch (err) {
         res.status(500).json(errorHandler.serverError);
-        return;
       }
     } else if (hasStarted === false) {
       res.status(400).json(errorHandler.electionNotStarted);
-      return;
     } else if (hasEnded === true) {
       res.status(400).json(errorHandler.electionEnded);
-      return;
     } else {
       res.status(400).json(errorHandler.generalValidation);
-      return;
     }
   }
 };
@@ -188,13 +184,10 @@ module.exports.isOTPMatch = async function (req, res) {
       }
     } catch (err) {
       res.status(500).json(errorHandler.queryError);
-      return;
     }
   } else if (vOTP != true) {
     res.status(401).json(errorHandler.otpValidation);
-    return;
   } else {
     res.status(500).json(errorHandler.serverError);
-    return;
   }
 };

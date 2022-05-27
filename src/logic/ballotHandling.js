@@ -1,11 +1,9 @@
 const {
-  users,
   vdata,
   candidates,
   positions,
   halls,
   faculties,
-  tallyinfo,
 } = require("../db/models");
 
 /**
@@ -59,7 +57,7 @@ module.exports.isInFaculty = async function (id, fid) {
         },
       });
 
-      if (voter.faculty == faculty.facultyName) {
+      if (voter.faculty === faculty.facultyName) {
         return true;
       } else {
         return false;
@@ -94,7 +92,7 @@ module.exports.isInHall = async function (id, hid) {
         },
       });
 
-      if (voter.hall == hall.hallName) {
+      if (voter.hall === hall.hallName) {
         return true;
       } else {
         return false;
@@ -115,13 +113,13 @@ module.exports.isInHall = async function (id, hid) {
  */
 module.exports.insertBallotInfo = async function (cids) {
   if (cids) {
-    for (var c = 0; c < cids.length; c++) {
+    for (let c = 0; c < cids.length; c++) {
       const candidate = await candidates.findOne({
         where: {
           cid: cids[c],
         },
       });
-      var up = candidate.noOfVotes + 1;
+      const up = candidate.noOfVotes + 1;
 
       await candidates.upsert({
         cid: candidate.cid,

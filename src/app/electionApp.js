@@ -20,7 +20,6 @@ const config = require("../../config/env");
 module.exports.createElection = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
-    return;
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
@@ -30,11 +29,9 @@ module.exports.createElection = async function (req, res) {
       const adminn = await admin.findAdminById(payload.id);
       if (!adminn) {
         res.status(401).json(errorHandler.noAdmins);
-        return;
       } else if (adminn) {
         if (!(title && sDate && eDate)) {
           res.status(400).json(errorHandler.emptyParam);
-          return;
         } else {
           const vTitle = validate.valAlphanumeric(title);
           const vSDate = validate.valDate(sDate);
@@ -65,23 +62,19 @@ module.exports.createElection = async function (req, res) {
                 }
               } catch (err) {
                 res.status(500).json(errorHandler.queryError);
-                return;
               }
             } else if (electionn.length > 0) {
               res.status(400).json(errorHandler.electionAlreadyExists);
             }
           } else if (!vTitle || !vSDate || !vEDate || !vSEDate) {
             res.status(401).json(errorHandler.generalValidation);
-            return;
           }
         }
       } else {
         res.status(500).json(errorHandler.serverError);
-        return;
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
-      return;
     }
   }
 };
@@ -97,7 +90,6 @@ module.exports.createElection = async function (req, res) {
 module.exports.deleteElection = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
-    return;
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
@@ -106,7 +98,6 @@ module.exports.deleteElection = async function (req, res) {
       const adminn = await admin.findAdminById(payload.id);
       if (!adminn) {
         res.status(401).json(errorHandler.noAdmins);
-        return;
       } else if (adminn) {
         try {
           const removeElection = await election.deleteElection();
@@ -121,15 +112,12 @@ module.exports.deleteElection = async function (req, res) {
           }
         } catch (err) {
           res.status(500).json(errorHandler.queryError);
-          return;
         }
       } else {
         res.status(500).json(errorHandler.serverError);
-        return;
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
-      return;
     }
   }
 };

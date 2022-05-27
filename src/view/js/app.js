@@ -1,7 +1,7 @@
 document.addEventListener(
   "DOMContentLoaded",
   function () {
-    /**Navbar buttons */
+    /** Navbar buttons */
     const navCandidates = document.getElementById("navCandidates");
     const navResults = document.getElementById("navResults");
     const navSignIn = document.getElementById("navSignIn");
@@ -24,13 +24,13 @@ document.addEventListener(
       alert("You clicked UWIVotes logo");
     });
 
-    /**Home Page Buttons*/
+    /** Home Page Buttons */
 
-    /**LogIn Page Buttons*/
+    /** LogIn Page Buttons */
 
-    /**Vote Intro Page*/
+    /** Vote Intro Page */
 
-    /**Body buttons */
+    /** Body buttons */
 
     /*
     board = document.querySelector("#board"); 

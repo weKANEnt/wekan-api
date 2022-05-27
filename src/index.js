@@ -3,9 +3,9 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-//import "dotenv/config";
+// import "dotenv/config";
 
-//Router imports
+// Router imports
 const voters = require("./routes/voterRoute");
 const admin = require("./routes/adminRoute");
 const ballot = require("./routes/ballotRoute");

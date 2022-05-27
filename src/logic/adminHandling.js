@@ -7,7 +7,6 @@ const {
   faculties,
   positions,
   electionData,
-  tallyinfo,
 } = require("../db/models");
 
 /**
@@ -103,7 +102,7 @@ module.exports.addVoter = async function (
         },
       });
 
-      newVoter = await vdata.create({
+      await vdata.create({
         emid: newVoter.uid,
         email: email,
         hall: hall.hallName,
@@ -173,7 +172,7 @@ module.exports.addCandidate = async function (
         },
       });
 
-      const newCandidate = await candidates.create({
+      await candidates.create({
         firstName: fname,
         lastName: lname,
         email: email,
@@ -250,7 +249,7 @@ module.exports.insertElectionData = async function (
   csvLocation
 ) {
   if (csvLocation) {
-    const election = await electionData.create({
+    await electionData.create({
       electionName: eName,
       startDate: sDate,
       endDate: eDate,
@@ -262,7 +261,7 @@ module.exports.insertElectionData = async function (
   }
 };
 
-//code to add tally info
+// code to add tally info
 // const newTallyIno = await tallyinfo.create({
 //   name: newCandidate.firstName + ' ' + newCandidate.lastName,
 //   position: newCandidate.position,

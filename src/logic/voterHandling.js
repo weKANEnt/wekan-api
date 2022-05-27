@@ -1,4 +1,3 @@
-const TypeOverrides = require("pg/lib/type-overrides");
 const { users, vdata } = require("../db/models");
 // const config = require("../../../config/env");
 
@@ -37,7 +36,7 @@ module.exports.isRegistered = async function (email) {
  * @returns {Number}
  */
 module.exports.updateVoteStatus = async function (id, vStat) {
-  if (id){
+  if (id) {
     if (vStat) {
       const voter = await vdata.findOne({
         where: {
@@ -93,7 +92,7 @@ module.exports.hasVoted = async function (email) {
  * @returns {Boolean}
  */
 module.exports.insertOTP = async function (email, otp) {
-  if ((email != undefined) & (otp != undefined)) {
+  if ((email !== undefined) & (otp !== undefined)) {
     const voter = await vdata.findOne({
       where: {
         email: email,
