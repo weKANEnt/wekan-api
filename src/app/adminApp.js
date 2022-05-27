@@ -27,13 +27,6 @@ function success(token) {
  * @returns {Promise}
  */
 module.exports.loginAdmin = async function (req, res) {
-  try {
-    const { email, password } = req.body;
-  } catch (err) {
-    res.status(400).json(errorHandler.emptyBody);
-    return;
-  }
-  
   const { email, password } = req.body;
   if (!(email && password)) {
     res.status(503).json(errorHandler.emptyParam);

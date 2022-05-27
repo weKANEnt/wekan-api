@@ -58,7 +58,8 @@ module.exports.valAlphanumeric = function (username) {
     username === "" ||
     username === undefined ||
     isBoolean(username) ||
-    Number.isInteger(username)
+    Number.isInteger(username) ||
+    typeof username === "object"
   ) {
     return false;
   } else {
@@ -82,7 +83,8 @@ module.exports.valName = function (name) {
     name === "" ||
     name === undefined ||
     isBoolean(name) ||
-    Number.isInteger(name)
+    Number.isInteger(name) ||
+    typeof name === "object"
   ) {
     return false;
   } else {
@@ -105,7 +107,8 @@ module.exports.valPassword = function (password) {
     password === null ||
     password === "" ||
     password === undefined ||
-    isBoolean(password)
+    isBoolean(password) ||
+    typeof password === "object"
   ) {
     return false;
   } else {
@@ -129,7 +132,8 @@ module.exports.valEmail = function (email) {
     email === "" ||
     email === undefined ||
     isBoolean(email) ||
-    Number.isInteger(email)
+    Number.isInteger(email) ||
+    typeof email === "object"
   ) {
     return false;
   } else {
@@ -148,7 +152,7 @@ module.exports.valEmail = function (email) {
  * @returns
  */
 module.exports.valOTP = function (otp) {
-  if (otp === null || otp === "" || otp === undefined || isBoolean(otp)) {
+  if (otp === null || otp === "" || otp === undefined || isBoolean(otp) || typeof otp === "object") {
     return false;
   } else {
     if (!otp.match(otpR)) {
@@ -170,7 +174,8 @@ module.exports.valDate = function (dateString) {
     dateString === null ||
     dateString === "" ||
     isBoolean(dateString) ||
-    Number.isInteger(dateString)
+    Number.isInteger(dateString) ||
+    typeof dateString === "object"
   ) {
     return false;
   } else {
@@ -194,7 +199,8 @@ module.exports.val2Dates = function (sDate, eDate) {
     sDate === null ||
     sDate === "" ||
     isBoolean(sDate) ||
-    Number.isInteger(sDate)
+    Number.isInteger(sDate) ||
+    typeof sDate === "object"
   ) {
     return false;
   } else {
@@ -203,7 +209,8 @@ module.exports.val2Dates = function (sDate, eDate) {
       eDate === null ||
       eDate === "" ||
       isBoolean(eDate) ||
-      Number.isInteger(eDate)
+      Number.isInteger(eDate) ||
+      typeof eDate === "object"
     ) {
       return false;
     } else {
