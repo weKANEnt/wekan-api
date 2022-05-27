@@ -320,7 +320,7 @@ module.exports.addCandidate = async function (req, res) {
                   );
                   addSum = addSum + addCandidate;
                 } catch (err) {
-                  res.status(500).json(errorHandler.queryError);
+                  res.status(400).json(errorHandler.queryError);
                   return;
                 }
               } else if (!vEmail || !vFname || !vLname) {
