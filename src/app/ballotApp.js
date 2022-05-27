@@ -608,12 +608,12 @@ module.exports.getPostGradCandidates = async function (req, res) {
  * Allows a voter to submit a ballot after selecting candidates they would liek to vote for
  * @function
  * @async
- * @name submittBallot
+ * @name submitBallot
  * @param {*} req
  * @param {*} res
  * @return {Promise}
  */
-module.exports.submittBallot = async function (req, res) {
+module.exports.submitBallot = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
     return;
