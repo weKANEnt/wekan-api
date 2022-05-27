@@ -285,60 +285,69 @@ module.exports.addCandidate = async function (req, res) {
       if (!adminn) {
         res.status(401).json(errorHandler.noAdmins);
       } else if (adminn) {
-        for (let c = 0; c < candidates.length; c++) {
-          if (
-            !(
-              candidates[c].firstName &&
-              candidates[c].lastName &&
-              candidates[c].email &&
-              candidates[c].hall &&
-              candidates[c].faculty &&
-              candidates[c].position &&
-              candidates[c].about
-            )
-          ) {
-            res.status(400).json(errorHandler.emptyFields);
-            return;
-          } else {
-            const vEmail = validate.valEmail(candidates[c].email);
-            const vFname = validate.valName(candidates[c].firstName);
-            const vLname = validate.valName(candidates[c].lastName);
-
-            var addCandidate;
-            var addSum = 0;
-            if (vEmail && vFname && vLname) {
-              try {
-                addCandidate = await admin.addCandidate(
-                  candidates[c].firstName,
-                  candidates[c].lastName,
-                  candidates[c].email,
-                  candidates[c].hall,
-                  candidates[c].faculty,
-                  candidates[c].position,
-                  candidates[c].about
-                );
-                addSum = addSum + addCandidate;
-              } catch (err) {
-                res.status(500).json(errorHandler.queryError);
-                return;
-              }
-            } else if (!vEmail || !vFname || !vLname) {
-              res.status(401).json(errorHandler.genValidation);
+        try {
+          for (let c = 0; c < candidates.length; c++) {
+            if (
+              !(
+                candidates[c].firstName &&
+                candidates[c].lastName &&
+                candidates[c].email &&
+                candidates[c].hall &&
+                candidates[c].faculty &&
+                candidates[c].position &&
+                candidates[c].about
+              )
+            ) {
+              res.status(400).json(errorHandler.emptyFields);
               return;
             } else {
-              res.status(500).json(errorHandler.serverError);
-              return;
+              const vEmail = validate.valEmail(candidates[c].email);
+              const vFname = validate.valName(candidates[c].firstName);
+              const vLname = validate.valName(candidates[c].lastName);
+
+              var addCandidate;
+              var addSum = 0;
+              if (vEmail && vFname && vLname) {
+                try {
+                  addCandidate = await admin.addCandidate(
+                    candidates[c].firstName,
+                    candidates[c].lastName,
+                    candidates[c].email,
+                    candidates[c].hall,
+                    candidates[c].faculty,
+                    candidates[c].position,
+                    candidates[c].about
+                  );
+                  addSum = addSum + addCandidate;
+                } catch (err) {
+                  res.status(500).json(errorHandler.queryError);
+                  return;
+                }
+              } else if (!vEmail || !vFname || !vLname) {
+                res.status(401).json(errorHandler.genValidation);
+                return;
+              } else {
+                res.status(500).json(errorHandler.serverError);
+                return;
+              }
             }
           }
-        }
-        if (addSum === 0) {
-          res
-            .status(200)
-            .json(successHandler(true, "All candidates added successfully"));
-        } else if (addSum < 0) {
-          res.status(400).json(errorHandler.serverError);
-        } else {
-          res.status(400).json(errorHandler.cannotAddCandidate);
+          if (addSum === 0) {
+            res
+              .status(200)
+              .json(successHandler(true, "All candidates added successfully"));
+            return;
+          } else if (addSum < 0) {
+            res.status(400).json(errorHandler.serverError);
+            return;
+          } else {
+            res.status(400).json(errorHandler.cannotAddCandidate);
+            return;
+          }
+        } catch (err) {
+          console.log("yeeee")
+          res.status(400).json(errorHandler.missingField);
+          return;
         }
       }
     }
