@@ -42,7 +42,6 @@ module.exports.loginAdmin = async function (req, res) {
         res.status(401).json(errorHandler.noAdmins);
       } else if (adminn) {
         if (bcrypt.compareSync(password, adminn.password)) {
-          console.log(config.jwt_key);
           const token = jwt.sign(
             {
               id: adminn.aid,
