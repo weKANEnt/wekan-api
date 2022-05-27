@@ -37,16 +37,23 @@ module.exports.isRegistered = async function (email) {
  * @returns {Number}
  */
 module.exports.updateVoteStatus = async function (id, vStat) {
-  if (id & vStat) {
-    await users.upsert({
-      uid: id,
-      votestatus: vStat,
-    });
+  if (id){
+    if (vStat) {
+      const voter = await vdata.findOne({
+        where: {
+          ccid: id,
+        },
+      });
 
-    return 0;
-  } else {
+      await users.upsert({
+        uid: voter.ccid,
+        votestatus: vStat,
+      });
+      return 0;
+    }
     return 1;
   }
+  return 1;
 };
 
 /**

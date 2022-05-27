@@ -188,3 +188,10 @@ module.exports.electionNotActive = errorHandler(
   "No election has been established",
   "wek-na"
 );
+
+module.exports.userHasVoted = errorHandler(
+  false,
+  "Cannot complete action",
+  "Vote already recorded for given email",
+  "wek-na"
+);

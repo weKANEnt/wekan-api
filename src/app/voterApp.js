@@ -119,10 +119,13 @@ module.exports.generateOTP = async function (req, res) {
             res.status(500).json(errorHandler.emailUnregistered);
             return;
           }
-        } else if (isOTP === true || hasVoted === true) {
+        } else if (isOTP === true) {
           res.status(422).json(errorHandler.causingDuplicate);
           return;
-        } else if (isOTP === 1) {
+        } else if (hasVoted === true) {
+          res.status(401).json(errorHandler.userHasVoted);
+          return;
+        }else if (isOTP === 1) {
           res.status(500).json(errorHandler.queryError);
           return;
         }

@@ -631,8 +631,9 @@ module.exports.submitBallot = async function (req, res) {
       } else if (electionDetails.length === 1) {
         const hasStarted = electionHandler.hasElectionStarted(electionDetails[0].startDate);
         const hasEnded = electionHandler.hasElectionEnded(electionDetails[0].endDate);
-        
-        if (hasStarted === true && hasEnded === false){
+        const hasVoted = await voter.hasVoted(payload.email);
+
+        if (hasStarted === true && hasEnded === false && hasVoted === false){
           const voterr = await voter.isRegistered(payload.email);
           if (voterr == false) {
             res.status(401).json(errorHandler.noVoter);
@@ -652,7 +653,8 @@ module.exports.submitBallot = async function (req, res) {
                   res
                     .status(200)
                     .json(successHandler(true, "Voter ballot submitted"));
-                  return;
+                  const updated = voter.updateVoteStatus(payload.id, true);
+                  return updated;
                 } else if (result === 1) {
                   res.status(400).json(errorHandler.ballotInvalid);
                   return;
@@ -671,6 +673,9 @@ module.exports.submitBallot = async function (req, res) {
           return;
         } else if (hasEnded === true) {
           res.status(400).json(errorHandler.electionEnded);
+          return;
+        } else if (hasVoted === true) {
+          res.status(401).json(errorHandler.userHasVoted);
           return;
         } else {
           res.status(400).json(errorHandler.generalValidation);
