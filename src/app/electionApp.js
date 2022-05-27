@@ -7,7 +7,6 @@ const getToken = require("../helpers/getToken");
 
 const jwt = require("jsonwebtoken");
 const config = require("../../config/env");
-const e = require("cors");
 
 /**
  * @function
