@@ -15,7 +15,7 @@ function success(candidates, pos) {
   return {
     success: true,
     message: `Candidates for ${pos}`,
-    candidates: [candidates],
+    candidates: candidates,
   };
 }
 
