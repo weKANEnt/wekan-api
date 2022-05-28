@@ -195,3 +195,10 @@ module.exports.userHasVoted = errorHandler(
   "Vote already recorded for given email",
   "wek-na"
 );
+
+module.exports.cannotSubmitBallot = errorHandler(
+  false,
+  "Cannot submit ballot",
+  "Ballot cannot be submitted due to validation errors",
+  "wek-ve"
+);

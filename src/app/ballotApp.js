@@ -543,6 +543,7 @@ module.exports.getPostGradCandidates = async function (req, res) {
       const voterr = await voter.isRegistered(payload.email);
       if (voterr == false) {
         res.status(401).json(errorHandler.noVoter);
+        return;
       } else if (voterr.isPostGrad === true) {
         const posNo = 16;
         try {
@@ -557,7 +558,7 @@ module.exports.getPostGradCandidates = async function (req, res) {
         } catch (err) {
           res.status(500).json(errorHandler.queryError);
         }
-      } else if (voterr.doesCommute === false) {
+      } else if (voterr.isPostGrad === false) {
         res.status(401).json(errorHandler.isNotPostGraduate);
       } else {
         res.status(500).json(errorHandler.serverError);
@@ -580,6 +581,7 @@ module.exports.getPostGradCandidates = async function (req, res) {
 module.exports.submitBallot = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
+    return;
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
@@ -587,61 +589,75 @@ module.exports.submitBallot = async function (req, res) {
     const verdict = [];
 
     if (payload && payload.id) {
-      const electionDetails = await election.selectElection();
-      if (electionDetails.length === 0) {
-        res.status(500).json(errorHandler.serverError);
-      } else if (electionDetails.length === 1) {
-        const hasStarted = electionHandler.hasElectionStarted(
-          electionDetails[0].startDate
-        );
-        const hasEnded = electionHandler.hasElectionEnded(
-          electionDetails[0].endDate
-        );
-        const hasVoted = await voter.hasVoted(payload.email);
+      if (typeof cids === 'array' && cids.length > 0) {
+        const electionDetails = await election.selectElection();
+        if (electionDetails.length === 0) {
+          res.status(500).json(errorHandler.serverError);
+          return;
+        } else if (electionDetails.length === 1) {
+          const hasStarted = electionHandler.hasElectionStarted(
+            electionDetails[0].startDate
+          );
+          const hasEnded = electionHandler.hasElectionEnded(
+            electionDetails[0].endDate
+          );
+          const hasVoted = await voter.hasVoted(payload.email);
 
-        if (hasStarted === true && hasEnded === false && hasVoted === false) {
-          const voterr = await voter.isRegistered(payload.email);
-          if (voterr == false) {
-            res.status(401).json(errorHandler.noVoter);
-          } else if (voterr) {
-            for (let c = 0; c < cids.length; c++) {
-              verdict.push(Number.isInteger(cids[c]));
-            }
+          if (hasStarted === true && hasEnded === false && hasVoted === false) {
+            const voterr = await voter.isRegistered(payload.email);
+            if (voterr == false) {
+              res.status(401).json(errorHandler.noVoter);
+              return;
+            } else if (voterr) {
+              for (let c = 0; c < cids.length; c++) {
+                verdict.push(Number.isInteger(cids[c]));
+              }
 
-            if (verdict.includes(false)) {
-              res.status(400).json(errorHandler.ballotInvalid);
-            } else if (!verdict.includes(false)) {
-              try {
-                const result = await ballot.insertBallotInfo(cids);
-                if (result === 0) {
-                  res
-                    .status(200)
-                    .json(successHandler(true, "Voter ballot submitted"));
-                  const updated = voter.updateVoteStatus(payload.id, true);
-                  return updated;
-                } else if (result === 1) {
-                  res.status(400).json(errorHandler.ballotInvalid);
+              if (verdict.includes(false)) {
+                res.status(400).json(errorHandler.ballotInvalid);
+                return;
+              } else if (!verdict.includes(false)) {
+                try {
+                  const result = await ballot.insertBallotInfo(cids);
+                  if (result === 0) {
+                    res
+                      .status(200)
+                      .json(successHandler(true, "Voter ballot submitted"));
+                    const updated = voter.updateVoteStatus(payload.id, true);
+                    return updated;
+                  } else if (result === 1) {
+                    res.status(400).json(errorHandler.ballotInvalid);
+                    return;
+                  }
+                } catch (err) {
+                  res.status(500).json(errorHandler.queryError);
                   return;
                 }
-              } catch (err) {
-                res.status(500).json(errorHandler.queryError);
               }
+            } else {
+              res.status(500).json(errorHandler.serverError);
             }
+          } else if (hasStarted === false) {
+            res.status(400).json(errorHandler.electionNotStarted);
+            return;
+          } else if (hasEnded === true) {
+            res.status(400).json(errorHandler.electionEnded);
+            return;
+          } else if (hasVoted === true) {
+            res.status(401).json(errorHandler.userHasVoted);
+            return;
           } else {
-            res.status(500).json(errorHandler.serverError);
+            res.status(400).json(errorHandler.generalValidation);
+            return;
           }
-        } else if (hasStarted === false) {
-          res.status(400).json(errorHandler.electionNotStarted);
-        } else if (hasEnded === true) {
-          res.status(400).json(errorHandler.electionEnded);
-        } else if (hasVoted === true) {
-          res.status(401).json(errorHandler.userHasVoted);
-        } else {
-          res.status(400).json(errorHandler.generalValidation);
         }
+      } else {
+        res.status(400).json(errorHandler.cannotSubmitBallot);
+        return;
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
+      return;
     }
   }
 };
