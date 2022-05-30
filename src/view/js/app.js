@@ -15,24 +15,54 @@ document.addEventListener(
     /**Event Listeners for Pages */
 
    
+    /*
+    fetch(url, { method: 'POST', redirect: 'follow'})
+    .then(response => {
+        // HTTP 301 response
+    })
+    .catch(function(err) {
+        console.info(err + " url: " + url);
+    });
 
-    navCandidates.addEventListener("onclick", function(){
-        //alert("You clicked Candidates");
-        fetch('/src/view/candidates.html')
+    fetch('/src/view/candidates.html', { method: 'POST', redirect: 'follow'})
+    .then(response => {
+        return response.text()
+    })
+    .catch(function(err) {
+        //console.info(err + " url: " + url);
+        document.body.innerHTML = body
+    });
+
+    */
+    navCandidates.addEventListener("click", function(){
+        alert("You clicked Candidates");
+        /*fetch('/src/view/candidates.html')
         .then(function(response) {
             return response.text()
         }).then(function(body) {
             document.body.innerHTML = body
+        })*/
+
+        ///*
+
+
+       /* fetch('/src/view/candidates.html')//, { method: 'POST', redirect: 'follow'})
+        .then(response => {
+            return response.text()
         })
+        .catch(function(err) {
+            //console.info(err + " url: " + url);
+            document.body.innerHTML = body
+        }); //*/
 
 
 
         
     });
 
-    navResults.addEventListener("onclick", function(){
-        //alert("You clicked Results");
-        fetch('/src/view/results.html')
+    navResults.addEventListener("click", function(){
+        alert("You clicked Results");
+        fetch('/src/view/results.html', { method: 'GET', redirect: 'follow'})
         .then(function(response) {
             return response.text()
         }).then(function(body) {
@@ -44,33 +74,32 @@ document.addEventListener(
 
     });
 
-    navSignIn.addEventListener("onclick", function(){
-        //alert("You clicked Sign In");
-        fetch('/src/view/logIn.html')
+    navSignIn.addEventListener("click", function(){
+        alert("You clicked Sign In");
+       /* fetch('/src/view/logIn.html')
         .then(function(response) {
             return response.text()
         }).then(function(body) {
             document.body.innerHTML = body
-        })
+        })*/
 
 
 
 
     });
 
-    navBarLogo.addEventListener("onclick", function(){
-        //alert("You clicked Home/Logo");
-        fetch('/src/view/index.html')
+    navBarLogo.addEventListener("click", function(){
+        alert("You clicked Home/Logo");
+       /* fetch('/src/view/index.html')
         .then(function(response) {
             return response.text()
         }).then(function(body) {
             document.body.innerHTML = body
-        })
+        }) */
 
 
 
     });
-
 
 
 
@@ -205,7 +234,7 @@ document.addEventListener(
             this.setAttribute("class",newClass);
         }  
 
-            square[i].onclick = function(target){                
+            square[i].click = function(target){                
                 if (this.innerHTML=="" && prevSquare!="X" ){
                     this.innerHTML = "X";
                     prevSquare="X";
