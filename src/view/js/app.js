@@ -1,18 +1,84 @@
 document.addEventListener(
   "DOMContentLoaded",
   function () {
+    console.log("loaded page");
     /** Navbar buttons */
-    const navCandidates = document.getElementById("navCandidates");
-    const navResults = document.getElementById("navResults");
-    const navSignIn = document.getElementById("navSignIn");
-    const navBarLogo = document.getElementById("navBarLogo");
+    var navCandidates = document.getElementById("navCandidates");
+    var navResults = document.getElementById("navResults");
+    var navSignIn = document.getElementById("navSignIn");
+    var navBarLogo = document.getElementById("navBarLogo");
+    var page1 = document.getElementById("page1Link");
+    var page2 = document.getElementById("page2Link");
 
-    navCandidates.addEventListener("click", function () {
-      alert("You clicked Candidates");
+    //console.log("start");
+    //console.log(fetch('/src/view/page1.html'));
+
+   /* fetch('/src/view/page2.html')
+    .then(function(response) {
+        return response.text()
+      }).then(function(body) {
+        document.body.innerHTML = body
+      }) */
+
+
+   /* .then(function(response) {
+        return response.json();
+    }).then(function(jsonData) {
+        console.log(jsonData);
+    }).catch(function(err) {
+        console.log("Opps, Something went wrong!", err);
+    })*/
+
+    /*
+    fetch('http://127.0.0.1:5500/src/view/page1.html')
+    .then(res => res.json())
+    .then(data => console.log(data)) */
+   /* console.log(fetch('https://regres.in/api/users'));
+    //alert("waiter");
+    fetch('http://example.com/movies.json')
+    .then(response => response.json())
+    .then(data => console.log(data));  */
+
+
+    page1.addEventListener("click", function(){
+        //alert("You clicked the link for page 1.")
+        
+      /*  fetch('http://google.com/')
+        .then((response) => {
+            alert("yes")
+            return response.json();
+        })
+        .then((myJson) => {
+            console.log(myJson);
+        });*/
+
+    });
+/*
+    page2.addEventListener("click", function(){
+        
+        //alert("You clicked the link for page 2.")
+        console.log("you clicked page2");
+
+
+
+    });
+*/
+
+  /*  navCandidates.addEventListener("click", function () {
+     alert("You clicked Candidates");
     });
 
     navResults.addEventListener("click", function () {
       alert("You clicked Results");
+      fetch('./src/view/results.html', { method: 'POST', body: 'a=1' })
+        .then(res => res.json()) // expecting a json response
+        .then(json => {
+           console.log(json)
+           window.location.href = data.redirect;
+          });
+    });     fetch('http://google.com')
+        .then(response => response.json())
+        .then(data => console.log(data)); 
     });
 
     navSignIn.addEventListener("click", function () {
@@ -24,6 +90,10 @@ document.addEventListener(
       alert("You clicked UWIVotes logo");
     });
 
+
+
+
+    */
     /** Home Page Buttons */
 
     /** LogIn Page Buttons */
