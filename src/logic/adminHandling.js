@@ -271,7 +271,7 @@ module.exports.insertElectionData = async function (
  */
 module.exports.getAllCandidates = async function (){
   const allCandidates = await candidates.findAll({
-    attributes: ["firstName", "lastName", "position", "noOfVotes"],
+    attributes: ["firstName", "lastName", "email", "position", "noOfVotes"],
   });
 
   if (allCandidates.length > 0) {
@@ -279,32 +279,4 @@ module.exports.getAllCandidates = async function (){
   } else {
     return 1;
   }
-};
-
-/**
- * Insert winners into the tally info table
- * @function
- * @async
- * @name insertWinner
- * @param {*} name 
- * @param {*} position 
- * @param {*} noOfVotes 
- * @returns {Number}
- */
-module.exports.insertWinner = async function (name, position, noOfVotes) {
-  if (name) {
-    if (position) {
-      if (noOfVotes) {
-        await tallyinfo.create({
-          name: name,
-          position: position,
-          noOfVotes: noOfVotes
-        });
-        return 0;
-      }
-      return 1;
-    }
-    return 1;
-  }
-  return 1;
 };

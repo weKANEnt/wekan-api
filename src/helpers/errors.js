@@ -202,3 +202,10 @@ module.exports.cannotSubmitBallot = errorHandler(
   "Ballot cannot be submitted due to validation errors",
   "wek-ve"
 );
+
+module.exports.noCandidates = errorHandler(
+  false,
+  "No candidates are present",
+  "No candidate found",
+  "wek-nf"
+);

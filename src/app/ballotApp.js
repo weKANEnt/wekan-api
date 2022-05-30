@@ -589,7 +589,7 @@ module.exports.submitBallot = async function (req, res) {
     const verdict = [];
 
     if (payload && payload.id) {
-      if (typeof cids === 'array' && cids.length > 0) {
+      if (Array.isArray(cids) && cids.length > 0) {
         const electionDetails = await election.selectElection();
         if (electionDetails.length === 0) {
           res.status(500).json(errorHandler.serverError);
@@ -602,7 +602,7 @@ module.exports.submitBallot = async function (req, res) {
             electionDetails[0].endDate
           );
           const hasVoted = await voter.hasVoted(payload.email);
-
+            console.log(hasVoted, hasStarted, hasEnded)
           if (hasStarted === true && hasEnded === false && hasVoted === false) {
             const voterr = await voter.isRegistered(payload.email);
             if (voterr == false) {

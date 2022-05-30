@@ -278,12 +278,13 @@ module.exports.addCandidate = async function (req, res) {
   } else {
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
-    // const { firstName, lastName, email, hall, faculty, position, about }= req.body
     const { candidates } = req.body;
+
     if (payload && payload.id) {
       const adminn = await admin.findAdminById(payload.id);
       if (!adminn) {
         res.status(401).json(errorHandler.noAdmins);
+        return;
       } else if (adminn) {
         try {
           for (let c = 0; c < candidates.length; c++) {
@@ -345,11 +346,12 @@ module.exports.addCandidate = async function (req, res) {
             return;
           }
         } catch (err) {
-          console.log("yeeee")
           res.status(400).json(errorHandler.missingField);
           return;
         }
       }
+    } else {
+      res.status(500).json(errorHandler.jwtError);
     }
   }
 };

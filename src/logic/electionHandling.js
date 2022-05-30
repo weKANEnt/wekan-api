@@ -1,4 +1,5 @@
-const { electiondata } = require("../db/models");
+const e = require("cors");
+const { electiondata, candidates, tallyinfo } = require("../db/models");
 
 /**
  * Adds election
@@ -78,4 +79,33 @@ module.exports.deleteElection = async function (elid = 1) {
     }
   }
   return 2;
+};
+
+/**
+ * Insert results into the tally info table
+ * @function
+ * @async
+ * @name insertResults
+ * @param {*} name 
+ * @param {*} position 
+ * @param {*} noOfVotes 
+ * @returns {Number}
+ */
+ module.exports.insertResults = async function (name, email, position, noOfVotes) {
+  if (name) {
+    if (position) {
+      if (noOfVotes) {
+        await tallyinfo.create({
+          name: name,
+          email: email,
+          position: position,
+          noOfVotes: noOfVotes
+        });
+        return 0;
+      }
+      return 1;
+    }
+    return 1;
+  }
+  return 1;
 };

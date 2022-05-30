@@ -21,8 +21,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       name: DataTypes.STRING,
+      email: DataTypes.STRING,
       position: DataTypes.STRING,
-      noOfVotes: DataTypes.INTEGER,
+      noOfVotes: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+      } 
     },
     {
       sequelize,
