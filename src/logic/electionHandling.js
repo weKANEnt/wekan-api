@@ -134,3 +134,34 @@ module.exports.updatePostResults = async function (elid=1, resultsStat) {
   }
   return 1;
 };
+
+/**
+ * @function
+ * @name getElectionResults
+ * @returns {Array<tallyinfo>}
+ */
+module.exports.selectElectionResults = async function () {
+  const results = await tallyinfo.findAll({
+    attributes: ['name', 'position', 'noOfVotes'],
+  });
+
+  if (results.length > 0) {
+    return results;
+  } else {
+    return 1;
+  }
+};
+
+/**
+ * @function
+ * @name selectPostedStatus
+ * @returns {Boolean}
+ */
+module.exports.selectPostedStatus = async function () {
+  const stat = await electiondata.findOne({
+    attributes: ['postResults']
+  });
+  
+  return stat;
+  
+};
