@@ -175,7 +175,6 @@ module.exports.generateElectionResults = async function (req, res) {
                  out = await election.insertResults(fullName, allCandidates[c].email, allCandidates[c].position, allCandidates[c].noOfVotes);
                  results.push(out);
                };
-               console.log(results);
                if (results.includes(1)) {
                  res.status(500).json(errorHandler.queryError);
                  return;

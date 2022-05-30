@@ -109,3 +109,28 @@ module.exports.deleteElection = async function (elid = 1) {
   }
   return 1;
 };
+
+/**
+ * @function
+ * @name updatePostResults
+ * @param {*} elid 
+ * @param {*} resultsStat 
+ * @returns {Integer}
+ */
+module.exports.updatePostResults = async function (elid=1, resultsStat) {
+  if (elid) {
+    const election = await electiondata.findOne({
+      where: {
+        elid: elid
+      }
+    });
+
+    await electiondata.upsert({
+      elid: election.elid,
+      postResults: resultsStat
+    });
+
+    return 0;
+  }
+  return 1;
+};

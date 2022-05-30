@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
       electionName: DataTypes.STRING,
       startDate: DataTypes.DATEONLY,
       endDate: DataTypes.DATEONLY,
+      postResults: {
+        type: DataTypes.BOOLEAN,
+        defaultValue : false
+      },
       csvLocation: DataTypes.STRING,
     },
     {

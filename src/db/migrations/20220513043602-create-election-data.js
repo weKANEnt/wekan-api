@@ -20,6 +20,10 @@ module.exports = {
       csvLocation: {
         type: Sequelize.STRING,
       },
+      postResults: {
+        type: Sequelize.BOOLEAN,
+        default: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
