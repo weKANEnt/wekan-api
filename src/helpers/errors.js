@@ -216,3 +216,17 @@ module.exports.noCandidates = errorHandler(
   "No candidate found",
   "wek-nf"
 );
+
+module.exports.resultsUnavailable = errorHandler(
+  false,
+  "Election Results Unavailable",
+  "Election Results have not yet been posted",
+  "wek-nf"
+);
+
+module.exports.noElectionResults = errorHandler(
+  false,
+  "No Election Results",
+  "Election Results have not yet been generated",
+  "wek-nf"
+);

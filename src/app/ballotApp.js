@@ -330,73 +330,78 @@ module.exports.getHallChairmanCandidates = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
   } else {
-    const token = getToken(req.headers);
-    const payload = await jwt.verify(token, config.jwt_key);
-    let posNo;
-    let candidates;
+    try {
+      const token = getToken(req.headers);
+      const payload = await jwt.verify(token, config.jwt_key);
+      let posNo;
+      let candidates;
 
-    if (payload && payload.id) {
-      const voterr = await voter.isRegistered(payload.email);
-      if (voterr === false) {
-        res.status(401).json(errorHandler.noVoter);
-      } else if (voterr) {
-        if (await ballot.isInHall(payload.id, 1)) {
-          // AZ Preston
-          posNo = 22;
-        } else if (await ballot.isInHall(payload.id, 2)) {
-          // Chancellor
-          posNo = 24;
-        } else if (await ballot.isInHall(payload.id, 3)) {
-          // Irvine
-          posNo = 28;
-        } else if (await ballot.isInHall(payload.id, 4)) {
-          // Mary Seacole
-          posNo = 30;
-        } else if (await ballot.isInHall(payload.id, 5)) {
-          // Taylor
-          posNo = 34;
-        } else if (await ballot.isInHall(payload.id, 6)) {
-          // Rex
-          posNo = 32;
-        } else if (await ballot.isInHall(payload.id, 7)) {
-          // ABC
-          posNo = 20;
-        } else if (await ballot.isInHall(payload.id, 8)) {
-          // ELR
-          posNo = 26;
-        } else if (await ballot.isInHall(payload.id, 9)) {
-          // Marlene Hamilton
-          posNo = 42;
-        } else if (await ballot.isInHall(payload.id, 10)) {
-          // Leslie Robinson
-          posNo = 38;
-        } else if (await ballot.isInHall(payload.id, 11)) {
-          // George Alleyne
-          posNo = 40;
-        } else if (await ballot.isInHall(payload.id, 12)) {
-          // WJC
-          posNo = 36;
-        } else {
-          res.status(500).json(errorHandler.queryError);
-          return;
-        }
-        try {
-          candidates = await ballot.selectRequestedCandidates(posNo);
-          if (candidates === 1) {
-            res.status(500).json(errorHandler.emptyParam);
-            return;
-          } else if (candidates) {
-            res.status(200).json(success(candidates, "Hall Rep."));
+      if (payload && payload.id) {
+        const voterr = await voter.isRegistered(payload.email);
+        if (voterr === false) {
+          res.status(401).json(errorHandler.noVoter);
+        } else if (voterr) {
+          if (await ballot.isInHall(payload.id, 1)) {
+            // AZ Preston
+            posNo = 22;
+          } else if (await ballot.isInHall(payload.id, 2)) {
+            // Chancellor
+            posNo = 24;
+          } else if (await ballot.isInHall(payload.id, 3)) {
+            // Irvine
+            posNo = 28;
+          } else if (await ballot.isInHall(payload.id, 4)) {
+            // Mary Seacole
+            posNo = 30;
+          } else if (await ballot.isInHall(payload.id, 5)) {
+            // Taylor
+            posNo = 34;
+          } else if (await ballot.isInHall(payload.id, 6)) {
+            // Rex
+            posNo = 32;
+          } else if (await ballot.isInHall(payload.id, 7)) {
+            // ABC
+            posNo = 20;
+          } else if (await ballot.isInHall(payload.id, 8)) {
+            // ELR
+            posNo = 26;
+          } else if (await ballot.isInHall(payload.id, 9)) {
+            // Marlene Hamilton
+            posNo = 42;
+          } else if (await ballot.isInHall(payload.id, 10)) {
+            // Leslie Robinson
+            posNo = 38;
+          } else if (await ballot.isInHall(payload.id, 11)) {
+            // George Alleyne
+            posNo = 40;
+          } else if (await ballot.isInHall(payload.id, 12)) {
+            // WJC
+            posNo = 36;
+          } else {
+            res.status(500).json(errorHandler.queryError);
             return;
           }
-        } catch (err) {
-          res.status(500).json(errorHandler.queryError);
+          try {
+            candidates = await ballot.selectRequestedCandidates(posNo);
+            if (candidates === 1) {
+              res.status(500).json(errorHandler.emptyParam);
+              return;
+            } else if (candidates) {
+              res.status(200).json(success(candidates, "Hall Rep."));
+              return;
+            }
+          } catch (err) {
+            res.status(500).json(errorHandler.queryError);
+          }
+        } else {
+          res.status(500).json(errorHandler.serverError);
         }
       } else {
-        res.status(500).json(errorHandler.serverError);
+        res.status(500).json(errorHandler.jwtError);
       }
-    } else {
-      res.status(500).json(errorHandler.jwtError);
+    } catch (err) {
+      res.status(401).json(errorHandler.jwtTokenExpired);
+      return;
     }
   }
 };
@@ -414,73 +419,81 @@ module.exports.getDHallChairmanCandidates = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
   } else {
-    const token = getToken(req.headers);
-    const payload = await jwt.verify(token, config.jwt_key);
-    let posNo;
-    let candidates;
+    try {
+      const token = getToken(req.headers);
+      const payload = await jwt.verify(token, config.jwt_key);
+      let posNo;
+      let candidates;
 
-    if (payload && payload.id) {
-      const voterr = await voter.isRegistered(payload.email);
-      if (voterr === false) {
-        res.status(401).json(errorHandler.noVoter);
-      } else if (voterr) {
-        if (await ballot.isInHall(payload.id, 1)) {
-          // AZ Preston
-          posNo = 23;
-        } else if (await ballot.isInHall(payload.id, 2)) {
-          // Chancellor
-          posNo = 25;
-        } else if (await ballot.isInHall(payload.id, 3)) {
-          // Irvine
-          posNo = 29;
-        } else if (await ballot.isInHall(payload.id, 4)) {
-          // Mary Seacole
-          posNo = 31;
-        } else if (await ballot.isInHall(payload.id, 5)) {
-          // Taylor
-          posNo = 35;
-        } else if (await ballot.isInHall(payload.id, 6)) {
-          // Rex
-          posNo = 33;
-        } else if (await ballot.isInHall(payload.id, 7)) {
-          // ABC
-          posNo = 21;
-        } else if (await ballot.isInHall(payload.id, 8)) {
-          // ELR
-          posNo = 27;
-        } else if (await ballot.isInHall(payload.id, 9)) {
-          // Marlene Hamilton
-          posNo = 43;
-        } else if (await ballot.isInHall(payload.id, 10)) {
-          // Leslie Robinson
-          posNo = 39;
-        } else if (await ballot.isInHall(payload.id, 11)) {
-          // George Alleyne
-          posNo = 41;
-        } else if (await ballot.isInHall(payload.id, 12)) {
-          // WJC
-          posNo = 37;
-        } else {
-          res.status(500).json(errorHandler.queryError);
-          return;
-        }
-        try {
-          candidates = await ballot.selectRequestedCandidates(posNo);
-          if (candidates === 1) {
-            res.status(500).json(errorHandler.emptyParam);
-            return;
-          } else if (candidates) {
-            res.status(200).json(success(candidates, "Deputy Hall Rep."));
+      if (payload && payload.id) {
+        const voterr = await voter.isRegistered(payload.email);
+        if (voterr === false) {
+          res.status(401).json(errorHandler.noVoter);
+        } else if (voterr) {
+          if (await ballot.isInHall(payload.id, 1)) {
+            // AZ Preston
+            posNo = 23;
+          } else if (await ballot.isInHall(payload.id, 2)) {
+            // Chancellor
+            posNo = 25;
+          } else if (await ballot.isInHall(payload.id, 3)) {
+            // Irvine
+            posNo = 29;
+          } else if (await ballot.isInHall(payload.id, 4)) {
+            // Mary Seacole
+            posNo = 31;
+          } else if (await ballot.isInHall(payload.id, 5)) {
+            // Taylor
+            posNo = 35;
+          } else if (await ballot.isInHall(payload.id, 6)) {
+            // Rex
+            posNo = 33;
+          } else if (await ballot.isInHall(payload.id, 7)) {
+            // ABC
+            posNo = 21;
+          } else if (await ballot.isInHall(payload.id, 8)) {
+            // ELR
+            posNo = 27;
+          } else if (await ballot.isInHall(payload.id, 9)) {
+            // Marlene Hamilton
+            posNo = 43;
+          } else if (await ballot.isInHall(payload.id, 10)) {
+            // Leslie Robinson
+            posNo = 39;
+          } else if (await ballot.isInHall(payload.id, 11)) {
+            // George Alleyne
+            posNo = 41;
+          } else if (await ballot.isInHall(payload.id, 12)) {
+            // WJC
+            posNo = 37;
+          } else {
+            res.status(500).json(errorHandler.queryError);
             return;
           }
-        } catch (err) {
-          res.status(500).json(errorHandler.queryError);
+          try {
+            candidates = await ballot.selectRequestedCandidates(posNo);
+            if (candidates === 1) {
+              res.status(500).json(errorHandler.emptyParam);
+              return;
+            } else if (candidates) {
+              res.status(200).json(success(candidates, "Deputy Hall Rep."));
+              return;
+            }
+          } catch (err) {
+            res.status(500).json(errorHandler.queryError);
+            return;
+          }
+        } else {
+          res.status(500).json(errorHandler.serverError);
+          return;
         }
       } else {
-        res.status(500).json(errorHandler.serverError);
+        res.status(500).json(errorHandler.jwtError);
+        return;
       }
-    } else {
-      res.status(500).json(errorHandler.jwtError);
+    } catch (err) {
+      res.status(401).json(errorHandler.jwtTokenExpired);
+      return;
     }
   }
 };
@@ -521,11 +534,14 @@ module.exports.getCommutingCandidates = async function (req, res) {
         }
       } else if (voterr.doesCommute === false) {
         res.status(401).json(errorHandler.isNotHallMember);
+        return;
       } else {
         res.status(500).json(errorHandler.serverError);
+        return
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
+      return;
     }
   }
 };
@@ -543,35 +559,40 @@ module.exports.getPostGradCandidates = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
   } else {
-    const token = getToken(req.headers);
-    const payload = await jwt.verify(token, config.jwt_key);
+    try {
+      const token = getToken(req.headers);
+      const payload = await jwt.verify(token, config.jwt_key);
 
-    if (payload && payload.id) {
-      const voterr = await voter.isRegistered(payload.email);
-      if (voterr == false) {
-        res.status(401).json(errorHandler.noVoter);
-        return;
-      } else if (voterr.isPostGrad === true) {
-        const posNo = 16;
-        try {
-          const candidates = await ballot.selectRequestedCandidates(posNo);
-          if (candidates === 1) {
-            res.status(500).json(errorHandler.emptyParam);
-            return;
-          } else if (candidates) {
-            res.status(200).json(success(candidates, "Post Grad Rep."));
-            return;
+      if (payload && payload.id) {
+        const voterr = await voter.isRegistered(payload.email);
+        if (voterr == false) {
+          res.status(401).json(errorHandler.noVoter);
+          return;
+        } else if (voterr.isPostGrad === true) {
+          const posNo = 16;
+          try {
+            const candidates = await ballot.selectRequestedCandidates(posNo);
+            if (candidates === 1) {
+              res.status(500).json(errorHandler.emptyParam);
+              return;
+            } else if (candidates) {
+              res.status(200).json(success(candidates, "Post Grad Rep."));
+              return;
+            }
+          } catch (err) {
+            res.status(500).json(errorHandler.queryError);
           }
-        } catch (err) {
-          res.status(500).json(errorHandler.queryError);
+        } else if (voterr.isPostGrad === false) {
+          res.status(401).json(errorHandler.isNotPostGraduate);
+        } else {
+          res.status(500).json(errorHandler.serverError);
         }
-      } else if (voterr.isPostGrad === false) {
-        res.status(401).json(errorHandler.isNotPostGraduate);
       } else {
-        res.status(500).json(errorHandler.serverError);
+        res.status(500).json(errorHandler.jwtError);
       }
-    } else {
-      res.status(500).json(errorHandler.jwtError);
+    } catch (err) {
+      res.status(401).json(errorHandler.jwtTokenExpired);
+      return;
     }
   }
 };
@@ -590,80 +611,85 @@ module.exports.submitBallot = async function (req, res) {
     res.status(401).json(errorHandler.cannotAccess);
     return;
   } else {
-    const token = getToken(req.headers);
-    const payload = await jwt.verify(token, config.jwt_key);
-    const { cids } = req.body;
-    const verdict = [];
+    try {
+      const token = getToken(req.headers);
+      const payload = await jwt.verify(token, config.jwt_key);
+      const { cids } = req.body;
+      const verdict = [];
 
-    if (payload && payload.id) {
-      if (Array.isArray(cids) && cids.length > 0) {
-        const electionDetails = await election.selectElection();
-        if (electionDetails.length === 0) {
-          res.status(500).json(errorHandler.serverError);
-          return;
-        } else if (electionDetails.length === 1) {
-          const hasStarted = electionHandler.hasElectionStarted(
-            electionDetails[0].startDate
-          );
-          const hasEnded = electionHandler.hasElectionEnded(
-            electionDetails[0].endDate
-          );
-          const hasVoted = await voter.hasVoted(payload.email);
-            console.log(hasVoted, hasStarted, hasEnded)
-          if (hasStarted === true && hasEnded === false && hasVoted === false) {
-            const voterr = await voter.isRegistered(payload.email);
-            if (voterr == false) {
-              res.status(401).json(errorHandler.noVoter);
-              return;
-            } else if (voterr) {
-              for (let c = 0; c < cids.length; c++) {
-                verdict.push(Number.isInteger(cids[c]));
-              }
-
-              if (verdict.includes(false)) {
-                res.status(400).json(errorHandler.ballotInvalid);
+      if (payload && payload.id) {
+        if (Array.isArray(cids) && cids.length > 0) {
+          const electionDetails = await election.selectElection();
+          if (electionDetails.length === 0) {
+            res.status(500).json(errorHandler.serverError);
+            return;
+          } else if (electionDetails.length === 1) {
+            const hasStarted = electionHandler.hasElectionStarted(
+              electionDetails[0].startDate
+            );
+            const hasEnded = electionHandler.hasElectionEnded(
+              electionDetails[0].endDate
+            );
+            const hasVoted = await voter.hasVoted(payload.email);
+              console.log(hasVoted, hasStarted, hasEnded)
+            if (hasStarted === true && hasEnded === false && hasVoted === false) {
+              const voterr = await voter.isRegistered(payload.email);
+              if (voterr == false) {
+                res.status(401).json(errorHandler.noVoter);
                 return;
-              } else if (!verdict.includes(false)) {
-                try {
-                  const result = await ballot.insertBallotInfo(cids);
-                  if (result === 0) {
-                    res
-                      .status(200)
-                      .json(successHandler(true, "Voter ballot submitted"));
-                    const updated = voter.updateVoteStatus(payload.id, true);
-                    return updated;
-                  } else if (result === 1) {
-                    res.status(400).json(errorHandler.ballotInvalid);
+              } else if (voterr) {
+                for (let c = 0; c < cids.length; c++) {
+                  verdict.push(Number.isInteger(cids[c]));
+                }
+
+                if (verdict.includes(false)) {
+                  res.status(400).json(errorHandler.ballotInvalid);
+                  return;
+                } else if (!verdict.includes(false)) {
+                  try {
+                    const result = await ballot.insertBallotInfo(cids);
+                    if (result === 0) {
+                      res
+                        .status(200)
+                        .json(successHandler(true, "Voter ballot submitted"));
+                      const updated = voter.updateVoteStatus(payload.id, true);
+                      return updated;
+                    } else if (result === 1) {
+                      res.status(400).json(errorHandler.ballotInvalid);
+                      return;
+                    }
+                  } catch (err) {
+                    res.status(500).json(errorHandler.queryError);
                     return;
                   }
-                } catch (err) {
-                  res.status(500).json(errorHandler.queryError);
-                  return;
                 }
+              } else {
+                res.status(500).json(errorHandler.serverError);
               }
+            } else if (hasStarted === false) {
+              res.status(400).json(errorHandler.electionNotStarted);
+              return;
+            } else if (hasEnded === true) {
+              res.status(400).json(errorHandler.electionEnded);
+              return;
+            } else if (hasVoted === true) {
+              res.status(401).json(errorHandler.userHasVoted);
+              return;
             } else {
-              res.status(500).json(errorHandler.serverError);
+              res.status(400).json(errorHandler.generalValidation);
+              return;
             }
-          } else if (hasStarted === false) {
-            res.status(400).json(errorHandler.electionNotStarted);
-            return;
-          } else if (hasEnded === true) {
-            res.status(400).json(errorHandler.electionEnded);
-            return;
-          } else if (hasVoted === true) {
-            res.status(401).json(errorHandler.userHasVoted);
-            return;
-          } else {
-            res.status(400).json(errorHandler.generalValidation);
-            return;
           }
+        } else {
+          res.status(400).json(errorHandler.cannotSubmitBallot);
+          return;
         }
       } else {
-        res.status(400).json(errorHandler.cannotSubmitBallot);
+        res.status(500).json(errorHandler.jwtError);
         return;
       }
-    } else {
-      res.status(500).json(errorHandler.jwtError);
+    } catch (err) {
+      res.status(401).json(errorHandler.jwtTokenExpired);
       return;
     }
   }
