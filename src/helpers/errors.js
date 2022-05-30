@@ -88,7 +88,14 @@ module.exports.jwtError = errorHandler(
   false,
   "JWT Error",
   "Possible issue with JWT authentication",
-  "wek-val"
+  "wek-auth"
+);
+
+module.exports.jwtTokenExpired = errorHandler(
+  false,
+  "JWT Expired",
+  "JWT Token has expired",
+  "wek-auth"
 );
 
 module.exports.cannotAccess = errorHandler(
