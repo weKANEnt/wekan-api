@@ -134,10 +134,12 @@ module.exports.deleteElection = async function (req, res) {
 
 
 /**
- * 
+ * Function generates the overall election results from the candidates table
+ * @function
+ * @name generateElectionResults
  * @param {*} req 
  * @param {*} res 
- * @returns 
+ * @returns {Promise}
  */
 module.exports.generateElectionResults = async function (req, res) {
   if (req.headers === null || req.headers === "") {
