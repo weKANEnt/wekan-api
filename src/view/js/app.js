@@ -7,8 +7,82 @@ document.addEventListener(
     var navResults = document.getElementById("navResults");
     var navSignIn = document.getElementById("navSignIn");
     var navBarLogo = document.getElementById("navBarLogo");
-    var page1 = document.getElementById("page1Link");
-    var page2 = document.getElementById("page2Link");
+   /* var page1 = document.getElementById("page1Link");
+    var page2 = document.getElementById("page2Link");*/
+    console.log("page loads");
+
+    
+    /**Event Listeners for Pages */
+
+   
+
+    navCandidates.addEventListener("onclick", function(){
+        //alert("You clicked Candidates");
+        fetch('/src/view/candidates.html')
+        .then(function(response) {
+            return response.text()
+        }).then(function(body) {
+            document.body.innerHTML = body
+        })
+
+
+
+        
+    });
+
+    navResults.addEventListener("onclick", function(){
+        //alert("You clicked Results");
+        fetch('/src/view/results.html')
+        .then(function(response) {
+            return response.text()
+        }).then(function(body) {
+            document.body.innerHTML = body
+        })
+
+
+
+
+    });
+
+    navSignIn.addEventListener("onclick", function(){
+        //alert("You clicked Sign In");
+        fetch('/src/view/logIn.html')
+        .then(function(response) {
+            return response.text()
+        }).then(function(body) {
+            document.body.innerHTML = body
+        })
+
+
+
+
+    });
+
+    navBarLogo.addEventListener("onclick", function(){
+        //alert("You clicked Home/Logo");
+        fetch('/src/view/index.html')
+        .then(function(response) {
+            return response.text()
+        }).then(function(body) {
+            document.body.innerHTML = body
+        })
+
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //console.log("start");
     //console.log(fetch('/src/view/page1.html'));
@@ -40,7 +114,7 @@ document.addEventListener(
     .then(data => console.log(data));  */
 
 
-    page1.addEventListener("click", function(){
+  /*  page1.addEventListener("click", function(){
         //alert("You clicked the link for page 1.")
         
       /*  fetch('http://google.com/')
@@ -50,9 +124,9 @@ document.addEventListener(
         })
         .then((myJson) => {
             console.log(myJson);
-        });*/
+        });
 
-    });
+    });*/
 /*
     page2.addEventListener("click", function(){
         
@@ -220,6 +294,115 @@ document.addEventListener(
     const newGame = document.querySelector('.btn');
     const loadGame = () => {location.reload();}
     newGame.addEventListener('click', loadGame) */
+
+
+
+
+
+    /**Rough notes */
+
+
+   /* var requestOptions = {
+        method: 'GET',
+        redirect:
+    } */
+    /*fetch('/src/view/page1.html')
+    .then(function(response) {
+        return response.text()
+      }).then(function(body) {
+        document.body.innerHTML = body
+      })*/
+
+
+
+
+
+
+
+/*
+
+    navCandidates.addEventListener("fetch", (event) => {
+  // Let the browser do its default thing
+  // for non-GET requests.
+  if (event.request.method != "GET") return;
+
+  // Prevent the default, and handle the request ourselves.
+  event.respondWith(
+    (async function () {
+      // Try to get the response from a cache.
+      const cache = await caches.open("dynamic-v1");
+      const cachedResponse = await cache.match(event.request);
+
+      if (cachedResponse) {
+        // If we found a match in the cache, return it, but also
+        // update the entry in the cache in the background.
+        event.waitUntil(cache.add(event.request));
+        return cachedResponse;
+      }
+
+      // If we didn't find a match in the cache, use the network.
+      return fetch(event.request);
+    })()
+  );
+    });
+
+
+  /*   navCandidates.addEventListener("fetch", (event) => {
+        fetch('/src/view/candidates.html')
+            .then(function(response) {
+                return response.text()
+            }).then(function(body) {
+                document.body.innerHTML = body
+            })
+
+
+
+
+       alert("You clicked Candidates");
+        fetch('/src/view/candidates.html')
+        .then(function(response) {
+            return response.text()
+        }).then(function(body) {
+            document.body.innerHTML = body
+        })
+  });
+  
+   /*function test(){
+        fetch('/src/view/candidates.html')
+        .then(function(response) {
+            return response.text()
+        }).then(function(body) {
+            document.body.innerHTML = body
+        })
+    }*/
+    //est();
+   /* fetch('/src/view/candidates.html')
+        .then(function(response) {
+            return response.text()
+        }).then(function(body) {
+            document.body.innerHTML = body
+        })*/
+
+
+        /*
+    fetch("http://localhost:8080/uwivotes/admin/halls", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+    
+  
+  
+  
+  
+  
+  
+  */
+
+
+
+
+
+
   },
   false
 );
