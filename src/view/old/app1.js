@@ -538,3 +538,322 @@ document.addEventListener(
   },
   false
 );
+
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+      console.log("loaded page");
+  
+      /** Navbar buttons */
+      var navCandidates = document.getElementById("navCandidates");
+      var navResults = document.getElementById("navResults");
+      var navSignIn = document.getElementById("navSignIn");
+      var navBarLogo = document.getElementById("navBarLogo");
+      var getOTPButton = document.getElementById("getOTPButton");
+      var otpSignUp = document.getElementById("otpTextbox");
+      var submitOTP = document.getElementById("submitOTP");
+      //var email = document.getElementById("email");
+  
+      var page1 = document.getElementById("page1Link");
+      var page2 = document.getElementById("page2Link");
+      
+  
+  
+  
+      /**Button Listeners*/
+      
+      /**Pages*/
+      //Candidates
+      if (navCandidates != null){ 
+        navCandidates.addEventListener("click", function(){
+          console.log("You clicked Candidates");
+          window.location.href = '/src/view/candidates.html';
+   
+       });
+      } 
+  
+      //Sign In
+      if (navResults != null){
+        navResults.addEventListener("click", function(){
+          console.log("You clicked Results");
+          window.location.href = '/src/view/results.html';
+          //.setAttribute('href', '/src/view/results.html');
+    
+       });
+      }
+  
+      //Sign In
+      if (navSignIn != null){
+        navSignIn.addEventListener("click", function(){
+          console.log("You clicked Sign In");
+          window.location.href = '/src/view/logIn.html';
+          //.setAttribute('href', '/src/view/logIn.html');
+   
+       });
+      }
+  
+      //Bar Logo
+      if (navBarLogo != null){
+        navBarLogo.addEventListener("click", function(){
+          console.log("You clicked Home/Logo");
+          window.location.href = '/src/view/index.html';
+          //.setAttribute('href', '/src/view/index.html');
+   
+       });
+      }
+  
+      /**Buttons */
+  
+      var requestOptions = {
+        method: "GET",
+        redirect: "follow",
+      };
+  
+      var requestOptions2 = {
+        method: "PATCH",
+        redirect: "follow",
+      };
+   
+        
+  
+        
+      //Home/Index Form Submit
+      /**Redirect upon sucessful email verification */
+      var verifyEmail = "false";
+      var email = document.getElementById("email");
+      if (getOTPButton != null){
+          getOTPButton.addEventListener("click", function(event){
+                  //alert("Works");
+                  event.preventDefault();
+                  alert("Here")
+                  
+                  //kayvia.harriott@mymona.uwi.edu
+                  //console.log(email.value);
+                  if (email.value != null || email.value != " " || email.value != ""){
+                      //alert("HERE");
+                      //naomi.benjamin@mymona.uwi.edu
+                      //kayvia.harriott@mymona.uwi.edu
+                      //console.log(email.value);
+                      //var text = "http://localhost:8080/uwivotes/votes?email=" + email.value;
+                      //console.log(text);
+                     fetch("http://localhost:8080/uwivotes/votes?email=" + email.value, requestOptions)
+                      .then((response) => response.json())
+                      .then((result) => {
+                          //console.log(result.success);
+                          verifyEmail = result.success;
+                          if (verifyEmail == true){ 
+  
+                              fetch('http://localhost:8080/uwivotes/votes/OTP',{
+                              //https://jsonplaceholder.typicode.com/posts/1', {
+                              method: 'PATCH',
+                              body: JSON.stringify({
+                                "email": email.value,
+                              }),
+                              /*headers: {
+                                'Content-type': 'application/json; charset=UTF-8',
+                                },*/
+                              })
+                              .then((response) => response.json())
+                              .then((json) => console.log(json));
+                    
+                                
+                            
+  
+  
+  
+                            window.location.href = '/src/view/logIn.html';
+                            verifyEmail = "false";
+                          } 
+                          else {
+                            alert ("not verified, blah blah");
+                          }
+                          //console.log(verifyEmail);
+                      }
+                          )//document.body.innerHTML += result.success)//.candidates[0].firstName)
+                      .catch((error) => console.log("error", error)); 
+                      //alert("stop");
+                  //  window.location.href = '/src/view/logIn.html'; 
+  
+                      
+                    }
+                  
+                  console.log(verifyEmail);
+              });
+  
+      }
+  
+      var verifyOTPSignUp  = ""; 
+      if (otpSignUp != null && submitOTP != null){
+        submitOTP.addEventListener("click", function(event){
+            alert("yes")
+            event.preventdefault();
+            alert(otpSignUp.value); 
+            //OTP: 9KEUBB   
+            //http://localhost:8080/uwivotes/votes/OTP
+            //"http://localhost:8080/uwivotes/votes/OTP?otp=" + otpSignUp.value + "&email=" + email.value
+            var text = "" + otpSignUp.value + "&email=" + email.value;
+            //http://localhost:8080/uwivotes/votes/OTP?otp=UUCS47&email=naomi.benjamin@mymona.uwi.edu
+            fetch("http://localhost:8080/uwivotes/votes/OTP?otp=" + otpSignUp.value + "&email=" + email.value, requestOptions)
+                      .then((response) => response.json())
+                      .then((result) => {
+                          //console.log(result.success);
+                          alert(result.success)
+                          /*8verifyEmail = result.success;
+                          if (verifyEmail == true){
+                                
+                            
+  
+  
+  
+                            window.location.href = '/src/view/logIn.html';
+                            verifyEmail = "false";
+                          } 
+                          else {
+                            alert ("not verified, blah blah");
+                          }*/
+                          //console.log(verifyEmail);
+                      }
+                          )//document.body.innerHTML += result.success)//.candidates[0].firstName)
+                      .catch((error) => console.log("error", error)); 
+                      
+  
+  
+           //   fetch(text, requestOptions2)
+            //  .then((response) => response.json())
+            //  .then((result) => { 
+                  //console.log(result.success);
+             //     verifyOTPSignUp = result.success;
+             //     console.log(verifyOTPSignUp)
+                  /*if (verifyOTPSignUp == true){
+                    alert("works");
+                    console.log(verifyOTPSignUp);
+                  //window.location.href = '/src/view/logIn.html';
+                   // verifyEmail = "false";
+                  } 
+                  else {
+                    alert ("Doesn't work");
+                  }*/
+             // }
+             //     )//document.body.innerHTML += result.success)//.candidates[0].firstName)
+            //  .catch((error) => console.log("error", error)); 
+  
+            /*
+            if (email.value != null || email.value != " " || email.value != ""){
+              //OTPL
+              var text = "http://localhost:8080/uwivotes/votes?email=" + email.value;
+              fetch(text, requestOptions)
+              .then((response) => response.json())
+              .then((result) => {
+                  //console.log(result.success);
+                  verifyEmail = result.success;
+                  if (verifyEmail == true){
+                  window.location.href = '/src/view/logIn.html';
+                    verifyEmail = "false";
+                  } 
+                  else {
+                    alert ("n");
+                  }
+              }
+                  )//document.body.innerHTML += result.success)//.candidates[0].firstName)
+              .catch((error) => console.log("error", error)); 
+              //alert("stop");
+          //  window.location.href = '/src/view/logIn.html'; 
+  
+              
+            }*/
+  
+        });
+      }
+      
+      
+  
+  
+  
+  
+      /**Helper Functions */
+      function disableLink(linkName){
+        //alert("Link off")
+        linkName.getElementById(id).style.visibility = "hidden";
+        //disable link
+      }
+  
+      function enableLink(linkName){
+        //alert("Link on")
+        linkName.getElementById(id).style.visibility = "visible";
+        //re-enable link
+      }
+  
+      
+  
+      /**Else */
+  
+      /**Verify email address format */
+  
+  
+  
+      /**Redirect to OTP page once email verified
+       */
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  /*
+      fetch('http://localhost:8080/uwivotes/ballot/vpssp')
+                  .then(function(response) {
+                      return result.candidates
+                      
+  
+                  }).then(function(body) {
+                      document.body.innerHTML += body
+                  })*/
+  
+  /*
+                  fetch('/src/view/page1.html')
+                .then(function(response) {
+                      return response.json()
+          }).then(function(body) {
+           body
+          })   */
+  
+          /** //finnnalllll 
+      console.log("page loads");
+  var requestOptions = {
+          method: "GET",
+          redirect: "follow",
+          };
+          fetch("http://localhost:8080/uwivotes/ballot/vpssp", requestOptions)
+          .then((response) => response.json())
+          .then((result) => document.body.innerHTML += result.candidates[0].firstName)
+          .catch((error) => console.log("error", error));*/
+  
+  
+       /*     fetch('/src/view/page1.html')
+          .then(function(response) {
+          return response.text()
+        }).then(function(body) {
+          document.body.innerHTML = body
+        })*/
+  
+  
+          
+     /* if (page1 != null){
+          page1.addEventListener("click", function(){
+              //page2.setAttribute('href', '');
+              
+  
+          })
+      }*/
+  
+  
+  
+    },
+    false
+  );
+  

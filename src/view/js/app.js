@@ -9,6 +9,9 @@ document.addEventListener(
     var navSignIn = document.getElementById("navSignIn");
     var navBarLogo = document.getElementById("navBarLogo");
     var getOTPButton = document.getElementById("getOTPButton");
+    var otpSignUp = document.getElementById("otpTextbox");
+    var submitOTPButton = document.getElementById("submitOTP");
+    var errorMessage = document.getElementById("errorMessage");
     //var email = document.getElementById("email");
 
     var page1 = document.getElementById("page1Link");
@@ -21,7 +24,7 @@ document.addEventListener(
     
     /**Pages*/
     //Candidates
-    if (navCandidates != null){
+    if (navCandidates != null){ 
       navCandidates.addEventListener("click", function(){
         console.log("You clicked Candidates");
         window.location.href = '/src/view/candidates.html';
@@ -66,48 +69,85 @@ document.addEventListener(
       redirect: "follow",
     };
 
+    var requestOptions2 = {
+      method: "PATCH",
+      redirect: "follow",
+    };
+ 
       
 
       
     //Home/Index Form Submit
-    var verifyEmail = "false";
-    if (getOTPButton != null){
+    /**Redirect upon sucessful email verification */
+    var verifyEmail = "false"; 
+    var email = document.getElementById("email");
+    if (getOTPButton != null){    
         getOTPButton.addEventListener("click", function(event){
-                //alert("Works");
                 event.preventDefault();
-                var email = document.getElementById("email");
-                //kayvia.harriott@mymona.uwi.edu
-                //console.log(email.value);
                 if (email.value != null || email.value != " " || email.value != ""){
-                    //alert("HERE");
                     //naomi.benjamin@mymona.uwi.edu
                     //kayvia.harriott@mymona.uwi.edu
-                    //console.log(email.value);
-                    var text = "http://localhost:8080/uwivotes/votes?email=" + email.value;
-                    //console.log(text);
-                   fetch(text, requestOptions)
+                   fetch("http://localhost:8080/uwivotes/votes?email=" + email.value, requestOptions)
                     .then((response) => response.json())
                     .then((result) => {
-                        //console.log(result.success);
                         verifyEmail = result.success;
-                        if (verifyEmail == true){
-                        window.location.href = '/src/view/logIn.html';
-                          verifyEmail = "false";
+                        if (verifyEmail == true){  
+                           //console.log("The email was verified");
+                           
+                            fetch('http://localhost:8080/uwivotes/votes/OTP',{
+                            method: 'PATCH',
+                            body: JSON.stringify({
+                              "email": email.value,
+                            }),
+                            headers: {
+                              'Content-type': 'application/json; charset=UTF-8',
+                              },
+                            })
+                            .then((response) => {response.json()
+                              verifyEmail = "false";
+                              window.location.href = '/src/view/logIn.html';
+                            })
+                            .then((json) => console.log(json));
+                          
                         } 
-                        //console.log(verifyEmail);
+                        else {
+                          errorMessage.innerHTML = "*Please ensure a valid UWI email is entered.";
+                        }
                     }
-                        )//document.body.innerHTML += result.success)//.candidates[0].firstName)
+                        )
                     .catch((error) => console.log("error", error)); 
-                    //alert("stop");
-                //  window.location.href = '/src/view/logIn.html'; 
 
-                  
-                }
+                    
+                  }
                 
                 console.log(verifyEmail);
             });
-
     }
+
+    if (submitOTPButton != null){
+        submitOTPButton.addEventListener("click", function(event){
+            event.preventDefault();
+            if (otpSignUp.value.length != 0){
+                //if (otpSignUpVerification/localhost... == false) 
+                //{
+                  alert("text" + otpSignUp.value.length + "text")
+                  errorMessage.innerHTML = "*The OTP entered is invalid.";
+                //}
+
+
+            }
+            else{
+              errorMessage.innerHTML = "*Please ensure an OTP is entered.";
+            }
+        });
+    }
+
+    
+
+
+
+
+    
     
 
 
@@ -127,6 +167,11 @@ document.addEventListener(
     }
 
     
+
+
+
+
+
 
     /**Else */
 

@@ -118,3 +118,8 @@ label {
 #getOTPButton{
   cursor: pointer;
 }
+
+#errorMessage{
+  color: rgb(255, 90, 90);
+  
+}

@@ -18,7 +18,7 @@ module.exports = {
       },
       position: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false, 
       },
       noOfVotes: {
         type: Sequelize.INTEGER,
@@ -37,5 +37,6 @@ module.exports = {
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("tallyinfos");
-  },
-};
+  }, 
+}; 
+   
