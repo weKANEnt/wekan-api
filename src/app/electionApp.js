@@ -234,7 +234,7 @@ module.exports.generateElectionResults = async function (req, res) {
 };
 
 /**
- * Function which gets the finalized election results
+ * Function which gets the finalized election results after they have been posted (does not need admin)
  * @function
  * @async 
  * @param {*} req 
@@ -263,5 +263,56 @@ module.exports.getElelectionResults = async function (req, res){
   } catch (err) {
     res.status(500).json(errorHandler.queryError);
     return;
+  }
+};
+
+module.exports.getElelectionResultsA = async function (req, res) {
+  if (req.headers === null || req.headers === "") {
+    res.status(401).json(errorHandler.cannotAccess);
+  } else {
+    try {
+      const token = getToken(req.headers);
+      const payload = await jwt.verify(token, config.jwt_key);
+
+      if (payload && payload.id) {
+        const adminn = await admin.findAdminById(payload.id);
+        if (!adminn) {
+          res.status(401).json(errorHandler.noAdmins);
+          return;
+        } else if (adminn) {
+          const electionDetails = await election.selectElection();
+          if (electionDetails.length === 0) {
+            res.status(401).json(errorHandler.noElectionResults);
+            return;
+          } else if (electionDetails.length === 1) {
+            const hasEnded = electionHandler.hasElectionEnded(
+              electionDetails[0].endDate
+            );
+            if (hasEnded === true) {
+              const results = await election.selectElectionResults();
+              if (results.length > 0) {
+                res.status(200).json(electionSuccess(results));
+                return;
+              } else {
+                res.status(404).json(errorHandler.noElectionResults);
+                return;
+              }
+            } else if (hasEnded === false) {
+              res.status(400).json(errorHandler.electionNotEnded);
+              return;
+            } else {
+              res.status(400).json(errorHandler.generalValidation);
+              return;
+            }
+          }
+        }
+      } else {
+        res.status(401).json(errorHandler.jwtError);
+        return;
+      }
+    } catch (err) {
+      res.status(401).json(errorHandler.jwtTokenExpired);
+      return;
+    }
   }
 };

@@ -7,5 +7,6 @@ router.route("/create").post(eApp.createElection);
 router.route("/delete").delete(eApp.deleteElection);
 router.route("/results").post(eApp.generateElectionResults);
 router.route("/results").get(eApp.getElelectionResults);
+router.route("/admin/results").get(eApp.getElelectionResultsA);
 
 module.exports = router;
