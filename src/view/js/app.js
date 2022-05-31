@@ -87,18 +87,24 @@ document.addEventListener(
                     //console.log(text);
                    fetch(text, requestOptions)
                     .then((response) => response.json())
-                    .then((result) => console.log(result.success) )//document.body.innerHTML += result.success)//.candidates[0].firstName)
+                    .then((result) => {
+                        //console.log(result.success);
+                        verifyEmail = result.success;
+                        if (verifyEmail == true){
+                        window.location.href = '/src/view/logIn.html';
+                          verifyEmail = "false";
+                        } 
+                        //console.log(verifyEmail);
+                    }
+                        )//document.body.innerHTML += result.success)//.candidates[0].firstName)
                     .catch((error) => console.log("error", error)); 
                     //alert("stop");
-                //  window.location.href = '/src/view/logIn.html';
+                //  window.location.href = '/src/view/logIn.html'; 
 
-                  if (result.sucess == "true"){
-                    window.location.href = '/src/view/logIn.html';
-                    verifyEmail = "false";
-                  }
+                  
                 }
                 
-                
+                console.log(verifyEmail);
             });
 
     }
