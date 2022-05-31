@@ -26,7 +26,16 @@ module.exports.selectRequestedCandidates = async function (posNo) {
       where: {
         position: position.positionTitle,
       },
-      attributes: ["cid", "firstName", "lastName", "email", "hall", "faculty", "position", "about"],
+      attributes: [
+        "cid",
+        "firstName",
+        "lastName",
+        "email",
+        "hall",
+        "faculty",
+        "position",
+        "about",
+      ],
     });
 
     return candidatess;

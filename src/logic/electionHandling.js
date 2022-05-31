@@ -86,12 +86,17 @@ module.exports.deleteElection = async function (elid = 1) {
  * @function
  * @async
  * @name insertResults
- * @param {*} name 
- * @param {*} position 
- * @param {*} noOfVotes 
+ * @param {*} name
+ * @param {*} position
+ * @param {*} noOfVotes
  * @returns {Number}
  */
- module.exports.insertResults = async function (name, email, position, noOfVotes) {
+module.exports.insertResults = async function (
+  name,
+  email,
+  position,
+  noOfVotes
+) {
   if (name) {
     if (position) {
       if (noOfVotes) {
@@ -99,7 +104,7 @@ module.exports.deleteElection = async function (elid = 1) {
           name: name,
           email: email,
           position: position,
-          noOfVotes: noOfVotes
+          noOfVotes: noOfVotes,
         });
         return 0;
       }
@@ -113,21 +118,21 @@ module.exports.deleteElection = async function (elid = 1) {
 /**
  * @function
  * @name updatePostResults
- * @param {*} elid 
- * @param {*} resultsStat 
+ * @param {*} elid
+ * @param {*} resultsStat
  * @returns {Integer}
  */
-module.exports.updatePostResults = async function (elid=1, resultsStat) {
+module.exports.updatePostResults = async function (elid = 1, resultsStat) {
   if (elid) {
     const election = await electiondata.findOne({
       where: {
-        elid: elid
-      }
+        elid: elid,
+      },
     });
 
     await electiondata.upsert({
       elid: election.elid,
-      postResults: resultsStat
+      postResults: resultsStat,
     });
 
     return 0;
@@ -142,7 +147,7 @@ module.exports.updatePostResults = async function (elid=1, resultsStat) {
  */
 module.exports.selectElectionResults = async function () {
   const results = await tallyinfo.findAll({
-    attributes: ['name', 'position', 'noOfVotes'],
+    attributes: ["name", "position", "noOfVotes"],
   });
 
   if (results.length > 0) {
@@ -159,9 +164,8 @@ module.exports.selectElectionResults = async function () {
  */
 module.exports.selectPostedStatus = async function () {
   const stat = await electiondata.findOne({
-    attributes: ['postResults']
+    attributes: ["postResults"],
   });
-  
+
   return stat;
-  
 };

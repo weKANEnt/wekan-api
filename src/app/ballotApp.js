@@ -258,7 +258,7 @@ module.exports.getFacultyCandidates = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
   } else {
-    try{
+    try {
       const token = getToken(req.headers);
       const payload = await jwt.verify(token, config.jwt_key);
       let posNo;
@@ -313,7 +313,6 @@ module.exports.getFacultyCandidates = async function (req, res) {
       res.status(401).json(errorHandler.jwtTokenExpired);
       return;
     }
-    
   }
 };
 
@@ -537,7 +536,7 @@ module.exports.getCommutingCandidates = async function (req, res) {
         return;
       } else {
         res.status(500).json(errorHandler.serverError);
-        return
+        return;
       }
     } else {
       res.status(500).json(errorHandler.jwtError);
@@ -631,8 +630,12 @@ module.exports.submitBallot = async function (req, res) {
               electionDetails[0].endDate
             );
             const hasVoted = await voter.hasVoted(payload.email);
-              console.log(hasVoted, hasStarted, hasEnded)
-            if (hasStarted === true && hasEnded === false && hasVoted === false) {
+            console.log(hasVoted, hasStarted, hasEnded);
+            if (
+              hasStarted === true &&
+              hasEnded === false &&
+              hasVoted === false
+            ) {
               const voterr = await voter.isRegistered(payload.email);
               if (voterr == false) {
                 res.status(401).json(errorHandler.noVoter);

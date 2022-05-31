@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       endDate: DataTypes.DATEONLY,
       postResults: {
         type: DataTypes.BOOLEAN,
-        defaultValue : false
+        defaultValue: false,
       },
       csvLocation: DataTypes.STRING,
     },

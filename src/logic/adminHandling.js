@@ -7,7 +7,7 @@ const {
   faculties,
   positions,
   electionData,
-  tallyinfo
+  tallyinfo,
 } = require("../db/models");
 
 /**
@@ -269,7 +269,7 @@ module.exports.insertElectionData = async function (
  * @name getAllCandidates
  * @returns {Array<candidates>}
  */
-module.exports.getAllCandidates = async function (){
+module.exports.getAllCandidates = async function () {
   const allCandidates = await candidates.findAll({
     attributes: ["firstName", "lastName", "email", "position", "noOfVotes"],
   });

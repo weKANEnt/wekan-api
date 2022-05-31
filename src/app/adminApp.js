@@ -199,8 +199,6 @@ module.exports.getAllHalls = async function (req, res) {
     }
     const token = getToken(req.headers);
     const payload = await jwt.verify(token, config.jwt_key);
-
-    
   }
 };
 
@@ -369,7 +367,9 @@ module.exports.addCandidate = async function (req, res) {
             if (addSum === 0) {
               res
                 .status(200)
-                .json(successHandler(true, "All candidates added successfully"));
+                .json(
+                  successHandler(true, "All candidates added successfully")
+                );
               return;
             } else if (addSum < 0) {
               res.status(400).json(errorHandler.serverError);
@@ -399,9 +399,9 @@ module.exports.addCandidate = async function (req, res) {
  * @function
  * @async
  * @name makeResultsPublic
- * @param {*} req 
- * @param {*} res 
- * @returns 
+ * @param {*} req
+ * @param {*} res
+ * @returns
  */
 module.exports.makeResultsPublic = async function (req, res) {
   if (req.headers === null || req.headers === "") {
@@ -416,21 +416,28 @@ module.exports.makeResultsPublic = async function (req, res) {
           if (!adminn) {
             res.status(401).json(errorHandler.noAdmins);
             return;
-          } else if (adminn) { 
+          } else if (adminn) {
             const electionDetails = await election.selectElection();
             if (electionDetails.length === 0) {
               res.status(500).json(errorHandler.serverError);
               return;
-            } else if (electionDetails.length === 1) { 
+            } else if (electionDetails.length === 1) {
               const hasEnded = electionHandler.hasElectionEnded(
                 electionDetails[0].endDate
               );
               if (hasEnded === true) {
-                const results = await election.updatePostResults(1,true);
-                if (results === 0){
-                  res.status(200).json(successHandler(true, "Election results have now been posted"));
+                const results = await election.updatePostResults(1, true);
+                if (results === 0) {
+                  res
+                    .status(200)
+                    .json(
+                      successHandler(
+                        true,
+                        "Election results have now been posted"
+                      )
+                    );
                   return;
-                } else if ( results === 1) {
+                } else if (results === 1) {
                   res.status(400).json(errorHandler.queryError);
                   return;
                 }
@@ -466,9 +473,9 @@ module.exports.makeResultsPublic = async function (req, res) {
  * @function
  * @async
  * @name makeResultsPrivate
- * @param {*} req 
- * @param {*} res 
- * @returns 
+ * @param {*} req
+ * @param {*} res
+ * @returns
  */
 module.exports.makeResultsPrivate = async function (req, res) {
   if (req.headers === null || req.headers === "") {
@@ -484,22 +491,29 @@ module.exports.makeResultsPrivate = async function (req, res) {
           if (!adminn) {
             res.status(401).json(errorHandler.noAdmins);
             return;
-          } else if (adminn) { 
+          } else if (adminn) {
             const electionDetails = await election.selectElection();
             if (electionDetails.length === 0) {
               res.status(500).json(errorHandler.serverError);
               return;
-            } else if (electionDetails.length === 1) { 
+            } else if (electionDetails.length === 1) {
               const hasEnded = electionHandler.hasElectionEnded(
                 electionDetails[0].endDate
               );
               if (hasEnded === true) {
-                console.log("Election")
-                const results = await election.updatePostResults(1,false);
-                console.log(results)
-                if (results === 0){
-                  res.status(200).json(successHandler(true, "Election results have now been made private"));
-                } else if ( results === 1) {
+                console.log("Election");
+                const results = await election.updatePostResults(1, false);
+                console.log(results);
+                if (results === 0) {
+                  res
+                    .status(200)
+                    .json(
+                      successHandler(
+                        true,
+                        "Election results have now been made private"
+                      )
+                    );
+                } else if (results === 1) {
                   res.status(400).json(errorHandler.queryError);
                   return;
                 }

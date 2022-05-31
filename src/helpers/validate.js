@@ -152,7 +152,13 @@ module.exports.valEmail = function (email) {
  * @returns
  */
 module.exports.valOTP = function (otp) {
-  if (otp === null || otp === "" || otp === undefined || isBoolean(otp) || typeof otp === "object") {
+  if (
+    otp === null ||
+    otp === "" ||
+    otp === undefined ||
+    isBoolean(otp) ||
+    typeof otp === "object"
+  ) {
     return false;
   } else {
     if (!otp.match(otpR)) {

@@ -7,14 +7,12 @@ document.addEventListener(
     var navResults = document.getElementById("navResults");
     var navSignIn = document.getElementById("navSignIn");
     var navBarLogo = document.getElementById("navBarLogo");
-   /* var page1 = document.getElementById("page1Link");
+    /* var page1 = document.getElementById("page1Link");
     var page2 = document.getElementById("page2Link");*/
     console.log("page loads");
 
-    
     /**Event Listeners for Pages */
 
-   
     /*
     fetch(url, { method: 'POST', redirect: 'follow'})
     .then(response => {
@@ -34,19 +32,18 @@ document.addEventListener(
     });
 
     */
-    navCandidates.addEventListener("click", function(){
-        alert("You clicked Candidates");
-        /*fetch('/src/view/candidates.html')
+    navCandidates.addEventListener("click", function () {
+      alert("You clicked Candidates");
+      /*fetch('/src/view/candidates.html')
         .then(function(response) {
             return response.text()
         }).then(function(body) {
             document.body.innerHTML = body
         })*/
 
-        ///*
+      ///*
 
-
-       /* fetch('/src/view/candidates.html')//, { method: 'POST', redirect: 'follow'})
+      /* fetch('/src/view/candidates.html')//, { method: 'POST', redirect: 'follow'})
         .then(response => {
             return response.text()
         })
@@ -54,77 +51,50 @@ document.addEventListener(
             //console.info(err + " url: " + url);
             document.body.innerHTML = body
         }); //*/
-
-
-
-        
     });
 
-    navResults.addEventListener("click", function(){
-        alert("You clicked Results");
-        fetch('/src/view/results.html', { method: 'GET', redirect: 'follow'})
-        .then(function(response) {
-            return response.text()
-        }).then(function(body) {
-            document.body.innerHTML = body
+    navResults.addEventListener("click", function () {
+      alert("You clicked Results");
+      fetch("/src/view/results.html", { method: "GET", redirect: "follow" })
+        .then(function (response) {
+          return response.text();
         })
-
-
-
-
+        .then(function (body) {
+          document.body.innerHTML = body;
+        });
     });
 
-    navSignIn.addEventListener("click", function(){
-        alert("You clicked Sign In");
-       /* fetch('/src/view/logIn.html')
+    navSignIn.addEventListener("click", function () {
+      alert("You clicked Sign In");
+      /* fetch('/src/view/logIn.html')
         .then(function(response) {
             return response.text()
         }).then(function(body) {
             document.body.innerHTML = body
         })*/
-
-
-
-
     });
 
-    navBarLogo.addEventListener("click", function(){
-        alert("You clicked Home/Logo");
-       /* fetch('/src/view/index.html')
+    navBarLogo.addEventListener("click", function () {
+      alert("You clicked Home/Logo");
+      /* fetch('/src/view/index.html')
         .then(function(response) {
             return response.text()
         }).then(function(body) {
             document.body.innerHTML = body
         }) */
-
-
-
     });
-
-
-
-
-
-
-
-
-
-
-
-
 
     //console.log("start");
     //console.log(fetch('/src/view/page1.html'));
 
-   /* fetch('/src/view/page2.html')
+    /* fetch('/src/view/page2.html')
     .then(function(response) {
         return response.text()
       }).then(function(body) {
         document.body.innerHTML = body
       }) */
 
-
-   /* .then(function(response) {
+    /* .then(function(response) {
         return response.json();
     }).then(function(jsonData) {
         console.log(jsonData);
@@ -136,14 +106,13 @@ document.addEventListener(
     fetch('http://127.0.0.1:5500/src/view/page1.html')
     .then(res => res.json())
     .then(data => console.log(data)) */
-   /* console.log(fetch('https://regres.in/api/users'));
+    /* console.log(fetch('https://regres.in/api/users'));
     //alert("waiter");
     fetch('http://example.com/movies.json')
     .then(response => response.json())
     .then(data => console.log(data));  */
 
-
-  /*  page1.addEventListener("click", function(){
+    /*  page1.addEventListener("click", function(){
         //alert("You clicked the link for page 1.")
         
       /*  fetch('http://google.com/')
@@ -156,7 +125,7 @@ document.addEventListener(
         });
 
     });*/
-/*
+    /*
     page2.addEventListener("click", function(){
         
         //alert("You clicked the link for page 2.")
@@ -167,7 +136,7 @@ document.addEventListener(
     });
 */
 
-  /*  navCandidates.addEventListener("click", function () {
+    /*  navCandidates.addEventListener("click", function () {
      alert("You clicked Candidates");
     });
 
@@ -324,14 +293,9 @@ document.addEventListener(
     const loadGame = () => {location.reload();}
     newGame.addEventListener('click', loadGame) */
 
-
-
-
-
     /**Rough notes */
 
-
-   /* var requestOptions = {
+    /* var requestOptions = {
         method: 'GET',
         redirect:
     } */
@@ -342,13 +306,7 @@ document.addEventListener(
         document.body.innerHTML = body
       })*/
 
-
-
-
-
-
-
-/*
+    /*
 
     navCandidates.addEventListener("fetch", (event) => {
   // Let the browser do its default thing
@@ -405,15 +363,14 @@ document.addEventListener(
         })
     }*/
     //est();
-   /* fetch('/src/view/candidates.html')
+    /* fetch('/src/view/candidates.html')
         .then(function(response) {
             return response.text()
         }).then(function(body) {
             document.body.innerHTML = body
         })*/
 
-
-        /*
+    /*
     fetch("http://localhost:8080/uwivotes/admin/halls", requestOptions)
     .then(response => response.text())
     .then(result => console.log(result))
@@ -426,12 +383,6 @@ document.addEventListener(
   
   
   */
-
-
-
-
-
-
   },
   false
 );

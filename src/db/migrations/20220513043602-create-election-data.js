@@ -22,7 +22,7 @@ module.exports = {
       },
       postResults: {
         type: Sequelize.BOOLEAN,
-        default: false
+        default: false,
       },
       createdAt: {
         allowNull: false,

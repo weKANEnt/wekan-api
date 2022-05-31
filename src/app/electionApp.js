@@ -16,15 +16,15 @@ function success(candidates) {
     message: "All Candidates",
     candidates: candidates,
   };
-};
+}
 
-function electionSuccess (results){
+function electionSuccess(results) {
   return {
     success: true,
     message: "Election Results",
-    results: results
-  }
-};
+    results: results,
+  };
+}
 
 /**
  * @function
@@ -155,13 +155,12 @@ module.exports.deleteElection = async function (req, res) {
   }
 };
 
-
 /**
  * Function generates the overall election results from the candidates table
  * @function
  * @name generateElectionResults
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  * @returns {Promise}
  */
 module.exports.generateElectionResults = async function (req, res) {
@@ -188,26 +187,41 @@ module.exports.generateElectionResults = async function (req, res) {
             );
             if (hasEnded === true) {
               const allCandidates = await admin.getAllCandidates();
-              if (allCandidates.length === 0){
+              if (allCandidates.length === 0) {
                 res.status(404).json(errorHandler.noCandidates);
                 return;
               } else if (allCandidates.length > 0) {
                 var results = [];
                 var out;
                 for (let c = 0; c < allCandidates.length; c++) {
-                  var fullName = allCandidates[c].firstName + " " + allCandidates[c].lastName;
-                  out = await election.insertResults(fullName, allCandidates[c].email, allCandidates[c].position, allCandidates[c].noOfVotes);
+                  var fullName =
+                    allCandidates[c].firstName +
+                    " " +
+                    allCandidates[c].lastName;
+                  out = await election.insertResults(
+                    fullName,
+                    allCandidates[c].email,
+                    allCandidates[c].position,
+                    allCandidates[c].noOfVotes
+                  );
                   results.push(out);
-                };
+                }
                 if (results.includes(1)) {
                   res.status(500).json(errorHandler.queryError);
                   return;
-                } else if (!(results.includes(1))) {
-                  res.status(200).json(successHandler(true, "Election results successfully generated"));
+                } else if (!results.includes(1)) {
+                  res
+                    .status(200)
+                    .json(
+                      successHandler(
+                        true,
+                        "Election results successfully generated"
+                      )
+                    );
                   return;
-                } else{
-                    res.status(500).json(errorHandler.serverError);
-                    return;
+                } else {
+                  res.status(500).json(errorHandler.serverError);
+                  return;
                 }
               } else {
                 res.status(500).json(errorHandler.serverError);
@@ -236,20 +250,20 @@ module.exports.generateElectionResults = async function (req, res) {
 /**
  * Function which gets the finalized election results after they have been posted (does not need admin)
  * @function
- * @async 
- * @param {*} req 
- * @param {*} res 
+ * @async
+ * @param {*} req
+ * @param {*} res
  * @returns {Array}
  */
-module.exports.getElelectionResults = async function (req, res){
+module.exports.getElelectionResults = async function (req, res) {
   try {
     const stat = await election.selectPostedStatus();
-    if (stat.postResults === false){
+    if (stat.postResults === false) {
       res.status(404).json(errorHandler.resultsUnavailable);
       return;
     } else if (stat.postResults === true) {
       const results = await election.selectElectionResults();
-      if (results.length > 0){
+      if (results.length > 0) {
         res.status(200).json(electionSuccess(results));
         return;
       } else {

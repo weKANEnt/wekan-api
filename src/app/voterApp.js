@@ -150,8 +150,8 @@ module.exports.generateOTP = async function (req, res) {
       }
     }
   } else {
-      res.status(400).json(errorHandler.emailValidation);
-      return;
+    res.status(400).json(errorHandler.emailValidation);
+    return;
   }
 };
 
