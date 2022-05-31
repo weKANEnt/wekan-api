@@ -48,6 +48,7 @@ html {
   grid-area: leftContent;
   max-width: 500px;
   padding-top: 30px;
+  padding-left: 50px;
 }
 
 .rightContent {
@@ -112,4 +113,8 @@ label {
   border-style: none;
   font-weight: 600;
   font-size: 14px;
+}
+
+#getOTPButton{
+  cursor: pointer;
 }
