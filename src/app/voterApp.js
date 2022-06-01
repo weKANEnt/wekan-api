@@ -64,7 +64,7 @@ module.exports.isVoterRegistered = async function (req, res) {
     } catch (err) {
       res.status(500).json(err);
     }
-  } else if (vEmail != true) {
+  } else if (vEmail !== true) {
     res.status(401).json(errorHandler.emailValidation);
     return;
   } else {

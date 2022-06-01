@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 const admin = require("../logic/adminHandling");
 const election = require("../logic/electionHandling");
 const validate = require("../helpers/validate");
@@ -10,14 +11,6 @@ const jwt = require("jsonwebtoken");
 const config = require("../../config/env");
 
 // small helper
-function success(candidates) {
-  return {
-    success: true,
-    message: "All Candidates",
-    candidates: candidates,
-  };
-}
-
 function electionSuccess(results) {
   return {
     success: true,
