@@ -1,5 +1,4 @@
-const e = require("cors");
-const { electiondata, candidates, tallyinfo } = require("../db/models");
+const { electiondata, tallyinfo } = require("../db/models");
 
 /**
  * Adds election

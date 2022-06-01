@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 const {
   users,
   vdata,
@@ -7,7 +8,6 @@ const {
   faculties,
   positions,
   electionData,
-  tallyinfo,
 } = require("../db/models");
 
 /**

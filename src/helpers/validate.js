@@ -1,3 +1,5 @@
+/* eslint-disable max-depth */
+/* eslint-disable max-lines-per-function */
 const uname = /^[0-9a-zA-Z]+$/;
 const title = /^[\w\s]+$/;
 const gname = /^[A-Za-z.\s-]+$/;
