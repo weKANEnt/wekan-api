@@ -12,6 +12,10 @@ document.addEventListener(
     var otpSignUp = document.getElementById("otpTextbox");
     var submitOTPButton = document.getElementById("submitOTP");
     var errorMessage = document.getElementById("errorMessage");
+    var errorMessageAdmin = document.getElementById("errorMessageAdmin");
+    var logInButton = document.getElementById("logInButton"); //for admin
+    var password = document.getElementById("password"); //for admin
+    
     //var email = document.getElementById("email");
 
     var page1 = document.getElementById("page1Link");
@@ -78,8 +82,9 @@ document.addEventListener(
 
       
     //Home/Index Form Submit
-    /**Redirect upon sucessful email verification */
-    var verifyEmail = "false"; 
+    /**Redirect to logIn page upon sucessful email verification */
+    var verifyEmail = "false"; //i should make this boolean
+    var verifyOTP = "false";
     var email = document.getElementById("email");
     if (getOTPButton != null){    
         getOTPButton.addEventListener("click", function(event){
@@ -91,6 +96,7 @@ document.addEventListener(
                     .then((response) => response.json())
                     .then((result) => {
                         verifyEmail = result.success;
+                        email = document.getElementById("email").value;
                         if (verifyEmail == true){  
                            //console.log("The email was verified");
                            
@@ -124,16 +130,30 @@ document.addEventListener(
             });
     }
 
+    /**Redirect to ____ page upon sucessful otp verification */
     if (submitOTPButton != null){
         submitOTPButton.addEventListener("click", function(event){
             event.preventDefault();
-            if (otpSignUp.value.length != 0){
-                //if (otpSignUpVerification/localhost... == false) 
-                //{
-                  alert("text" + otpSignUp.value.length + "text")
-                  errorMessage.innerHTML = "*The OTP entered is invalid.";
-                //}
-
+            //should add more criterio for otp not being empty
+            if (otpSignUp.value.length != 0){ 
+                  //to do: email not saving from previous page
+                  fetch("http://localhost:8080/uwivotes/votes/OTP?otp=" + otpSignUp.value + "&email=" + "kayvia.harriott@mymona.uwi.edu", requestOptions)
+                  .then((response) => response.json())
+                  .then((result) => {
+                        //alert(otpSignUp.value);
+                        verifyOTP = result.success;
+                        console.log(otpSignUp.value)
+                        if (verifyOTP == true){
+                            console.log("OTP verified");
+                            //redirect to place vote
+                            verifyOTP = "false";
+                        }
+                        else{
+                            console.log("OTP didn't work");
+                        }
+                  }
+                      )
+                  .catch((error) => console.log("error", error)); 
 
             }
             else{
@@ -142,6 +162,67 @@ document.addEventListener(
         });
     }
 
+
+
+    /**Redirect to admin side upon succesfull admin verification */
+    if (email && password != null){
+        logInButton.addEventListener("click", function(event){
+            event.preventDefault();
+            //console.log("Admin Email:" + email.value);
+            //console.log("Admin Password:" + password.value);
+            //console.log("\'" + email.value + "\'");
+            //console.log("\'" + email.value.length + "\'");
+            if (email.value != null && email.value != " " && email.value != "" && email.value.length != 0
+                && password.value != null && password.value != " " && password.value != "" && password.value.length != 0){
+              //console.log("\'" + email.value + "\'");
+              //console.log("Admin Email:" + email.value);
+              //console.log("Admin Password:" + password.value);
+
+
+
+            }
+            else{
+              errorMessageAdmin.innerHTML = "*Please ensure an email and password is entered.";
+            }
+
+
+
+           /* if(email.value != null || email.value != " " || email.value != "" || email.value.length != 0){
+              errorMessageAdmin.innerHTML ="bloop";
+            }
+            else{
+              errorMessageAdmin.innerHTML = "*Please ensure an email and password is entered.";
+            }*/
+            /*
+            if (otpSignUp.value.length != 0){
+              //email not saving from previous page
+              fetch("http://localhost:8080/uwivotes/votes/OTP?otp=" + otpSignUp.value + "&email=" + "kayvia.harriott@mymona.uwi.edu", requestOptions)
+              .then((response) => response.json())
+              .then((result) => {
+                    //alert(otpSignUp.value);
+                    verifyOTP = result.success;
+                    console.log(otpSignUp.value)
+                    if (verifyOTP == true){
+                        console.log("OTP verified");
+                        //redirect to place vote
+                        verifyOTP = "false";
+                    }
+                    else{
+                        console.log("OTP didn't work");
+                    }
+              }
+                  )
+              .catch((error) => console.log("error", error)); 
+
+            }
+            else{
+              errorMessageAdmin.innerHTML = "*Please ensure an OTP is entered.";
+            }*/
+
+
+
+        });
+    }
     
 
 
