@@ -136,7 +136,7 @@ module.exports.getTreasurerCandidates = async function (req, res) {
       res.status(500).json(errorHandler.emptyParam);
       return;
     } else if (candidates) {
-      res.status(200).json(success(candidates, "Treasuer"));
+      res.status(200).json(success(candidates, "Treasurer"));
       return;
     }
   } catch (err) {

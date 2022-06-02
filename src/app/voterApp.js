@@ -40,7 +40,7 @@ function successT(token) {
 module.exports.isVoterRegistered = async function (req, res) {
   const { email } = req.query;
   if (!email) {
-    res.status(503).json(errorHandler.missingField);
+    res.status(401).json(errorHandler.missingField);
     return;
   }
 
