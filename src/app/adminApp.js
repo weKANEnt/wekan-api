@@ -170,6 +170,9 @@ module.exports.getAllHalls = async function (req, res) {
     res.status(401).json(errorHandler.cannotAccess);
   } else {
     try {
+      const token = getToken(req.headers);
+      const payload = await jwt.verify(token, config.jwt_key);
+      
       if (payload && payload.id) {
         try {
           const adminn = await admin.findAdminById(payload.id);
@@ -197,8 +200,6 @@ module.exports.getAllHalls = async function (req, res) {
       res.status(401).json(errorHandler.jwtTokenExpired);
       return;
     }
-    const token = getToken(req.headers);
-    const payload = await jwt.verify(token, config.jwt_key);
   }
 };
 
