@@ -73,7 +73,7 @@ module.exports.queryError = errorHandler(
 module.exports.noAdmins = errorHandler(
   false,
   "Not Found",
-  "Cannot find admin associated with given email",
+  "Cannot find admin associated with given credentials",
   "wek-nf"
 );
 
@@ -228,5 +228,12 @@ module.exports.noElectionResults = errorHandler(
   false,
   "No Election Results",
   "Election Results have not yet been generated",
+  "wek-nf"
+);
+
+module.exports.noOTPGen = errorHandler(
+  false,
+  "OTP Not Found",
+  "No OTP has been generated for trying user",
   "wek-nf"
 );

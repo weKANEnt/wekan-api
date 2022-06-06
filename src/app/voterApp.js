@@ -192,11 +192,11 @@ module.exports.isOTPMatch = async function (req, res) {
         res.status(401).json(errorHandler.incorrectOTP);
         return;
       } else if (otpStat === 1) {
-        res.status(500).json(errorHandler.queryError);
+        res.status(400).json(errorHandler.queryError);
         return;
       }
     } catch (err) {
-      res.status(500).json(errorHandler.queryError);
+      res.status(404).json(errorHandler.noOTPGen);
       return;
     }
   } else if (vOTP != true) {

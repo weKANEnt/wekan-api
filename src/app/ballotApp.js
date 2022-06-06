@@ -510,36 +510,41 @@ module.exports.getCommutingCandidates = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
   } else {
-    const token = getToken(req.headers);
-    const payload = await jwt.verify(token, config.jwt_key);
+    try {
+      const token = getToken(req.headers);
+      const payload = await jwt.verify(token, config.jwt_key);
 
-    if (payload && payload.id) {
-      const voterr = await voter.isRegistered(payload.email);
-      if (voterr == false) {
-        res.status(401).json(errorHandler.noVoter);
-      } else if (voterr.doesCommute === true) {
-        const posNo = 17;
-        try {
-          const candidates = await ballot.selectRequestedCandidates(posNo);
-          if (candidates === 1) {
-            res.status(500).json(errorHandler.emptyParam);
-            return;
-          } else if (candidates) {
-            res.status(200).json(success(candidates, "Communting Rep."));
-            return;
+      if (payload && payload.id) {
+        const voterr = await voter.isRegistered(payload.email);
+        if (voterr == false) {
+          res.status(401).json(errorHandler.noVoter);
+        } else if (voterr.doesCommute === true) {
+          const posNo = 17;
+          try {
+            const candidates = await ballot.selectRequestedCandidates(posNo);
+            if (candidates === 1) {
+              res.status(500).json(errorHandler.emptyParam);
+              return;
+            } else if (candidates) {
+              res.status(200).json(success(candidates, "Communting Rep."));
+              return;
+            }
+          } catch (err) {
+            res.status(500).json(errorHandler.queryError);
           }
-        } catch (err) {
-          res.status(500).json(errorHandler.queryError);
+        } else if (voterr.doesCommute === false) {
+          res.status(401).json(errorHandler.isNotHallMember);
+          return;
+        } else {
+          res.status(500).json(errorHandler.serverError);
+          return;
         }
-      } else if (voterr.doesCommute === false) {
-        res.status(401).json(errorHandler.isNotHallMember);
-        return;
       } else {
-        res.status(500).json(errorHandler.serverError);
+        res.status(500).json(errorHandler.jwtError);
         return;
       }
-    } else {
-      res.status(500).json(errorHandler.jwtError);
+    } catch (err) {
+      res.status(401).json(errorHandler.jwtTokenExpired);
       return;
     }
   }
@@ -583,11 +588,14 @@ module.exports.getPostGradCandidates = async function (req, res) {
           }
         } else if (voterr.isPostGrad === false) {
           res.status(401).json(errorHandler.isNotPostGraduate);
+          return;
         } else {
           res.status(500).json(errorHandler.serverError);
+          return;
         }
       } else {
         res.status(500).json(errorHandler.jwtError);
+        return;
       }
     } catch (err) {
       res.status(401).json(errorHandler.jwtTokenExpired);
