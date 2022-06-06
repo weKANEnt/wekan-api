@@ -56,6 +56,8 @@ module.exports.loginAdmin = async function (req, res) {
           );
           res.status(200).json(success(token));
           return;
+        } else {
+          res.status(401).json(errorHandler.noAdmins);
         }
       } else {
         res.status(500).json(errorHandler.serverError);

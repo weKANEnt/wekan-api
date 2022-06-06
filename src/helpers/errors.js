@@ -73,7 +73,7 @@ module.exports.queryError = errorHandler(
 module.exports.noAdmins = errorHandler(
   false,
   "Not Found",
-  "Cannot find admin associated with given email",
+  "Cannot find admin associated with given credentials",
   "wek-nf"
 );
 
