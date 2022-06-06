@@ -1,10 +1,11 @@
 /* eslint-disable max-depth */
 /* eslint-disable max-lines-per-function */
 const uname = /^[0-9a-zA-Z]+$/;
-const title = /^[\w\s]+$/;
+const title = /^(?!^\d*$)[a-zA-Z\d\s]*$/;
 const gname = /^[A-Za-z.\s-]+$/;
 const emailR = /.{1,}@mymona.uwi.edu$/;
 const otpR = /^[A-Z0-9]{6}/;
+
 
 // Helpers
 /**

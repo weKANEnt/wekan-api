@@ -445,7 +445,7 @@ module.exports.makeResultsPublic = async function (req, res) {
                   return;
                 }
               } else if (hasEnded === false) {
-                res.status(400).json(errorHandler.electionNotEnded);
+                res.status(422).json(errorHandler.electionNotEnded);
                 return;
               } else {
                 res.status(400).json(errorHandler.generalValidation);

@@ -62,7 +62,7 @@ module.exports.createElection = async function (req, res) {
                   );
                   if (addElection === 0) {
                     res
-                      .status(200)
+                      .status(201)
                       .json(successHandler(true, "Election created"));
                     return;
                   } else if (addElection === 1) {
@@ -77,11 +77,11 @@ module.exports.createElection = async function (req, res) {
                   return;
                 }
               } else if (electionn.length > 0) {
-                res.status(400).json(errorHandler.electionAlreadyExists);
+                res.status(422).json(errorHandler.electionAlreadyExists);
                 return;
               }
             } else if (!vTitle || !vSDate || !vEDate || !vSEDate) {
-              res.status(401).json(errorHandler.generalValidation);
+              res.status(400).json(errorHandler.generalValidation);
               return;
             }
           }
@@ -126,7 +126,7 @@ module.exports.deleteElection = async function (req, res) {
             if (removeElection === 0) {
               res.status(200).json(successHandler(true, "Election deleted."));
             } else if (removeElection === 1) {
-              res.status(400).json(errorHandler.nothingToRemove);
+              res.status(422).json(errorHandler.nothingToRemove);
               return;
             } else {
               res.status(500).json(errorHandler.queryError);
@@ -221,7 +221,7 @@ module.exports.generateElectionResults = async function (req, res) {
                 return;
               }
             } else if (hasEnded === false) {
-              res.status(400).json(errorHandler.electionNotEnded);
+              res.status(422).json(errorHandler.electionNotEnded);
               return;
             } else {
               res.status(400).json(errorHandler.generalValidation);
@@ -268,7 +268,7 @@ module.exports.getElelectionResults = async function (req, res) {
       return;
     }
   } catch (err) {
-    res.status(500).json(errorHandler.queryError);
+    res.status(500).json(errorHandler.electionNotActive);
     return;
   }
 };
@@ -305,7 +305,7 @@ module.exports.getElelectionResultsA = async function (req, res) {
                 return;
               }
             } else if (hasEnded === false) {
-              res.status(400).json(errorHandler.electionNotEnded);
+              res.status(422).json(errorHandler.electionNotEnded);
               return;
             } else {
               res.status(400).json(errorHandler.generalValidation);
