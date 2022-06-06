@@ -230,3 +230,10 @@ module.exports.noElectionResults = errorHandler(
   "Election Results have not yet been generated",
   "wek-nf"
 );
+
+module.exports.noOTPGen = errorHandler(
+  false,
+  "OTP Not Found",
+  "No OTP has been generated for trying user",
+  "wek-nf"
+);
