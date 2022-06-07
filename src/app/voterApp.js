@@ -87,6 +87,12 @@ module.exports.isVoterRegistered = async function (req, res) {
 module.exports.generateOTP = async function (req, res) {
   try {
     const { email } = req.body;
+
+    if (!(email && otp)) {
+      res.status(503).json(errorHandler.missingField);
+      return;
+    }
+
     const electionDetails = await election.selectElection();
     const vEmail = validate.valEmail(email);
 
@@ -155,7 +161,7 @@ module.exports.generateOTP = async function (req, res) {
       return;
     }
   } catch (err) {
-    res.status(400).json(errorHandler.missingField);
+    res.status(500).json(errorHandler.serverError);
     return;
   }
 };
