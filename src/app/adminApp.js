@@ -118,7 +118,7 @@ module.exports.registerVoter = async function (req, res) {
                 );
                 if (addVoter === 0) {
                   res
-                    .status(200)
+                    .status(201)
                     .json(successHandler(true, "Voter added successfully"));
                   return;
                 } else if (addVoter === 1) {
@@ -132,7 +132,7 @@ module.exports.registerVoter = async function (req, res) {
                   return;
                 }
               } catch (err) {
-                res.status(500).json(errorHandler.queryError);
+                res.status(400).json(errorHandler.noHallorFaculty);
               }
             } else if (
               vEmail != true ||
@@ -141,7 +141,7 @@ module.exports.registerVoter = async function (req, res) {
               !(doesCommute === true || doesCommute === false) ||
               !(isPostGrad === true || isPostGrad === false)
             ) {
-              res.status(401).json(errorHandler.generalValidation);
+              res.status(400).json(errorHandler.generalValidation);
             } else {
               res.status(500).json(errorHandler.serverError);
             }
@@ -308,6 +308,7 @@ module.exports.getAllPositions = async function (req, res) {
 module.exports.addCandidate = async function (req, res) {
   if (req.headers === null || req.headers === "") {
     res.status(401).json(errorHandler.cannotAccess);
+    return;
   } else {
     try {
       const token = getToken(req.headers);
@@ -333,16 +334,19 @@ module.exports.addCandidate = async function (req, res) {
                   candidates[c].about
                 )
               ) {
-                res.status(400).json(errorHandler.emptyFields);
+                res.status(400).json(errorHandler.missingField);
                 return;
               } else {
                 const vEmail = validate.valEmail(candidates[c].email);
                 const vFname = validate.valName(candidates[c].firstName);
                 const vLname = validate.valName(candidates[c].lastName);
+                const vHall = Number.isInteger(candidates[c].hall);
+                const vFaculty = Number.isInteger(candidates[c].faculty);
+                const vPosition = Number.isInteger(candidates[c].position);
 
                 var addCandidate;
                 var addSum = 0;
-                if (vEmail && vFname && vLname) {
+                if (vEmail && vFname && vLname && vHall && vFaculty && vPosition) {
                   try {
                     addCandidate = await admin.addCandidate(
                       candidates[c].firstName,
@@ -358,8 +362,8 @@ module.exports.addCandidate = async function (req, res) {
                     res.status(400).json(errorHandler.queryError);
                     return;
                   }
-                } else if (!vEmail || !vFname || !vLname) {
-                  res.status(401).json(errorHandler.genValidation);
+                } else if (!vEmail || !vFname || !vLname || !vHall || !vFaculty || !vPosition) {
+                  res.status(400).json(errorHandler.generalValidation);
                   return;
                 } else {
                   res.status(500).json(errorHandler.serverError);
@@ -369,16 +373,16 @@ module.exports.addCandidate = async function (req, res) {
             }
             if (addSum === 0) {
               res
-                .status(200)
+                .status(201)
                 .json(
                   successHandler(true, "All candidates added successfully")
                 );
               return;
             } else if (addSum < 0) {
-              res.status(400).json(errorHandler.serverError);
+              res.status(500).json(errorHandler.serverError);
               return;
             } else {
-              res.status(400).json(errorHandler.cannotAddCandidate);
+              res.status(422).json(errorHandler.cannotAddCandidate);
               return;
             }
           } catch (err) {
@@ -387,7 +391,7 @@ module.exports.addCandidate = async function (req, res) {
           }
         }
       } else {
-        res.status(500).json(errorHandler.jwtError);
+        res.status(401).json(errorHandler.jwtError);
         return;
       }
     } catch (err) {

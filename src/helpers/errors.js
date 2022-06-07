@@ -115,7 +115,7 @@ module.exports.incorrectOTP = errorHandler(
 module.exports.cannotAddCandidate = errorHandler(
   false,
   "Candidate Insert Aborted",
-  "All candidates may have not been added due to empty fields or duplicate entry attempts",
+  "All candidates may have not been added due to invalid/empty fields or duplicate entry attempts",
   "wek-ci"
 );
 
@@ -236,4 +236,11 @@ module.exports.noOTPGen = errorHandler(
   "OTP Not Found",
   "No OTP has been generated for trying user",
   "wek-nf"
+);
+
+module.exports.noHallorFaculty = errorHandler(
+  false,
+  "Error with Hall or Faculty",
+  "Possible Query Error - No such hall or faculty exists.",
+  "wek-ve"
 );

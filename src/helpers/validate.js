@@ -87,7 +87,8 @@ module.exports.valName = function (name) {
     name === undefined ||
     isBoolean(name) ||
     Number.isInteger(name) ||
-    typeof name === "object"
+    typeof name === "object" || 
+    name === "null"
   ) {
     return false;
   } else {
