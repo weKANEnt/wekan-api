@@ -3,3 +3,4 @@ node_modules/*
 src/csvs/Test.csv
 src/db/models/index.js
 config/env/*
+.vscode/settings.json
