@@ -88,7 +88,7 @@ module.exports.generateOTP = async function (req, res) {
   try {
     const { email } = req.body;
 
-    if (!(email && otp)) {
+    if (!(email)) {
       res.status(503).json(errorHandler.missingField);
       return;
     }
