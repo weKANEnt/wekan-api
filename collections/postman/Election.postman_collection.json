@@ -1,0 +1,625 @@
+{
+	"info": {
+		"_postman_id": "6505daa2-f1a7-484b-a78a-8e6f16134168",
+		"name": "uwivotes - Election",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19799427"
+	},
+	"item": [
+		{
+			"name": "Admin Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Const declarations\r",
+							"const adminCred = pm.collectionVariables.get(\"adminCreds\");\r",
+							"const cEmail = pm.collectionVariables.get(\"adminEmail\");\r",
+							"const cPwrd = pm.collectionVariables.get(\"adminPwrd\");\r",
+							"\r",
+							"//Schema Definition\r",
+							"const Ajv = require(\"ajv\");\r",
+							"const ajv = new Ajv();\r",
+							"\r",
+							"const successSchema = {\r",
+							"  type: \"object\",\r",
+							"  properties: {\r",
+							"    success: {type: \"boolean\"},\r",
+							"    message: {type: \"string\"},\r",
+							"    token: {type: \"string\"}\r",
+							"  },\r",
+							"  additionalProperties: false\r",
+							"};\r",
+							"\r",
+							"const errorSchema = {\r",
+							"  type: \"object\",\r",
+							"  properties: {\r",
+							"    success: {type: \"boolean\"},\r",
+							"    name: {type: \"string\"},\r",
+							"    message: {type: \"string\"},\r",
+							"    code: {type: \"string\"}\r",
+							"  },\r",
+							"  additionalProperties: false\r",
+							"};\r",
+							"\r",
+							"//Ensuring iteration over users array\r",
+							"if (adminCred && adminCred.length > 0){\r",
+							"    postman.setNextRequest(\"Admin Login\");\r",
+							"} else {\r",
+							"    postman.setNextRequest(\"Create Election\");\r",
+							"};\r",
+							"\r",
+							"\r",
+							"if (cEmail == \"kayvia.harriott@mymona.uwi.edu\" && cPwrd == \"weKAN\"){\r",
+							"    pm.test(\"Verify that the status code is 200\", () => {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"\r",
+							"    try {\r",
+							"        const response = pm.response.json();\r",
+							"        if (response) {\r",
+							"            pm.test(\"Verify that body follow success schema\", () => {\r",
+							"                const verdict = ajv.validate(successSchema, response)\r",
+							"                pm.expect(verdict).to.be.true;\r",
+							"            });\r",
+							"\r",
+							"            pm.test(\"Veify that message is successful login\", () => {\r",
+							"                const message = response.message;\r",
+							"                pm.expect(message).to.be.eq(\"Successful login.\");\r",
+							"            });\r",
+							"\r",
+							"            //set env var\r",
+							"            pm.collectionVariables.set(\"adminToken\", response.token);\r",
+							"        } else {\r",
+							"            pm.test(\"No response body when response body expected\", () => {\r",
+							"                pm.expect(false).to.be.eq(true);\r",
+							"            });\r",
+							"        }\r",
+							"    } catch (err) {\r",
+							"        pm.test(\"Something is wrong\", () => {\r",
+							"            pm.expect(true).to.be.eq(false);\r",
+							"        });\r",
+							"    }\r",
+							"} else {\r",
+							"    pm.test(\"Verify that the status code is 401\", () => {\r",
+							"        pm.response.to.have.status(401);\r",
+							"    });\r",
+							"\r",
+							"    try {\r",
+							"        const response = pm.response.json();\r",
+							"        if (response) {\r",
+							"            pm.test(\"Verify that body follow error schema\", () => {\r",
+							"                const verdict = ajv.validate(errorSchema, response)\r",
+							"                pm.expect(verdict).to.be.true;\r",
+							"            });\r",
+							"        } else {\r",
+							"            pm.test(\"No response body when response body expected\", () => {\r",
+							"                pm.expect(false).to.be.eq(true);\r",
+							"            });\r",
+							"        }\r",
+							"    } catch (err) {\r",
+							"        pm.test(\"Something is wrong\", () => {\r",
+							"            pm.expect(true).to.be.eq(false);\r",
+							"        });\r",
+							"    } \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let adminCred = pm.collectionVariables.get(\"adminCreds\");",
+							"",
+							"if (!adminCred || adminCred.length == 0) {",
+							"    adminCred = [",
+							"        {//actuall credentials",
+							"            email: \"kayvia.harriott@mymona.uwi.edu\",",
+							"            password: \"weKAN\"",
+							"        },",
+							"        {",
+							"            email: \"kayvia.harriott@gmail.com\",",
+							"            password: \"weKan\"",
+							"        },",
+							"        {",
+							"            email: \"kayvia.harriott@mymona.uwi.edu\",",
+							"            password: \"weKannot\"",
+							"        },",
+							"        {",
+							"            email: null,",
+							"            password: null",
+							"        },",
+							"        {",
+							"            email: true,",
+							"            password: true",
+							"        },",
+							"        {",
+							"            email: {},",
+							"            password: {}",
+							"        },",
+							"        {",
+							"            email: 12345677,",
+							"            password: \"weKan\"",
+							"        },",
+							"        {",
+							"            email:\"&&&&&&&&\",",
+							"            password: \"&^@*!!\"",
+							"        }",
+							"    ]",
+							"}",
+							"",
+							"pm.collectionVariables.set(\"adminCreds\", adminCred);",
+							"",
+							"let currentAdmin = adminCred.shift();",
+							"console.log(currentAdmin);",
+							"",
+							"pm.collectionVariables.set(\"adminEmail\", currentAdmin.email);",
+							"pm.collectionVariables.set(\"adminPwrd\", currentAdmin.password);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{adminEmail}}\",\n    \"password\": \"{{adminPwrd}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/admin/login",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"admin",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Admin Login",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@mymona.uwi.edu\",\n    \"password\": \"example123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{serverUrl}}/uwivotes/admin/login",
+							"host": [
+								"{{serverUrl}}"
+							],
+							"path": [
+								"uwivotes",
+								"admin",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Create Election",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let elections = pm.collectionVariables.get(\"elections\");",
+							"",
+							"if (!elections || elections.length == 0) {",
+							"    elections = [",
+							"        {",
+							"            title: \"UWI MONA Guild Election 2022\",",
+							"            sDate: \"2022-06-03\",",
+							"            eDate: \"2022-06-04\",",
+							"            csvLocation: \"naomi.csv\"",
+							"        },",
+							"        {",
+							"            title: \"UWI MONA Guild Election 2022\",",
+							"            sDate: \"2022-06-06\",",
+							"            eDate: \"2022-06-04\",",
+							"            csvLocation: \"naomi.csv\"",
+							"        }, ",
+							"        {",
+							"            title: \"UWI MONA Guild Election 2022\",",
+							"            sDate: \"2021-06-03\",",
+							"            eDate: \"2022-06-04\",",
+							"            csvLocation: \"naomi.csv\"",
+							"        },",
+							"        {",
+							"            title: true,",
+							"            sDate: true,",
+							"            eDate: true,",
+							"            csvLocation: true",
+							"        }, ",
+							"        {",
+							"            title: 1111,",
+							"            sDate: \"2022-06-07\",",
+							"            eDate: \"2022-06-08\",",
+							"            csvLocation: \"naomi.csv\"",
+							"        },",
+							"        {",
+							"            title: \"UWI MONA Guild Election 2022\",",
+							"            sDate: \"22-06-03\",",
+							"            eDate: \"22-06-04\",",
+							"            csvLocation: \"naomi.csv\"",
+							"        },",
+							"        {",
+							"            title: \"UWI MONA Guild Election 2022\",",
+							"            sDate: \"^^^&&&!()@\",",
+							"            eDate: 2022-06-08,",
+							"            csvLocation: \"naomi.csv\"",
+							"        },",
+							"        {",
+							"            title: \"\",",
+							"            sDate: \"\",",
+							"            eDate: \"\",",
+							"            csvLocation: \"naomi.csv\"",
+							"        },",
+							"        {//only right one",
+							"            title: \"UWI MONA Guild Election 2022\",",
+							"            sDate: \"2022-06-07\",",
+							"            eDate: \"2022-06-08\",",
+							"            csvLocation: \"naomi.csv\"",
+							"        },",
+							"        {//duplicate to test duplicate scenario",
+							"            title: \"UWI MONA Guild Election 2022\",",
+							"            sDate: \"2022-06-07\",",
+							"            eDate: \"2022-06-08\",",
+							"            csvLocation: \"naomi.csv\"",
+							"        }",
+							"    ]",
+							"}",
+							"",
+							"pm.collectionVariables.set(\"elections\", elections);",
+							"",
+							"let currentElection = elections.shift();",
+							"console.log(currentElection);",
+							"",
+							"pm.environment.set(\"electionTitle\", currentElection.title);",
+							"pm.environment.set(\"electionStart\", currentElection.sDate);",
+							"pm.environment.set(\"electionEnd\", currentElection.eDate);",
+							"pm.environment.set(\"electionFile\", currentElection.csvLocation);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//const declarations",
+							"const elections = pm.collectionVariables.get(\"elections\");",
+							"const cTitle = pm.environment.get(\"electionTitle\");",
+							"const cStart = pm.environment.get(\"electionStart\");",
+							"const cEnd = pm.environment.get(\"electionEnd\");",
+							"const cFile = pm.environment.get(\"electionFile\");",
+							"",
+							"//Currently valid dates",
+							"const testStart = \"2022-06-07\";",
+							"const testEnd = \"2022-06-08\";",
+							"",
+							"//Schema Definition",
+							"const Ajv = require(\"ajv\");",
+							"const ajv = new Ajv();",
+							"",
+							"const successSchema = {",
+							"  type: \"object\",",
+							"  properties: {",
+							"    success: {type: \"boolean\"},",
+							"    message: {type: \"string\"}",
+							"  },",
+							"  additionalProperties: false",
+							"};",
+							"",
+							"const errorSchema = {",
+							"  type: \"object\",",
+							"  properties: {",
+							"    success: {type: \"boolean\"},",
+							"    name: {type: \"string\"},",
+							"    message: {type: \"string\"},",
+							"    code: {type: \"string\"}",
+							"  },",
+							"  additionalProperties: false",
+							"};",
+							"",
+							"//Ensuring iteration over users array",
+							"if (elections && elections.length > 0){",
+							"    postman.setNextRequest(\"Create Election\");",
+							"} else {",
+							"    postman.setNextRequest(\"Get Election Results Admin\");",
+							"};",
+							"",
+							"if (cStart == testStart && cEnd == testEnd && cTitle != 1111) {",
+							"    pm.test(\"Verify that the status code is 201 or 422\", function () {",
+							"        const codes = [201, 422]",
+							"        var code = pm.response.code;",
+							"        pm.expect(codes).to.contain(code);",
+							"    });",
+							"    try {",
+							"        const response = pm.response.json();",
+							"        if (response) {",
+							"            if (pm.response.code == 200){",
+							"                pm.test(\"Verify that body follow success schema\", () => {",
+							"                    const verdict = ajv.validate(successSchema, response)",
+							"                    pm.expect(verdict).to.be.true;",
+							"                });",
+							"            } else {",
+							"                pm.test(\"Verify that body follow error schema\", () => {",
+							"                    const verdict = ajv.validate(errorSchema, response)",
+							"                    pm.expect(verdict).to.be.true;",
+							"                });",
+							"            }",
+							"        } else {",
+							"            pm.test(\"No response body when response body expected\", () => {",
+							"                pm.expect(false).to.be.eq(true);",
+							"            });",
+							"        }",
+							"    } catch (err) {",
+							"        pm.test(\"Something is wrong\", () => {",
+							"            pm.expect(true).to.be.eq(false);",
+							"        });",
+							"    }",
+							"} else {",
+							"    pm.test(\"Verify that the status code is 400\", () => {",
+							"        pm.response.to.have.status(400);",
+							"    });",
+							"",
+							"    try {",
+							"        const response = pm.response.json();",
+							"        if (response) {",
+							"            pm.test(\"Verify that body follow error schema\", () => {",
+							"                const verdict = ajv.validate(errorSchema, response)",
+							"                pm.expect(verdict).to.be.true;",
+							"            });",
+							"        } else {",
+							"            pm.test(\"No response body when response body expected\", () => {",
+							"                pm.expect(false).to.be.eq(true);",
+							"            });",
+							"        }",
+							"    } catch (err) {",
+							"        pm.test(\"Something is wrong\", () => {",
+							"            pm.expect(true).to.be.eq(false);",
+							"        });",
+							"    } ",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{adminToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"{{electionTitle}}\",\n    \"sDate\": \"{{electionStart}}\",\n    \"eDate\": \"{{electionEnd}}\",\n    \"csvLocation\": \"{{electionFile}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/election/create",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"election",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Election Results Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify that the status code is 200 or 422\", function () {",
+							"    const codes = [200, 422]",
+							"    var code = pm.response.code;",
+							"    pm.expect(codes).to.contain(code);",
+							"});",
+							"",
+							"//Set Next",
+							"postman.setNextRequest(\"Generate Election Results\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{adminToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/election/admin/results",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"election",
+						"admin",
+						"results"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate Election Results",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify that the status code is 200 or 422\", function () {",
+							"    const codes = [200, 422]",
+							"    var code = pm.response.code;",
+							"    pm.expect(codes).to.contain(code);",
+							"});",
+							"",
+							"//Set Next",
+							"postman.setNextRequest(\"Delete Election\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{adminToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/election/results",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"election",
+						"results"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Election",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{adminToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/election/delete",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"election",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "serverUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "adminCreds",
+			"value": ""
+		},
+		{
+			"key": "adminToken",
+			"value": ""
+		},
+		{
+			"key": "adminEmail",
+			"value": ""
+		},
+		{
+			"key": "adminPwrd",
+			"value": ""
+		},
+		{
+			"key": "elections",
+			"value": ""
+		}
+	]
+}

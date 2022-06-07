@@ -1,0 +1,939 @@
+{
+	"info": {
+		"_postman_id": "19b0ac31-ca8b-4d73-97d2-4d5e67f0a116",
+		"name": "uwiVotes - Ballot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19799427"
+	},
+	"item": [
+		{
+			"name": "Does OTP Match",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();",
+							"pm.collectionVariables.set(\"voterToken\", response.token);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/votes/OTP?otp=PWFQAB&email=matthew.palmer@mymona.uwi.edu",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"votes",
+						"OTP"
+					],
+					"query": [
+						{
+							"key": "otp",
+							"value": "PWFQAB"
+						},
+						{
+							"key": "email",
+							"value": "matthew.palmer@mymona.uwi.edu"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Candidates - President",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Schema Definition",
+							"const Ajv = require(\"ajv\");",
+							"const ajv = new Ajv();",
+							"",
+							"const successSchema = {",
+							"    type: \"object\", ",
+							"    properties: {",
+							"        success: {type: \"boolean\"},",
+							"        message: {type: \"string\"},",
+							"        candidates: {type: \"array\"}",
+							"    },",
+							"    additionalProperties: false",
+							"}",
+							"",
+							"//Tests",
+							"pm.test(\"Verify that the status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"try {",
+							"    const response = pm.response.json()",
+							"    if (response) {",
+							"        pm.test(\"Verify that response body follows success schema\", () => {",
+							"            const verdict = ajv.validate(successSchema, response);",
+							"            pm.expect(verdict).to.be.true;",
+							"        });",
+							"",
+							"        pm.test(\"Verify that response holds correct list of candidates\", () => {",
+							"            const message = response.message;",
+							"            pm.expect(message).to.contain(\"President\");",
+							"        });",
+							"    } else {",
+							"        pm.test(\"No response body when response body expected\", () => {",
+							"            pm.expect(false).to.be.eq(true);",
+							"        });",
+							"    }",
+							"} catch (err) {",
+							"    pm.test(\"Something is wrong\", () => {",
+							"        pm.expect(true).to.be.eq(false);",
+							"    });",
+							"}",
+							"",
+							"//Set Next ",
+							"postman.setNextRequest(\"Get Candidates - VP SSP\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/ballot/presidents",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"ballot",
+						"presidents"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Candidates - VP SSP",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Schema Definition",
+							"const Ajv = require(\"ajv\");",
+							"const ajv = new Ajv();",
+							"",
+							"const successSchema = {",
+							"    type: \"object\", ",
+							"    properties: {",
+							"        success: {type: \"boolean\"},",
+							"        message: {type: \"string\"},",
+							"        candidates: {type: \"array\"}",
+							"    },",
+							"    additionalProperties: false",
+							"}",
+							"",
+							"//Tests",
+							"pm.test(\"Verify that the status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"try {",
+							"    const response = pm.response.json()",
+							"    if (response) {",
+							"        pm.test(\"Verify that response body follows success schema\", () => {",
+							"            const verdict = ajv.validate(successSchema, response);",
+							"            pm.expect(verdict).to.be.true;",
+							"        });",
+							"",
+							"        pm.test(\"Verify that response holds correct list of candidates\", () => {",
+							"            const message = response.message;",
+							"            pm.expect(message).to.contain(\"VP SSP\");",
+							"        });",
+							"    } else {",
+							"        pm.test(\"No response body when response body expected\", () => {",
+							"            pm.expect(false).to.be.eq(true);",
+							"        });",
+							"    }",
+							"} catch (err) {",
+							"    pm.test(\"Something is wrong\", () => {",
+							"        pm.expect(true).to.be.eq(false);",
+							"    });",
+							"}",
+							"",
+							"//Set Next ",
+							"postman.setNextRequest(\"Get Candidates - VP PSI\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/ballot/vpssp",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"ballot",
+						"vpssp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Candidates - VP PSI",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Schema Definition",
+							"const Ajv = require(\"ajv\");",
+							"const ajv = new Ajv();",
+							"",
+							"const successSchema = {",
+							"    type: \"object\", ",
+							"    properties: {",
+							"        success: {type: \"boolean\"},",
+							"        message: {type: \"string\"},",
+							"        candidates: {type: \"array\"}",
+							"    },",
+							"    additionalProperties: false",
+							"}",
+							"",
+							"//Tests",
+							"pm.test(\"Verify that the status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"try {",
+							"    const response = pm.response.json()",
+							"    if (response) {",
+							"        pm.test(\"Verify that response body follows success schema\", () => {",
+							"            const verdict = ajv.validate(successSchema, response);",
+							"            pm.expect(verdict).to.be.true;",
+							"        });",
+							"",
+							"        pm.test(\"Verify that response holds correct list of candidates\", () => {",
+							"            const message = response.message;",
+							"            pm.expect(message).to.contain(\"VP PSI\");",
+							"        });",
+							"    } else {",
+							"        pm.test(\"No response body when response body expected\", () => {",
+							"            pm.expect(false).to.be.eq(true);",
+							"        });",
+							"    }",
+							"} catch (err) {",
+							"    pm.test(\"Something is wrong\", () => {",
+							"        pm.expect(true).to.be.eq(false);",
+							"    });",
+							"}",
+							"",
+							"//Set Next ",
+							"postman.setNextRequest(\"Get Candidates - Secretary\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{voterToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/ballot/vppsi",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"ballot",
+						"vppsi"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Candidates - Secretary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Schema Definition",
+							"const Ajv = require(\"ajv\");",
+							"const ajv = new Ajv();",
+							"",
+							"const successSchema = {",
+							"    type: \"object\", ",
+							"    properties: {",
+							"        success: {type: \"boolean\"},",
+							"        message: {type: \"string\"},",
+							"        candidates: {type: \"array\"}",
+							"    },",
+							"    additionalProperties: false",
+							"}",
+							"",
+							"//Tests",
+							"pm.test(\"Verify that the status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"try {",
+							"    const response = pm.response.json()",
+							"    if (response) {",
+							"        pm.test(\"Verify that response body follows success schema\", () => {",
+							"            const verdict = ajv.validate(successSchema, response);",
+							"            pm.expect(verdict).to.be.true;",
+							"        });",
+							"",
+							"        pm.test(\"Verify that response holds correct list of candidates\", () => {",
+							"            const message = response.message;",
+							"            pm.expect(message).to.contain(\"Secretary\");",
+							"        });",
+							"    } else {",
+							"        pm.test(\"No response body when response body expected\", () => {",
+							"            pm.expect(false).to.be.eq(true);",
+							"        });",
+							"    }",
+							"} catch (err) {",
+							"    pm.test(\"Something is wrong\", () => {",
+							"        pm.expect(true).to.be.eq(false);",
+							"    });",
+							"}",
+							"",
+							"//Set Next ",
+							"postman.setNextRequest(\"Get Candidates - Treasurer\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{voterToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/ballot/secretary",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"ballot",
+						"secretary"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Candidates - Treasurer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Schema Definition",
+							"const Ajv = require(\"ajv\");",
+							"const ajv = new Ajv();",
+							"",
+							"const successSchema = {",
+							"    type: \"object\", ",
+							"    properties: {",
+							"        success: {type: \"boolean\"},",
+							"        message: {type: \"string\"},",
+							"        candidates: {type: \"array\"}",
+							"    },",
+							"    additionalProperties: false",
+							"}",
+							"",
+							"//Tests",
+							"pm.test(\"Verify that the status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"try {",
+							"    const response = pm.response.json()",
+							"    if (response) {",
+							"        pm.test(\"Verify that response body follows success schema\", () => {",
+							"            const verdict = ajv.validate(successSchema, response);",
+							"            pm.expect(verdict).to.be.true;",
+							"        });",
+							"",
+							"        pm.test(\"Verify that response holds correct list of candidates\", () => {",
+							"            const message = response.message;",
+							"            pm.expect(message).to.contain(\"Treasurer\");",
+							"        });",
+							"    } else {",
+							"        pm.test(\"No response body when response body expected\", () => {",
+							"            pm.expect(false).to.be.eq(true);",
+							"        });",
+							"    }",
+							"} catch (err) {",
+							"    pm.test(\"Something is wrong\", () => {",
+							"        pm.expect(true).to.be.eq(false);",
+							"    });",
+							"}",
+							"",
+							"//Set Next ",
+							"postman.setNextRequest(\"Get Candidates - GCC\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/ballot/treasurer",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"ballot",
+						"treasurer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Candidates - GCC",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Schema Definition",
+							"const Ajv = require(\"ajv\");",
+							"const ajv = new Ajv();",
+							"",
+							"const successSchema = {",
+							"    type: \"object\", ",
+							"    properties: {",
+							"        success: {type: \"boolean\"},",
+							"        message: {type: \"string\"},",
+							"        candidates: {type: \"array\"}",
+							"    },",
+							"    additionalProperties: false",
+							"}",
+							"",
+							"//Tests",
+							"pm.test(\"Verify that the status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"try {",
+							"    const response = pm.response.json()",
+							"    if (response) {",
+							"        pm.test(\"Verify that response body follows success schema\", () => {",
+							"            const verdict = ajv.validate(successSchema, response);",
+							"            pm.expect(verdict).to.be.true;",
+							"        });",
+							"",
+							"        pm.test(\"Verify that response holds correct list of candidates\", () => {",
+							"            const message = response.message;",
+							"            pm.expect(message).to.contain(\"GCC\");",
+							"        });",
+							"    } else {",
+							"        pm.test(\"No response body when response body expected\", () => {",
+							"            pm.expect(false).to.be.eq(true);",
+							"        });",
+							"    }",
+							"} catch (err) {",
+							"    pm.test(\"Something is wrong\", () => {",
+							"        pm.expect(true).to.be.eq(false);",
+							"    });",
+							"}",
+							"",
+							"//Set Next ",
+							"postman.setNextRequest(\"Get Candidates - PRO\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{voterToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/ballot/gcc",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"ballot",
+						"gcc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Candidates - PRO",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Schema Definition",
+							"const Ajv = require(\"ajv\");",
+							"const ajv = new Ajv();",
+							"",
+							"const successSchema = {",
+							"    type: \"object\", ",
+							"    properties: {",
+							"        success: {type: \"boolean\"},",
+							"        message: {type: \"string\"},",
+							"        candidates: {type: \"array\"}",
+							"    },",
+							"    additionalProperties: false",
+							"}",
+							"",
+							"//Tests",
+							"pm.test(\"Verify that the status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"try {",
+							"    const response = pm.response.json()",
+							"    if (response) {",
+							"        pm.test(\"Verify that response body follows success schema\", () => {",
+							"            const verdict = ajv.validate(successSchema, response);",
+							"            pm.expect(verdict).to.be.true;",
+							"        });",
+							"",
+							"        pm.test(\"Verify that response holds correct list of candidates\", () => {",
+							"            const message = response.message;",
+							"            pm.expect(message).to.contain(\"PRO\");",
+							"        });",
+							"    } else {",
+							"        pm.test(\"No response body when response body expected\", () => {",
+							"            pm.expect(false).to.be.eq(true);",
+							"        });",
+							"    }",
+							"} catch (err) {",
+							"    pm.test(\"Something is wrong\", () => {",
+							"        pm.expect(true).to.be.eq(false);",
+							"    });",
+							"}",
+							"",
+							"//Set Next ",
+							"postman.setNextRequest(\"Get Candidates - CEAC\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{voterToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/ballot/pro",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"ballot",
+						"pro"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Candidates - CEAC",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Schema Definition",
+							"const Ajv = require(\"ajv\");",
+							"const ajv = new Ajv();",
+							"",
+							"const successSchema = {",
+							"    type: \"object\", ",
+							"    properties: {",
+							"        success: {type: \"boolean\"},",
+							"        message: {type: \"string\"},",
+							"        candidates: {type: \"array\"}",
+							"    },",
+							"    additionalProperties: false",
+							"}",
+							"",
+							"//Tests",
+							"pm.test(\"Verify that the status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"try {",
+							"    const response = pm.response.json()",
+							"    if (response) {",
+							"        pm.test(\"Verify that response body follows success schema\", () => {",
+							"            const verdict = ajv.validate(successSchema, response);",
+							"            pm.expect(verdict).to.be.true;",
+							"        });",
+							"",
+							"        pm.test(\"Verify that response holds correct list of candidates\", () => {",
+							"            const message = response.message;",
+							"            pm.expect(message).to.contain(\"CEAC\");",
+							"        });",
+							"    } else {",
+							"        pm.test(\"No response body when response body expected\", () => {",
+							"            pm.expect(false).to.be.eq(true);",
+							"        });",
+							"    }",
+							"} catch (err) {",
+							"    pm.test(\"Something is wrong\", () => {",
+							"        pm.expect(true).to.be.eq(false);",
+							"    });",
+							"}",
+							"",
+							"//Set Next ",
+							"postman.setNextRequest(\"Get Candidates - EAC\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{voterToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/ballot/ceac",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"ballot",
+						"ceac"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Candidates - EAC",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Schema Definition",
+							"const Ajv = require(\"ajv\");",
+							"const ajv = new Ajv();",
+							"",
+							"const successSchema = {",
+							"    type: \"object\", ",
+							"    properties: {",
+							"        success: {type: \"boolean\"},",
+							"        message: {type: \"string\"},",
+							"        candidates: {type: \"array\"}",
+							"    },",
+							"    additionalProperties: false",
+							"}",
+							"",
+							"//Tests",
+							"pm.test(\"Verify that the status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"try {",
+							"    const response = pm.response.json()",
+							"    if (response) {",
+							"        pm.test(\"Verify that response body follows success schema\", () => {",
+							"            const verdict = ajv.validate(successSchema, response);",
+							"            pm.expect(verdict).to.be.true;",
+							"        });",
+							"",
+							"        pm.test(\"Verify that response holds correct list of candidates\", () => {",
+							"            const message = response.message;",
+							"            pm.expect(message).to.contain(\"EAC\");",
+							"        });",
+							"    } else {",
+							"        pm.test(\"No response body when response body expected\", () => {",
+							"            pm.expect(false).to.be.eq(true);",
+							"        });",
+							"    }",
+							"} catch (err) {",
+							"    pm.test(\"Something is wrong\", () => {",
+							"        pm.expect(true).to.be.eq(false);",
+							"    });",
+							"}",
+							"",
+							"//Set Next ",
+							"postman.setNextRequest(\"Get Candidates - Faculty Rep\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{voterToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/ballot/eac",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"ballot",
+						"eac"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Candidates - Faculty Rep",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify that the status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Set Next ",
+							"postman.setNextRequest(\"Get Candidates - Commuting\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{voterToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/ballot/facultyrep",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"ballot",
+						"facultyrep"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Candidates - Commuting",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify that the status code is 401\", () => {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"//Set Next ",
+							"postman.setNextRequest(\"Get Candidates - Post Graduate\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{voterToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/ballot/commuting",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"ballot",
+						"commuting"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Candidates - Post Graduate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify that the status code is 401\", () => {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"//Set Next ",
+							"postman.setNextRequest(\"Create Election\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{voterToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/ballot/postgrad",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"ballot",
+						"postgrad"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Submit Ballot",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify that the status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Set Next",
+							"postman.setNextRequest(\"Generate Election Results\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{voterToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cids\": [1]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{serverUrl}}/uwivotes/ballot/submitBallot",
+					"host": [
+						"{{serverUrl}}"
+					],
+					"path": [
+						"uwivotes",
+						"ballot",
+						"submitBallot"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "serverUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
