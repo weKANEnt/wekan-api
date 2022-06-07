@@ -85,72 +85,77 @@ module.exports.isVoterRegistered = async function (req, res) {
  * @return {Promise}
  */
 module.exports.generateOTP = async function (req, res) {
-  const { email } = req.body;
-  const electionDetails = await election.selectElection();
-  const vEmail = validate.valEmail(email);
+  try {
+    const { email } = req.body;
+    const electionDetails = await election.selectElection();
+    const vEmail = validate.valEmail(email);
 
-  if (vEmail) {
-    if (electionDetails.length === 0) {
-      res.status(500).json(errorHandler.electionNotActive);
-      return;
-    } else if (electionDetails.length === 1) {
-      const hasStarted = electionHandler.hasElectionStarted(
-        electionDetails[0].startDate
-      );
-      const hasEnded = electionHandler.hasElectionEnded(
-        electionDetails[0].endDate
-      );
-      if (hasStarted === true && hasEnded === false) {
-        try {
-          let otp;
-          otp = optGen.generateOTP();
-          const isOTP = await voter.doesOTPExist(otp);
-          const hasVoted = await voter.hasVoted(email);
-          if (isOTP === false && hasVoted === false) {
-            try {
-              const addOTP = await voter.insertOTP(email, otp);
-              if (addOTP === false) {
-                res.status(422).json(errorHandler.queryError);
-                return;
-              } else if (addOTP === true) {
-                await transport.sendMail(mail(config.email, email, otp));
-                res.status(200).json(success(email));
-                return;
-              } else if (addOTP === 1) {
-                res.status(422).json(errorHandler.queryError);
+    if (vEmail) {
+      if (electionDetails.length === 0) {
+        res.status(500).json(errorHandler.electionNotActive);
+        return;
+      } else if (electionDetails.length === 1) {
+        const hasStarted = electionHandler.hasElectionStarted(
+          electionDetails[0].startDate
+        );
+        const hasEnded = electionHandler.hasElectionEnded(
+          electionDetails[0].endDate
+        );
+        if (hasStarted === true && hasEnded === false) {
+          try {
+            let otp;
+            otp = optGen.generateOTP();
+            const isOTP = await voter.doesOTPExist(otp);
+            const hasVoted = await voter.hasVoted(email);
+            if (isOTP === false && hasVoted === false) {
+              try {
+                const addOTP = await voter.insertOTP(email, otp);
+                if (addOTP === false) {
+                  res.status(422).json(errorHandler.queryError);
+                  return;
+                } else if (addOTP === true) {
+                  await transport.sendMail(mail(config.email, email, otp));
+                  res.status(200).json(success(email));
+                  return;
+                } else if (addOTP === 1) {
+                  res.status(422).json(errorHandler.queryError);
+                  return;
+                }
+              } catch (err) {
+                res.status(500).json(errorHandler.emailUnregistered);
                 return;
               }
-            } catch (err) {
-              res.status(500).json(errorHandler.emailUnregistered);
+            } else if (isOTP === true) {
+              res.status(422).json(errorHandler.causingDuplicate);
+              return;
+            } else if (hasVoted === true) {
+              res.status(401).json(errorHandler.userHasVoted);
+              return;
+            } else if (isOTP === 1) {
+              res.status(500).json(errorHandler.queryError);
               return;
             }
-          } else if (isOTP === true) {
-            res.status(422).json(errorHandler.causingDuplicate);
-            return;
-          } else if (hasVoted === true) {
-            res.status(401).json(errorHandler.userHasVoted);
-            return;
-          } else if (isOTP === 1) {
-            res.status(500).json(errorHandler.queryError);
+          } catch (err) {
+            res.status(500).json(errorHandler.serverError);
             return;
           }
-        } catch (err) {
-          res.status(500).json(errorHandler.serverError);
+        } else if (hasStarted === false) {
+          res.status(400).json(errorHandler.electionNotStarted);
+          return;
+        } else if (hasEnded === true) {
+          res.status(400).json(errorHandler.electionEnded);
+          return;
+        } else {
+          res.status(400).json(errorHandler.generalValidation);
           return;
         }
-      } else if (hasStarted === false) {
-        res.status(400).json(errorHandler.electionNotStarted);
-        return;
-      } else if (hasEnded === true) {
-        res.status(400).json(errorHandler.electionEnded);
-        return;
-      } else {
-        res.status(400).json(errorHandler.generalValidation);
-        return;
       }
+    } else {
+      res.status(400).json(errorHandler.emailValidation);
+      return;
     }
-  } else {
-    res.status(400).json(errorHandler.emailValidation);
+  } catch (err) {
+    res.status(400).json(errorHandler.missingField);
     return;
   }
 };
