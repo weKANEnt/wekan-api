@@ -83,27 +83,35 @@ document.addEventListener(
       
     //Home/Index Form Submit
     /**Redirect to logIn page upon sucessful email verification */
+    /*COMPLETE*/
     var verifyEmail = "false"; //i should make this boolean
     var verifyOTP = "false";
-    var email = document.getElementById("email");
+    let email = ""; 
     if (getOTPButton != null){    
         getOTPButton.addEventListener("click", function(event){
                 event.preventDefault();
-                if (email.value != null || email.value != " " || email.value != ""){
+                if (document.getElementById("email").value != null || document.getElementById("email").value != " " || document.getElementById("email").value != ""){
                     //naomi.benjamin@mymona.uwi.edu
                     //kayvia.harriott@mymona.uwi.edu
-                   fetch("http://localhost:8080/uwivotes/votes?email=" + email.value, requestOptions)
-                    .then((response) => response.json())
+                   fetch("http://localhost:8080/uwivotes/votes?email=" + document.getElementById("email").value, requestOptions)
+
+                   //localStorage.setItem("someVarKey", email);  
+                   
+                  
+                   
+                   .then((response) => response.json())
                     .then((result) => {
                         verifyEmail = result.success;
                         email = document.getElementById("email").value;
                         if (verifyEmail == true){  
-                           //console.log("The email was verified");
+                          localStorage.setItem("email", document.getElementById("email").value);
+                          //email = localStorage.getItem("email");
+                          //alert(email);
                            
                             fetch('http://localhost:8080/uwivotes/votes/OTP',{
                             method: 'PATCH',
                             body: JSON.stringify({
-                              "email": email.value,
+                              "email": localStorage.getItem("email"),
                             }),
                             headers: {
                               'Content-type': 'application/json; charset=UTF-8',
@@ -112,6 +120,7 @@ document.addEventListener(
                             .then((response) => {response.json()
                               verifyEmail = "false";
                               window.location.href = '/src/view/logIn.html';
+                              
                             })
                             .then((json) => console.log(json));
                           
@@ -131,13 +140,21 @@ document.addEventListener(
     }
 
     /**Redirect to ____ page upon sucessful otp verification */
+    /**COMPLETE */
     if (submitOTPButton != null){
+        if (localStorage.getItem("email")!=null){
+          document.getElementById("email").value = localStorage.getItem("email");
+        }
         submitOTPButton.addEventListener("click", function(event){
             event.preventDefault();
+            
             //should add more criterio for otp not being empty
             if (otpSignUp.value.length != 0){ 
                   //to do: email not saving from previous page
-                  fetch("http://localhost:8080/uwivotes/votes/OTP?otp=" + otpSignUp.value + "&email=" + "kayvia.harriott@mymona.uwi.edu", requestOptions)
+                 // fetch("http://localhost:8080/uwivotes/votes/OTP?otp=" + otpSignUp.value + "&email=" + "kayvia.harriott@mymona.uwi.edu", requestOptions)
+               //alert(localStorage.getItem("email"));
+                    fetch("http://localhost:8080/uwivotes/votes/OTP?otp=" + otpSignUp.value + "&email=" + localStorage.getItem("email"), requestOptions)
+
                   .then((response) => response.json())
                   .then((result) => {
                         //alert(otpSignUp.value);
@@ -161,6 +178,13 @@ document.addEventListener(
             }
         });
     }
+
+
+
+
+
+
+
 
 
 
