@@ -11,6 +11,7 @@ const admin = require("./routes/adminRoute");
 const ballot = require("./routes/ballotRoute");
 const election = require("./routes/electionRoute");
 
+const config = require("../config/env");
 const app = express();
 
 // Initialize Middleware
@@ -26,8 +27,8 @@ app.get("/", (req, res, next) => {
   res.json({ message: "from index api" });
 });
 
-app.listen( () => {
+app.listen(config.port, () => {
   console.log(
-    `@${Date(Date.now()).toString()}: uwiVotes Server is running...`
+    `@${Date(Date.now()).toString()}: Server is running on PORT:${config.port}`
   );
 });
