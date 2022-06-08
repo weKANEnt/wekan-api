@@ -5,6 +5,9 @@
   "repository": "https://github.com/SparkxFoundation/sparkx-express-starter.git",
   "author": "DangaRanga <jasonblue1626@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": "14.17.6"
+  },
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/node": "^7.14.5",
