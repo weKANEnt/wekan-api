@@ -26,6 +26,8 @@ app.get("/", (req, res, next) => {
   res.json({ message: "from index api" });
 });
 
-app.listen(8080, () => {
-  console.log(`UwiVotes server is running...`);
+app.listen(config.port, () => {
+  console.log(
+    `@${Date(Date.now()).toString()}: uwiVotes Server is running on PORT:${config.port}`
+  );
 });
