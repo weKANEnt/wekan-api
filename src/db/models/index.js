@@ -7,20 +7,15 @@ const basename = path.basename(__filename);
 const config = require("../../../config/env");
 const db = {};
 
-if (config.use_env_variable){
+if (process.env.NODE_ENV === "production") {
   var sequelize = new Sequelize(process.env[config.use_env_variable]);
 } else {
-  var sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    {
-      dialect: "postgres",
-      dialectOptions: {
-        // Your pg options here
-      },
-    }
-  );
+  var sequelize = new Sequelize("uwivotes", "postgres", "aLowbrid", {
+    dialect: "postgres",
+    dialectOptions: {
+      // Your pg options here
+    },
+  });
 }
 
 fs.readdirSync(__dirname)
