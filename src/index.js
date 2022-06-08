@@ -26,8 +26,8 @@ app.get("/", (req, res, next) => {
   res.json({ message: "from index api" });
 });
 
-app.listen(config.port, () => {
+app.listen( () => {
   console.log(
-    `@${Date(Date.now()).toString()}: uwiVotes Server is running on PORT:${config.port}`
+    `@${Date(Date.now()).toString()}: uwiVotes Server is running...`
   );
 });
