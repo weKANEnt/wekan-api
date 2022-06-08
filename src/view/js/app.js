@@ -15,6 +15,7 @@ document.addEventListener(
     var errorMessageAdmin = document.getElementById("errorMessageAdmin");
     var logInButton = document.getElementById("logInButton"); //for admin
     var password = document.getElementById("password"); //for admin
+    var adminEmail = document.getElementById("adminEmail"); //for admin
     
     //var email = document.getElementById("email");
 
@@ -75,6 +76,11 @@ document.addEventListener(
 
     var requestOptions2 = {
       method: "PATCH",
+      redirect: "follow",
+    };
+
+    var requestOptions3 = {
+      method: "POST",
       redirect: "follow",
     };
  
@@ -139,7 +145,7 @@ document.addEventListener(
             });
     }
 
-    /**Redirect to ____ page upon sucessful otp verification */
+    /**Redirect to vote page upon sucessful otp verification */
     /**COMPLETE */
     if (submitOTPButton != null){
         if (localStorage.getItem("email")!=null){
@@ -164,6 +170,7 @@ document.addEventListener(
                             console.log("OTP verified");
                             //redirect to place vote
                             verifyOTP = "false";
+                            window.location.href = '/src/view/voteIntroPage.html';
                         }
                         else{
                             console.log("OTP didn't work");
@@ -180,69 +187,100 @@ document.addEventListener(
     }
 
 
+    /**Allow User to vote */
 
 
 
 
-
-
+ 
 
 
     /**Redirect to admin side upon succesfull admin verification */
-    if (email && password != null){
+    var verifyAdminEmail = ""; //should be boolean false
+    if (adminEmail && password != null){
         logInButton.addEventListener("click", function(event){
             event.preventDefault();
-            //console.log("Admin Email:" + email.value);
-            //console.log("Admin Password:" + password.value);
-            //console.log("\'" + email.value + "\'");
-            //console.log("\'" + email.value.length + "\'");
-            if (email.value != null && email.value != " " && email.value != "" && email.value.length != 0
+
+            if (adminEmail.value != null && adminEmail.value != " " && adminEmail.value != "" && adminEmail.value.length != 0
                 && password.value != null && password.value != " " && password.value != "" && password.value.length != 0){
-              //console.log("\'" + email.value + "\'");
-              //console.log("Admin Email:" + email.value);
-              //console.log("Admin Password:" + password.value);
+                console.log("Checking if Admin email valid");
 
+                /*
+                let data = {element: "barium"};
 
+                fetch("http://localhost:8080/uwivotes/admin/login", {
+                  method: "POST",
+                  headers: {'Content-Type': 'application/json'}, 
+                  body: JSON.stringify(
+                    {
+                    "email": "kayvia.harriott@mymona.uwi.edu", //document.getElementById("adminEmail"),
+                    "password": "weKAN" //document.getElementById("password")
+                  }
 
-            }
-            else{
-              errorMessageAdmin.innerHTML = "*Please ensure an email and password is entered.";
-            }
-
-
-
-           /* if(email.value != null || email.value != " " || email.value != "" || email.value.length != 0){
-              errorMessageAdmin.innerHTML ="bloop";
-            }
-            else{
-              errorMessageAdmin.innerHTML = "*Please ensure an email and password is entered.";
-            }*/
-            /*
-            if (otpSignUp.value.length != 0){
-              //email not saving from previous page
-              fetch("http://localhost:8080/uwivotes/votes/OTP?otp=" + otpSignUp.value + "&email=" + "kayvia.harriott@mymona.uwi.edu", requestOptions)
-              .then((response) => response.json())
-              .then((result) => {
-                    //alert(otpSignUp.value);
-                    verifyOTP = result.success;
-                    console.log(otpSignUp.value)
-                    if (verifyOTP == true){
-                        console.log("OTP verified");
-                        //redirect to place vote
-                        verifyOTP = "false";
-                    }
-                    else{
-                        console.log("OTP didn't work");
-                    }
-              }
                   )
-              .catch((error) => console.log("error", error)); 
+                }).then(res => {
+                  console.log("Request complete! response:", res);
+                }).then(result => {
+                    console.log(result.success);
+                })
+                
+                
+                
+                ;*/
+           
+
+
+                
+
+                //fetch("http://localhost:8080/uwivotes/admin/login", requestOptions3)
+
+                //localStorage.setItem("someVarKey", email);  
+                
+                /*fetch('http://localhost:8080/uwivotes/admin/login',{
+                  method: 'POST',
+                  body: JSON.stringify({
+                    "email": document.getElementById("adminEmail"),
+                    "password": document.getElementById("password")
+                  }),
+                  headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                    },
+                  })
+                  .then((response) => {response.json()
+                    verifyAdminEmail = "false";
+                    //window.location.href = '/src/view/logIn.html';
+                    
+                  })
+                  .then((json) => console.log(json)); */
+
+
+              /*  
+                .then((response) => response.json())
+                 .then((result) => {
+                     verifyAdminEmail = result.success;
+                     //email = document.getElementById("email").value;
+                     if (verifyAdminEmail == true){  
+                       alert("admin logged in")
+                       
+                     } 
+                     else {
+                       alert("admin notlogged in")
+                     }
+                 }
+                     )
+                 .catch((error) => console.log("error", error));  */
+
+
+
+
+
 
             }
             else{
-              errorMessageAdmin.innerHTML = "*Please ensure an OTP is entered.";
-            }*/
+              errorMessageAdmin.innerHTML = "*Please ensure an email and password is entered.";
+            }
 
+          
 
 
         });
