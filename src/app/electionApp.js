@@ -41,7 +41,6 @@ module.exports.createElection = async function (req, res) {
       if (payload && payload.id) {
         const adminn = await admin.findAdminById(payload.id);
         if (!adminn) {
-          console.log("you")
           res.status(401).json(errorHandler.noAdmins);
         } else if (adminn) {
           console.log("are");
@@ -53,8 +52,9 @@ module.exports.createElection = async function (req, res) {
             const vSDate = validate.valDate(sDate);
             const vEDate = validate.valDate(eDate);
             const vSEDate = validate.val2Dates(sDate, eDate);
+            console.log(vTitle, vSDate, vEDate, vSEDate);
             const electionn = await election.selectElection();
-            console.log(vTitle,vSDate,vEDate,vSEDate);
+            console.log("ding ding ding");
             if (vTitle && vSDate && vEDate && vSEDate) {
               console.log("newo");
               if (electionn.length == 0) {
