@@ -30,6 +30,7 @@ function isValidDate(dateString) {
  * @returns {DateString}
  */
 function getToday() {
+  console.log("yo")
   const today = new Date()
     .toLocaleDateString("zh-Hans-CN", {
       year: "numeric",
@@ -37,6 +38,7 @@ function getToday() {
       day: "2-digit",
     })
     .replaceAll("/", "-");
+  console.log(today)
   return today;
 }
 
