@@ -49,10 +49,13 @@ module.exports.createElection = async function (req, res) {
           } else {
             console.log("here");
             const vTitle = validate.valAlphanumeric(title);
+            console.log(vTitle);
             const vSDate = validate.valDate(sDate);
+            console.log(vSDate);
             const vEDate = validate.valDate(eDate);
+            console.log(vEDate);
             const vSEDate = validate.val2Dates(sDate, eDate);
-            console.log(vTitle, vSDate, vEDate, vSEDate);
+            console.log(vSEDate);
             const electionn = await election.selectElection();
             console.log("ding ding ding");
             if (vTitle && vSDate && vEDate && vSEDate) {
