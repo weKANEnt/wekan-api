@@ -31,14 +31,13 @@ function isValidDate(dateString) {
  */
 function getToday() {
   console.log("yo")
-  const today = new Date()
+  var today = new Date()
     .toLocaleDateString("zh-Hans-CN", {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
     })
-    //.replaceAll("/", "-");
-  console.log(today.replaceAll("/", "-"));
+  console.log(today.split('/').join('-'));
   return today;
 }
 
