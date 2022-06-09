@@ -5,7 +5,7 @@ const prodConfig = {
   mailPort: Number(process.env.MAIL_PORT),
   password: process.env.MAIL_PASSWORD,
   email: process.env.MAIL_EMAIL,
-  jwt_key: process.env.SECRET_KEY,
+  jwt_key: process.env.JWT_KEY,
   jwt_expiration: "1h",
   dbConnectionString: process.env.DATABASE_URL,
   dbOptions: {
