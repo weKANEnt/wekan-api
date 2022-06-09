@@ -35,7 +35,7 @@ module.exports.createElection = async function (req, res) {
     try {
       const token = getToken(req.headers);
       const payload = await jwt.verify(token, config.jwt_key);
-      console.log(config.jwt_key)
+      console.log(payload)
       const { title, sDate, eDate, csvLocation } = req.body;
 
       if (payload && payload.id) {
