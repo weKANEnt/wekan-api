@@ -30,10 +30,10 @@ app.get("/", (req, res, next) => {
 app.listen(config.port, () => {
   console.log(
     `@${new Date().toLocaleDateString(
-      ("zh-Hans-CN", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
+      ("af-ZA", {
+      //year: "numeric",
+      //month: "2-digit",
+      //day: "2-digit",
     })
     )}: Server is running on PORT:${config.port}`
   );
