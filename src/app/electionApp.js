@@ -33,19 +33,22 @@ module.exports.createElection = async function (req, res) {
     res.status(401).json(errorHandler.cannotAccess);
   } else {
     try {
+      console.log("know");
       const token = getToken(req.headers);
       const payload = await jwt.verify(token, config.jwt_key);
-      console.log(payload)
       const { title, sDate, eDate, csvLocation } = req.body;
 
       if (payload && payload.id) {
         const adminn = await admin.findAdminById(payload.id);
         if (!adminn) {
+          console.log("you")
           res.status(401).json(errorHandler.noAdmins);
         } else if (adminn) {
+          console.log("are");
           if (!(title && sDate && eDate)) {
             res.status(400).json(errorHandler.emptyParam);
           } else {
+            console.log("here");
             const vTitle = validate.valAlphanumeric(title);
             const vSDate = validate.valDate(sDate);
             const vEDate = validate.valDate(eDate);
@@ -53,6 +56,7 @@ module.exports.createElection = async function (req, res) {
             const electionn = await election.selectElection();
 
             if (vTitle && vSDate && vEDate && vSEDate) {
+              console.log("newo");
               if (electionn.length == 0) {
                 try {
                   const addElection = await election.insertElection(
@@ -95,7 +99,7 @@ module.exports.createElection = async function (req, res) {
         return;
       }
     } catch (err) {
-      res.status(401).json(errorHandler.jwtTokenExpired);
+      res.status(401).json(err);
       return;
     }
   }
