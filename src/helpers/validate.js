@@ -30,14 +30,13 @@ function isValidDate(dateString) {
  * @returns {DateString}
  */
 function getToday() {
-  console.log("yo")
-  var today = new Date()
+  var temp = new Date()
     .toLocaleDateString("zh-Hans-CN", {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
     })
-  console.log(today.split('/').join('-'));
+  const today = temp.split('/').join('-');
   return today;
 }
 
@@ -205,7 +204,6 @@ module.exports.valDate = function (dateString) {
  * @returns {Boolean}
  */
 module.exports.val2Dates = function (sDate, eDate) {
-  console.log("val2Dates");
   if (
     sDate === undefined ||
     sDate === null ||
@@ -214,7 +212,6 @@ module.exports.val2Dates = function (sDate, eDate) {
     Number.isInteger(sDate) ||
     typeof sDate === "object"
   ) {
-    console.log("validation err");
     return false;
   } else {
     if (
@@ -225,25 +222,20 @@ module.exports.val2Dates = function (sDate, eDate) {
       Number.isInteger(eDate) ||
       typeof eDate === "object"
     ) {
-      console.log("validation err 2");
       return false;
     } else {
       const vD1 = isValidDate(sDate);
       const vD2 = isValidDate(eDate);
-      console.log(vD1, vD2);
       if (!(vD1 && vD2)) {
         return false;
       } else {
         if (sDate > eDate) {
           return false;
         } else if (sDate <= eDate) {
-          console.log("kmt")
           const today = getToday();
           console.log(today);
           if (new Date(sDate).toISOString().slice(0, 10) >= today) {
-            console.log("date?");
             if (new Date(eDate).toISOString().slice(0, 10) >= today) {
-              console.log("date????");
               return true;
             } else {
               return false;
