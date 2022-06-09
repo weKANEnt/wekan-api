@@ -54,7 +54,7 @@ module.exports.createElection = async function (req, res) {
             const vEDate = validate.valDate(eDate);
             const vSEDate = validate.val2Dates(sDate, eDate);
             const electionn = await election.selectElection();
-
+            console.log(vTitle,vSDate,vEDate,vSEDate);
             if (vTitle && vSDate && vEDate && vSEDate) {
               console.log("newo");
               if (electionn.length == 0) {
@@ -99,7 +99,7 @@ module.exports.createElection = async function (req, res) {
         return;
       }
     } catch (err) {
-      res.status(401).json(err);
+      res.status(401).json(errorHandler.jwtTokenExpired);
       return;
     }
   }
