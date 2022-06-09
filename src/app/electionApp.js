@@ -33,7 +33,6 @@ module.exports.createElection = async function (req, res) {
     res.status(401).json(errorHandler.cannotAccess);
   } else {
     try {
-      console.log("know");
       const token = getToken(req.headers);
       const payload = await jwt.verify(token, config.jwt_key);
       const { title, sDate, eDate, csvLocation } = req.body;
@@ -43,11 +42,9 @@ module.exports.createElection = async function (req, res) {
         if (!adminn) {
           res.status(401).json(errorHandler.noAdmins);
         } else if (adminn) {
-          console.log("are");
           if (!(title && sDate && eDate)) {
             res.status(400).json(errorHandler.emptyParam);
           } else {
-            console.log("here");
             const vTitle = validate.valAlphanumeric(title);
             console.log(vTitle);
             const vSDate = validate.valDate(sDate);
