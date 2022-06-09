@@ -35,7 +35,6 @@ app.listen(config.port, () => {
       month: "2-digit",
       day: "2-digit",
     })
-    .replaceAll("/", "-")
     )}: Server is running on PORT:${config.port}`
   );
 });
