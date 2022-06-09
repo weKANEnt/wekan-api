@@ -38,7 +38,7 @@ function getToday() {
       day: "2-digit",
     })
     //.replaceAll("/", "-");
-  console.log(today)
+  console.log(today.replaceAll("/", "-"));
   return today;
 }
 
