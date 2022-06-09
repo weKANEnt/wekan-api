@@ -30,7 +30,7 @@ app.get("/", (req, res, next) => {
 app.listen(config.port, () => {
   console.log(
     `@${new Date().toLocaleDateString(
-      ("af-ZA", {
+      ("EST", {
       //year: "numeric",
       //month: "2-digit",
       //day: "2-digit",
