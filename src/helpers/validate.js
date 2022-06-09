@@ -236,6 +236,7 @@ module.exports.val2Dates = function (sDate, eDate) {
         if (sDate > eDate) {
           return false;
         } else if (sDate <= eDate) {
+          console.log("kmt")
           const today = getToday();
           console.log(today);
           if (new Date(sDate).toISOString().slice(0, 10) >= today) {
