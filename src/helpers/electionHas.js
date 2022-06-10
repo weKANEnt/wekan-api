@@ -4,13 +4,12 @@
  * @returns {DateString}
  */
 function getToday() {
-  const today = new Date()
-    .toLocaleDateString("zh-Hans-CN", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    })
-    .replaceAll("/", "-");
+  var temp = new Date().toLocaleDateString("zh-Hans-CN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  const today = temp.split("/").join("-");
   return today;
 }
 
