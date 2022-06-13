@@ -41,12 +41,33 @@ function getToday() {
 }
 
 /**
- *
+ * Function that determines whether the given value is a BOOLEAN
  * @param {*} val
  * @returns {Booleam}
  */
 function isBoolean(val) {
   return val === false || val === true;
+}
+
+/**
+ * Function that determines whether the given value is aFloat
+ * @param {*} n 
+ * @returns 
+ */
+function isFloat(val) {
+  return Number(val) === val && val % 1 !== 0;
+}
+
+/**
+ * Function that determines whether the given value os only spaces (slightly different)
+ * @author Borislav Hadzhiev
+ * @see https://bobbyhadz.com/blog/javascript-typeerror-trim-is-not-a-function#:~:text=The%20%22trim%20is%20not%20a,the%20trim%20method%20on%20strings.
+ * @param {*} str 
+ * @returns 
+ */
+function onlySpaces(str) {
+  str = str.toString()
+  return str.trim().length === 0;
 }
 
 /**
@@ -62,6 +83,8 @@ module.exports.valAlphanumeric = function (username) {
     username === undefined ||
     isBoolean(username) ||
     Number.isInteger(username) ||
+    isFloat(username) || 
+    onlySpaces(username) ||
     typeof username === "object"
   ) {
     return false;
@@ -87,7 +110,9 @@ module.exports.valName = function (name) {
     name === undefined ||
     isBoolean(name) ||
     Number.isInteger(name) ||
-    typeof name === "object" || 
+    isFloat(username) ||
+    onlySpaces(username) ||
+    typeof name === "object" ||
     name === "null"
   ) {
     return false;
@@ -112,6 +137,7 @@ module.exports.valPassword = function (password) {
     password === "" ||
     password === undefined ||
     isBoolean(password) ||
+    onlySpaces(username) ||
     typeof password === "object"
   ) {
     return false;
@@ -137,6 +163,8 @@ module.exports.valEmail = function (email) {
     email === undefined ||
     isBoolean(email) ||
     Number.isInteger(email) ||
+    isFloat(username) ||
+    onlySpaces(username) ||
     typeof email === "object"
   ) {
     return false;
@@ -161,6 +189,8 @@ module.exports.valOTP = function (otp) {
     otp === "" ||
     otp === undefined ||
     isBoolean(otp) ||
+    isFloat(username) ||
+    onlySpaces(username) ||
     typeof otp === "object"
   ) {
     return false;
@@ -185,6 +215,8 @@ module.exports.valDate = function (dateString) {
     dateString === "" ||
     isBoolean(dateString) ||
     Number.isInteger(dateString) ||
+    isFloat(username) ||
+    onlySpaces(username) ||
     typeof dateString === "object"
   ) {
     return false;
@@ -210,6 +242,8 @@ module.exports.val2Dates = function (sDate, eDate) {
     sDate === "" ||
     isBoolean(sDate) ||
     Number.isInteger(sDate) ||
+    isFloat(username) ||
+    onlySpaces(username) ||
     typeof sDate === "object"
   ) {
     return false;
