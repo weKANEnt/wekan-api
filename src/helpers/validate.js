@@ -1,10 +1,10 @@
 /* eslint-disable max-depth */
 /* eslint-disable max-lines-per-function */
-const uname = /^[0-9a-zA-Z]+$/;
+const pwrd = /^[A-Za-z0-9_@./#$%&+-]*$/;
 const title = /^(?!^\d*$)[a-zA-Z\d\s]*$/;
-const gname = /^[A-Za-z.\s-]+$/;
-const emailR = /.{1,}@mymona.uwi.edu$/;
-const otpR = /^[A-Z0-9]{6}/;
+const gname = /^[a-z ,.'-]+$/i;
+const emailR = /.[a-zA-Z]+\.[a-zA-Z\d]+@mymona.uwi.edu$/;
+const otpR = /^[A-Z0-9]{6}$/;
 
 
 // Helpers
@@ -41,7 +41,7 @@ function getToday() {
 }
 
 /**
- *
+ * Function that determines whether the given value is a BOOLEAN
  * @param {*} val
  * @returns {Booleam}
  */
@@ -50,23 +50,46 @@ function isBoolean(val) {
 }
 
 /**
- * Username server side validation
+ * Function that determines whether the given value is aFloat
+ * @param {*} n 
+ * @returns 
+ */
+function isFloat(val) {
+  return Number(val) === val && val % 1 !== 0;
+}
+
+/**
+ * Function that determines whether the given value os only spaces (slightly different)
+ * @author Borislav Hadzhiev
+ * @see https://bobbyhadz.com/blog/javascript-typeerror-trim-is-not-a-function#:~:text=The%20%22trim%20is%20not%20a,the%20trim%20method%20on%20strings.
+ * @param {*} str 
+ * @returns 
+ */
+function onlySpaces(str) {
+  str = str.toString()
+  return str.trim().length === 0;
+}
+
+/**
+ * Title server side validation
  * @version 1.0
  * @author Spark-Inc
  * @return {Boolean}
  */
-module.exports.valAlphanumeric = function (username) {
+module.exports.valAlphanumeric = function (val) {
   if (
-    username === null ||
-    username === "" ||
-    username === undefined ||
-    isBoolean(username) ||
-    Number.isInteger(username) ||
-    typeof username === "object"
+    val === null ||
+    val === "" ||
+    val === undefined ||
+    isBoolean(val) ||
+    Number.isInteger(val) ||
+    isFloat(val) ||
+    onlySpaces(val) ||
+    typeof val === "object"
   ) {
     return false;
   } else {
-    if (!username.match(title)) {
+    if (!val.match(title)) {
       return false;
     } else {
       return true;
@@ -80,19 +103,21 @@ module.exports.valAlphanumeric = function (username) {
  * @author Spark-Inc
  * @return {Boolean}
  */
-module.exports.valName = function (name) {
+module.exports.valName = function (val) {
   if (
-    name === null ||
-    name === "" ||
-    name === undefined ||
-    isBoolean(name) ||
-    Number.isInteger(name) ||
-    typeof name === "object" || 
-    name === "null"
+    val === null ||
+    val === "" ||
+    val === undefined ||
+    isBoolean(val) ||
+    Number.isInteger(val) ||
+    isFloat(val) ||
+    onlySpaces(val) ||
+    typeof val === "object" ||
+    val === "null"
   ) {
     return false;
   } else {
-    if (!name.match(gname)) {
+    if (!val.match(gname)) {
       return false;
     } else {
       return true;
@@ -106,17 +131,20 @@ module.exports.valName = function (name) {
  * @author Spark-Inc
  * @return {Boolean}
  */
-module.exports.valPassword = function (password) {
+module.exports.valPassword = function (val) {
   if (
-    password === null ||
-    password === "" ||
-    password === undefined ||
-    isBoolean(password) ||
-    typeof password === "object"
+    val === null ||
+    val === "" ||
+    val === undefined ||
+    isBoolean(val) ||
+    onlySpaces(val) ||
+    Number.isInteger(val) ||
+    isFloat(val) ||
+    typeof val === "object"
   ) {
     return false;
   } else {
-    if (!password.match(uname)) {
+    if (!val.match(pwrd)) {
       return false;
     } else {
       return true;
@@ -130,18 +158,20 @@ module.exports.valPassword = function (password) {
  * @author Spark-Inc
  * @return {Boolean}
  */
-module.exports.valEmail = function (email) {
+module.exports.valEmail = function (val) {
   if (
-    email === null ||
-    email === "" ||
-    email === undefined ||
-    isBoolean(email) ||
-    Number.isInteger(email) ||
-    typeof email === "object"
+    val === null ||
+    val === "" ||
+    val === undefined ||
+    isBoolean(val) ||
+    Number.isInteger(val) ||
+    isFloat(val) ||
+    onlySpaces(val) ||
+    typeof val === "object"
   ) {
     return false;
   } else {
-    if (!email.match(emailR)) {
+    if (!val.match(emailR)) {
       return false;
     } else {
       return true;
@@ -155,17 +185,20 @@ module.exports.valEmail = function (email) {
  * @param {*} otp
  * @returns
  */
-module.exports.valOTP = function (otp) {
+module.exports.valOTP = function (val) {
   if (
-    otp === null ||
-    otp === "" ||
-    otp === undefined ||
-    isBoolean(otp) ||
-    typeof otp === "object"
+    val === null ||
+    val === "" ||
+    val === undefined ||
+    isBoolean(val) ||
+    Number.isInteger(val) ||
+    isFloat(val) ||
+    onlySpaces(val) ||
+    typeof val === "object"
   ) {
     return false;
   } else {
-    if (!otp.match(otpR)) {
+    if (!val.match(otpR)) {
       return false;
     } else {
       return true;
@@ -185,6 +218,8 @@ module.exports.valDate = function (dateString) {
     dateString === "" ||
     isBoolean(dateString) ||
     Number.isInteger(dateString) ||
+    isFloat(dateString) ||
+    onlySpaces(dateString) ||
     typeof dateString === "object"
   ) {
     return false;
@@ -210,6 +245,8 @@ module.exports.val2Dates = function (sDate, eDate) {
     sDate === "" ||
     isBoolean(sDate) ||
     Number.isInteger(sDate) ||
+    isFloat(username) ||
+    onlySpaces(username) ||
     typeof sDate === "object"
   ) {
     return false;
