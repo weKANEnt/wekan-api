@@ -4,7 +4,7 @@ const pwrd = /^[A-Za-z0-9_@./#$%&+-]*$/;
 const title = /^(?!^\d*$)[a-zA-Z\d\s]*$/;
 const gname = /^[a-z ,.'-]+$/i;
 const emailR = /.[a-zA-Z]+\.[a-zA-Z\d]+@mymona.uwi.edu$/;
-const otpR = /^[A-Z0-9]{6}/;
+const otpR = /^[A-Z0-9]{6}$/;
 
 
 // Helpers
@@ -191,6 +191,7 @@ module.exports.valOTP = function (val) {
     val === "" ||
     val === undefined ||
     isBoolean(val) ||
+    Number.isInteger(val) ||
     isFloat(val) ||
     onlySpaces(val) ||
     typeof val === "object"

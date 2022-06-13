@@ -328,8 +328,90 @@ describe("valEmail validate function", () => {
     expect(ans).toBe(false);
   });
 
-  it("should return flase since 789234111 is invalid", () => {
+  it("should return false since 789234111 is invalid", () => {
     const ans = validate.valEmail(789234111);
+    expect(ans).toBe(false);
+  });
+});
+
+describe("valOTP validate function", () => {
+  it("should return true since 'ABC123' is valid", () => {
+    const ans = validate.valOTP("ABC123");
+    expect(ans).toBe(true);
+  });
+
+  it("should return true since '123ABC' is valid", () => {
+    const ans = validate.valOTP("123ABC");
+    expect(ans).toBe(true);
+  });
+
+  it("should return true since 'A1B2C3' is valid", () => {
+    const ans = validate.valOTP("A1B2C3");
+    expect(ans).toBe(true);
+  });
+
+  it("should return true since '1A2B3C' is valid", () => {
+    const ans = validate.valOTP("1A2B3C");
+    expect(ans).toBe(true);
+  });
+
+  it("should return true since 'ABCDEF' is valid", () => {
+    const ans = validate.valOTP("ABCDEF");
+    expect(ans).toBe(true);
+  });
+
+   it("should return true since '123456' is valid", () => {
+     const ans = validate.valOTP("123456");
+     expect(ans).toBe(true);
+   });
+
+  it("should return false since 'ABCDEFG' is invalid", () => {
+    const ans = validate.valOTP("ABCDEFG");
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since 'ABCDE' is invalid", () => {
+    const ans = validate.valOTP("ABCDE");
+    expect(ans).toBe(false);
+  });
+
+  it("should return true since '1234567' is invalid", () => {
+    const ans = validate.valOTP("1234567");
+    expect(ans).toBe(false);
+  });
+
+  it("should return true since '12345' is invalid", () => {
+    const ans = validate.valOTP("12345");
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since parameter is boolean value (true)", () => {
+    const ans = validate.valOTP(true);
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since parameter is boolean value (false)", () => {
+    const ans = validate.valOTP(false);
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since parameter is null", () => {
+    const ans = validate.valOTP(null);
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since parameter is an object", () => {
+    const ans = validate.valOTP({ test: "obj" });
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since 789234111 is invalid", () => {
+    const ans = validate.valOTP(789234111);
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since 789234 is invalid", () => {
+    const ans = validate.valOTP(789234);
     expect(ans).toBe(false);
   });
 });
