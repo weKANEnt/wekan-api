@@ -33,6 +33,7 @@
     "build": "npx sequelize-cli db:migrate",
     "lint": "eslint ./src",
     "test": "jest",
+    "coverage": "jest --coverage",
     "migrate": "npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
     "undo": "npx sequelize-cli db:migrate:undo",
     "undo-all": "npx sequelize-cli db:migrate:undo:all",
