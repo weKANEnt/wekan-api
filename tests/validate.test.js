@@ -323,6 +323,11 @@ describe("valEmail validate function", () => {
     expect(ans).toBe(false);
   });
 
+  it("should return false since parameter is undefined", () => {
+    const ans = validate.valEmail(undefined);
+    expect(ans).toBe(false);
+  });
+
   it("should return false since parameter is an object", () => {
     const ans = validate.valEmail({ test: "obj" });
     expect(ans).toBe(false);
@@ -412,6 +417,88 @@ describe("valOTP validate function", () => {
 
   it("should return false since 789234 is invalid", () => {
     const ans = validate.valOTP(789234);
+    expect(ans).toBe(false);
+  });
+});
+
+describe("valDate validate function", () => {
+  it("should return true since '2022-09-01' is valid", () => {
+    const ans = validate.valDate("2022-09-01");
+    expect(ans).toBe(true);
+  });
+
+  it("should return true since '2022-06-12' is valid", () => {
+    const ans = validate.valDate("2022-06-12");
+    expect(ans).toBe(true);
+  });
+
+  it("should return true since '2021-06-12' is valid", () => {
+    const ans = validate.valDate("2021-06-12");
+    expect(ans).toBe(true);
+  });
+
+  it("should return false since '2022-13-12' is invalid", () => {
+    const ans = validate.valDate("2022-13-12");
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since '202-13-12' is invalid", () => {
+    const ans = validate.valDate("202-13-12");
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since '2022-12-33' is invalid", () => {
+    const ans = validate.valDate("2022-12-33");
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since '2022/12/30' is invalid", () => {
+    const ans = validate.valDate("2022/12/30");
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since '01/2001/01' is invalid", () => {
+    const ans = validate.valDate("01/2001/01");
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since '01/01/2001' is invalid", () => {
+    const ans = validate.valDate("01/01/2001");
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since '01012001' is invalid", () => {
+    const ans = validate.valDate("01012001");
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since 'June 2, 2022' is invalid", () => {
+    const ans = validate.valDate("June 2, 2022");
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since parameter is boolean value (true)", () => {
+    const ans = validate.valDate(true);
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since parameter is boolean value (false)", () => {
+    const ans = validate.valDate(false);
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since parameter is null", () => {
+    const ans = validate.valDate(null);
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since parameter is undefined", () => {
+    const ans = validate.valDate(undefined);
+    expect(ans).toBe(false);
+  });
+
+  it("should return false since parameter is an object", () => {
+    const ans = validate.valOTP({ test: "obj" });
     expect(ans).toBe(false);
   });
 });

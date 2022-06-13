@@ -218,8 +218,8 @@ module.exports.valDate = function (dateString) {
     dateString === "" ||
     isBoolean(dateString) ||
     Number.isInteger(dateString) ||
-    isFloat(username) ||
-    onlySpaces(username) ||
+    isFloat(dateString) ||
+    onlySpaces(dateString) ||
     typeof dateString === "object"
   ) {
     return false;
