@@ -1,9 +1,9 @@
 /* eslint-disable max-depth */
 /* eslint-disable max-lines-per-function */
-const pwrd = /^[0-9a-zA-Z]+$/;
+const pwrd = /^[A-Za-z0-9_@./#$%&+-]*$/;
 const title = /^(?!^\d*$)[a-zA-Z\d\s]*$/;
 const gname = /^[a-z ,.'-]+$/i;
-const emailR = /.{1,}@mymona.uwi.edu$/;
+const emailR = /.[a-zA-Z]+\.[a-zA-Z\d]+@mymona.uwi.edu$/;
 const otpR = /^[A-Z0-9]{6}/;
 
 
@@ -138,6 +138,8 @@ module.exports.valPassword = function (val) {
     val === undefined ||
     isBoolean(val) ||
     onlySpaces(val) ||
+    Number.isInteger(val) ||
+    isFloat(val) ||
     typeof val === "object"
   ) {
     return false;
