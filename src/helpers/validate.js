@@ -1,8 +1,8 @@
 /* eslint-disable max-depth */
 /* eslint-disable max-lines-per-function */
-const uname = /^[0-9a-zA-Z]+$/;
+const pwrd = /^[0-9a-zA-Z]+$/;
 const title = /^(?!^\d*$)[a-zA-Z\d\s]*$/;
-const gname = /^[A-Za-z.\s-]+$/;
+const gname = /^[a-z ,.'-]+$/i;
 const emailR = /.{1,}@mymona.uwi.edu$/;
 const otpR = /^[A-Z0-9]{6}/;
 
@@ -71,25 +71,25 @@ function onlySpaces(str) {
 }
 
 /**
- * Username server side validation
+ * Title server side validation
  * @version 1.0
  * @author Spark-Inc
  * @return {Boolean}
  */
-module.exports.valAlphanumeric = function (username) {
+module.exports.valAlphanumeric = function (val) {
   if (
-    username === null ||
-    username === "" ||
-    username === undefined ||
-    isBoolean(username) ||
-    Number.isInteger(username) ||
-    isFloat(username) || 
-    onlySpaces(username) ||
-    typeof username === "object"
+    val === null ||
+    val === "" ||
+    val === undefined ||
+    isBoolean(val) ||
+    Number.isInteger(val) ||
+    isFloat(val) ||
+    onlySpaces(val) ||
+    typeof val === "object"
   ) {
     return false;
   } else {
-    if (!username.match(title)) {
+    if (!val.match(title)) {
       return false;
     } else {
       return true;
@@ -103,21 +103,21 @@ module.exports.valAlphanumeric = function (username) {
  * @author Spark-Inc
  * @return {Boolean}
  */
-module.exports.valName = function (name) {
+module.exports.valName = function (val) {
   if (
-    name === null ||
-    name === "" ||
-    name === undefined ||
-    isBoolean(name) ||
-    Number.isInteger(name) ||
-    isFloat(username) ||
-    onlySpaces(username) ||
-    typeof name === "object" ||
-    name === "null"
+    val === null ||
+    val === "" ||
+    val === undefined ||
+    isBoolean(val) ||
+    Number.isInteger(val) ||
+    isFloat(val) ||
+    onlySpaces(val) ||
+    typeof val === "object" ||
+    val === "null"
   ) {
     return false;
   } else {
-    if (!name.match(gname)) {
+    if (!val.match(gname)) {
       return false;
     } else {
       return true;
@@ -131,18 +131,18 @@ module.exports.valName = function (name) {
  * @author Spark-Inc
  * @return {Boolean}
  */
-module.exports.valPassword = function (password) {
+module.exports.valPassword = function (val) {
   if (
-    password === null ||
-    password === "" ||
-    password === undefined ||
-    isBoolean(password) ||
-    onlySpaces(username) ||
-    typeof password === "object"
+    val === null ||
+    val === "" ||
+    val === undefined ||
+    isBoolean(val) ||
+    onlySpaces(val) ||
+    typeof val === "object"
   ) {
     return false;
   } else {
-    if (!password.match(uname)) {
+    if (!val.match(pwrd)) {
       return false;
     } else {
       return true;
@@ -156,20 +156,20 @@ module.exports.valPassword = function (password) {
  * @author Spark-Inc
  * @return {Boolean}
  */
-module.exports.valEmail = function (email) {
+module.exports.valEmail = function (val) {
   if (
-    email === null ||
-    email === "" ||
-    email === undefined ||
-    isBoolean(email) ||
-    Number.isInteger(email) ||
-    isFloat(username) ||
-    onlySpaces(username) ||
-    typeof email === "object"
+    val === null ||
+    val === "" ||
+    val === undefined ||
+    isBoolean(val) ||
+    Number.isInteger(val) ||
+    isFloat(val) ||
+    onlySpaces(val) ||
+    typeof val === "object"
   ) {
     return false;
   } else {
-    if (!email.match(emailR)) {
+    if (!val.match(emailR)) {
       return false;
     } else {
       return true;
@@ -183,19 +183,19 @@ module.exports.valEmail = function (email) {
  * @param {*} otp
  * @returns
  */
-module.exports.valOTP = function (otp) {
+module.exports.valOTP = function (val) {
   if (
-    otp === null ||
-    otp === "" ||
-    otp === undefined ||
-    isBoolean(otp) ||
-    isFloat(username) ||
-    onlySpaces(username) ||
-    typeof otp === "object"
+    val === null ||
+    val === "" ||
+    val === undefined ||
+    isBoolean(val) ||
+    isFloat(val) ||
+    onlySpaces(val) ||
+    typeof val === "object"
   ) {
     return false;
   } else {
-    if (!otp.match(otpR)) {
+    if (!val.match(otpR)) {
       return false;
     } else {
       return true;
