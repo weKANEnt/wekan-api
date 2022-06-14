@@ -245,8 +245,8 @@ module.exports.val2Dates = function (sDate, eDate) {
     sDate === "" ||
     isBoolean(sDate) ||
     Number.isInteger(sDate) ||
-    isFloat(username) ||
-    onlySpaces(username) ||
+    isFloat(sDate) ||
+    onlySpaces(sDate) ||
     typeof sDate === "object"
   ) {
     return false;
@@ -257,6 +257,8 @@ module.exports.val2Dates = function (sDate, eDate) {
       eDate === "" ||
       isBoolean(eDate) ||
       Number.isInteger(eDate) ||
+      isFloat(eDate) ||
+      onlySpaces(eDate) ||
       typeof eDate === "object"
     ) {
       return false;
