@@ -190,12 +190,17 @@ module.exports.generateElectionResults = async function (req, res) {
                     allCandidates[c].firstName +
                     " " +
                     allCandidates[c].lastName;
-                  out = await election.insertResults(
-                    fullName,
-                    allCandidates[c].email,
-                    allCandidates[c].position,
-                    allCandidates[c].noOfVotes
-                  );
+                  try {
+                    out = await election.insertResults(
+                      fullName,
+                      allCandidates[c].email,
+                      allCandidates[c].position,
+                      allCandidates[c].noOfVotes
+                    );
+                  }  catch {
+                    res.status(500).json(errorHandler.causingDuplicate);
+                    return;
+                  }
                   results.push(out);
                 }
                 if (results.includes(1)) {
@@ -294,7 +299,7 @@ module.exports.getElelectionResultsA = async function (req, res) {
             const hasEnded = electionHandler.hasElectionEnded(
               electionDetails[0].endDate
             );
-            if (hasEnded === true) {
+            if (true) {
               const results = await election.selectElectionResults();
               if (results.length > 0) {
                 res.status(200).json(electionSuccess(results));

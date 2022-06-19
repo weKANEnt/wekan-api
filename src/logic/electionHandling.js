@@ -124,9 +124,7 @@ module.exports.insertResults = async function (
 module.exports.updatePostResults = async function (elid = 1, resultsStat) {
   if (elid) {
     const election = await electiondata.findOne({
-      where: {
-        elid: elid,
-      },
+      
     });
 
     await electiondata.upsert({
