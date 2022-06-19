@@ -45,7 +45,7 @@ module.exports.updateVoteStatus = async function (id, vStat) {
       });
 
       await users.upsert({
-        uid: voter.ccid,
+        uid: voter.emid,
         votestatus: vStat,
       });
       return 0;
