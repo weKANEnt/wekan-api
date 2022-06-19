@@ -1,6 +1,7 @@
 const ballot = require("../logic/ballotHandling");
 const voter = require("../logic/voterHandling");
 const validate = require("../helpers/validate");
+const dupes = require("../helpers/remove-dupes");
 const election = require("../logic/electionHandling");
 const errorHandler = require("../helpers/errors");
 const successHandler = require("../helpers/create-success");
@@ -621,7 +622,8 @@ module.exports.submitBallot = async function (req, res) {
     try {
       const token = getToken(req.headers);
       const payload = await jwt.verify(token, config.jwt_key);
-      const { cids } = req.body;
+      var { cids } = req.body;
+      cids = dupes.removeDupes(cids);
       const verdict = [];
 
       if (payload && payload.id) {
@@ -638,7 +640,6 @@ module.exports.submitBallot = async function (req, res) {
               electionDetails[0].endDate
             );
             const hasVoted = await voter.hasVoted(payload.email);
-            console.log(hasVoted, hasStarted, hasEnded);
             if (
               hasStarted === true &&
               hasEnded === false &&
