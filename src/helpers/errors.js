@@ -143,7 +143,7 @@ module.exports.isNotPostGraduate = errorHandler(
 module.exports.ballotInvalid = errorHandler(
   false,
   "Ballot Invalid",
-  "Ballot contains bad data",
+  "Ballot is invalid and connot be submitted",
   "wek-ve"
 );
 
