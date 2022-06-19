@@ -663,7 +663,7 @@ module.exports.submitBallot = async function (req, res) {
                       res
                         .status(200)
                         .json(successHandler(true, "Voter ballot submitted"));
-                      const updated = voter.updateVoteStatus(payload.id, true);
+                      const updated = await voter.updateVoteStatus(payload.id, true);
                       return updated;
                     } else if (result === 1) {
                       res.status(400).json(errorHandler.ballotInvalid);

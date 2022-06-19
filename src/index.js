@@ -24,7 +24,7 @@ app.use("/uwivotes/ballot", ballot);
 app.use("/uwivotes/election", election);
 
 app.get("/", (req, res, next) => {
-  res.json({ message: "from index api" });
+  res.json({ message: "Welcome to UWIVotes API..." });
 });
 
 app.listen(config.port, () => {

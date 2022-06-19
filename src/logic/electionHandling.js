@@ -133,7 +133,6 @@ module.exports.updatePostResults = async function (elid = 1, resultsStat) {
       elid: election.elid,
       postResults: resultsStat,
     });
-
     return 0;
   }
   return 1;
