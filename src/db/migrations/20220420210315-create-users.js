@@ -12,6 +12,11 @@ module.exports = {
         type: Sequelize.STRING(255),
         unique: true,
       },
+      otpValid: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
       votestatus: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,

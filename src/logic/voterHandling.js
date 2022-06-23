@@ -108,7 +108,12 @@ module.exports.insertOTP = async function (email, otp) {
     if (voterData) {
       await users.upsert({
         uid: voterData.uid,
-        OTP: otp,
+        OTP: otp
+      });
+
+      await users.upsert({
+        uid: voterData.uid,
+        otpValid: true
       });
 
       return true;
@@ -175,3 +180,66 @@ module.exports.doesOTPMatchEntry = async function (email, otp) {
   }
   return 1;
 };
+
+/**
+ * 
+ * @param {*} email 
+ * @returns 
+ */
+module.exports.updateOTPValidStatus = async function (email, bool) {
+  if ((email !== undefined) ) {
+    const voter = await vdata.findOne({
+      where: {
+        email: email,
+      },
+    });
+
+    const voterData = await users.findOne({
+      where: {
+        uid: voter.emid,
+      },
+    });
+
+    if (voterData) {
+      await users.upsert({
+        uid: voterData.uid,
+        otpValid: bool,
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return 1;
+  }
+};
+
+/**
+ * 
+ * @param {*} email 
+ * @returns 
+ */
+module.exports.getOTPValid = async function (email){
+  if (email !== undefined) {
+    const voter = await vdata.findOne({
+      where: {
+        email: email,
+      },
+    });
+
+    const voterData = await users.findOne({
+      where: {
+        uid: voter.emid,
+      },
+      attributes: ["otpValid"],
+    });
+
+    if (voterData) {
+      return voterData;
+    } else {
+      return 1;
+    }
+  } else {
+    return 1;
+  }
+}

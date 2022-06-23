@@ -244,3 +244,10 @@ module.exports.noHallorFaculty = errorHandler(
   "Possible Query Error - No such hall or faculty exists.",
   "wek-ve"
 );
+
+module.exports.invalidOTP = errorHandler(
+  false,
+  "OTP Invalid",
+  "You have already utilized this OTP. Please generate another",
+  "wek-val"
+);

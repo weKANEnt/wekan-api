@@ -186,7 +186,9 @@ module.exports.isOTPMatch = async function (req, res) {
   if (vOTP) {
     try {
       const otpStat = await voter.doesOTPMatchEntry(email, otp);
-      if (otpStat) {
+      const isOtpValid = await voter.getOTPValid(email);
+      console.log(isOtpValid.otpValid);
+      if (otpStat && (isOtpValid.otpValid === true)) {
         const token = jwt.sign(
           {
             id: otpStat.ccid,
@@ -197,15 +199,27 @@ module.exports.isOTPMatch = async function (req, res) {
             expiresIn: "1hr",
           }
         );
-        res.status(200).json(successT(token));
-        return;
+        const otpValid = await voter.updateOTPValidStatus(email, false);
+        if (otpValid) {
+          res.status(200).json(success(token));
+          return;
+        } else if (otpValid = false){
+          res.status(404).json(errorHandler.noVoter)
+          return;
+        } else {
+          res.status(400).json(errorHandler.queryError);
+          return;
+        };
       } else if (otpStat === false) {
         res.status(401).json(errorHandler.incorrectOTP);
         return;
-      } else if (otpStat === 1) {
+      } else if (otpStat === 1 || isOtpValid.otpValid === 1) {
         res.status(400).json(errorHandler.queryError);
         return;
-      }
+      } else if (isOtpValid.otpValid === false) {
+        res.status(401).json(errorHandler.invalidOTP);
+        return;
+      } 
     } catch (err) {
       res.status(404).json(errorHandler.noOTPGen);
       return;
