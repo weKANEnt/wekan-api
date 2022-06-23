@@ -508,9 +508,7 @@ module.exports.makeResultsPrivate = async function (req, res) {
                 electionDetails[0].endDate
               );
               if (hasEnded === true) {
-                console.log("Election");
                 const results = await election.updatePostResults(1, false);
-                console.log(results);
                 if (results === 0) {
                   res
                     .status(200)

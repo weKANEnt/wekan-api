@@ -187,7 +187,6 @@ module.exports.isOTPMatch = async function (req, res) {
     try {
       const otpStat = await voter.doesOTPMatchEntry(email, otp);
       const isOtpValid = await voter.getOTPValid(email);
-      console.log(isOtpValid.otpValid);
       if (otpStat && (isOtpValid.otpValid === true)) {
         const token = jwt.sign(
           {
@@ -201,7 +200,7 @@ module.exports.isOTPMatch = async function (req, res) {
         );
         const otpValid = await voter.updateOTPValidStatus(email, false);
         if (otpValid) {
-          res.status(200).json(success(token));
+          res.status(200).json(successT(token));
           return;
         } else if (otpValid = false){
           res.status(404).json(errorHandler.noVoter)

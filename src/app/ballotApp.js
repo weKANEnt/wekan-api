@@ -1,6 +1,5 @@
 const ballot = require("../logic/ballotHandling");
 const voter = require("../logic/voterHandling");
-const validate = require("../helpers/validate");
 const dupes = require("../helpers/remove-dupes");
 const election = require("../logic/electionHandling");
 const errorHandler = require("../helpers/errors");
