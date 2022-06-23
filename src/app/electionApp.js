@@ -299,7 +299,7 @@ module.exports.getElelectionResultsA = async function (req, res) {
             const hasEnded = electionHandler.hasElectionEnded(
               electionDetails[0].endDate
             );
-            if (true) {
+            if (hasEnded === true) {
               const results = await election.selectElectionResults();
               if (results.length > 0) {
                 res.status(200).json(electionSuccess(results));
